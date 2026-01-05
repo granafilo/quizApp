@@ -1,0 +1,137 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    width: 100%;
+    min-width: auto;
+    min-height: 100vh;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-areas: "title title title"
+        "main-content main-content main-content";
+}
+
+@media (min-width: 768px) {
+    .main-container {
+        display: grid;
+        grid-template-columns: 1fr 4fr 1fr;
+        grid-template-areas: "title title title"
+            ". main-content .";
+    }
+}
+
+.homepage-title {
+    grid-area: title;
+    font-size: 3rem;
+    font-weight: bold;
+    font-weight: 800;
+    text-align: center;
+    padding: 15px;
+}
+
+@media (min-width: 768px) {
+    .homepage-title {
+        font-size: 4rem;
+    }
+}
+
+.main-content {
+    grid-area: main-content;
+}
+
+.score-table-container {
+    padding: 8px;
+    ;
+}
+
+.score-header-container {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+}
+
+@media (min-width: 768px) {
+    .score-header-container {
+        grid-template-columns: 4fr 1fr 1fr 1fr;
+        gap: 8px;
+    }
+}
+
+.score-header {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.nickname-header {
+    justify-content: start;
+}
+
+.nickname-header,
+.points-header {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+
+    .nickname-header,
+    .points-header {
+        font-size: 2rem;
+    }
+}
+
+.correct-header,
+.wrong-header {
+    display: none;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+
+    .correct-header,
+    .wrong-header {
+        display: flex;
+        font-size: 1.5rem;
+    }
+}
+
+.score-board{
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 8px;
+}
+
+@media (min-width: 768px) {
+    .score-board {
+        grid-template-columns: 4fr 1fr 1fr 1fr;
+    }
+}
+
+.score-board .score-header{
+    background: white !important;
+    padding: 5px;
+    border-radius: 8px;
+
+    font-size: 1.1rem;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: transparent !important;
+    color: inherit !important;
+}

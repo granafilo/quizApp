@@ -25,24 +25,20 @@ scoreBoard.forEach((tentativo) => {
     const score = tentativo.score;
 
     scoreHtml = `
-            <div class="scoreBoardHeader p-2" style="justify-content: start !important; background: white !important; color: black !important; border: 1px solid #e9ecef !important; ">
-                <span style="font-weight: 900; font-size: 30px;"
-                    class="text-wrap text-break">${nickname}</span>
+            <div class="score-header nickname-header">
+                <span class="text-wrap text-break">${nickname}</span>
             </div>
 
-            <div class="scoreBoardHeader" style="background: white !important; color: black !important; border: 1px solid #e9ecef !important; ">
-                <span style="font-weight: 800; font-size: 30px;"
-                    class="text-wrap text-break">${score.punteggio}</span>
+            <div class="score-header points-header">
+                <span class="text-wrap text-break">${score.punteggio}</span>
             </div>
 
-            <div class="scoreBoardHeader" style="background: white !important; color: black !important; border: 1px solid #e9ecef !important; ">
-                <span style="font-weight: 800; font-size: 20px;"
-                    class="text-break text-wrap">${score.corrette}</span>
+            <div class="score-header correct-header">
+                <span class="text-break text-wrap">${score.corrette}</span>
             </div>
 
-            <div class="scoreBoardHeader" style="background: white !important; color: black !important; border: 1px solid #e9ecef !important; ">
-                <span style="font-weight: 800; font-size: 20px;"
-                    class="text-break text-wrap">${score.errate}</span>
+            <div class="score-header wrong-header">
+                <span class="text-break text-wrap">${score.errate}</span>
             </div>
     `;
 
@@ -100,6 +96,5 @@ function startGame() {
         alert('Please enter a nickname to start the game.');
         return;
     }
-    window.location.href = `game.html?nickname=${nickname}&difficulty=${difficulty}&pfpId=${pfp}`
+    window.location.href = `/game.html?nickname=${nickname}&difficulty=${difficulty}&pfpId=${pfp}`
 }
-

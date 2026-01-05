@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="/index.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <div class="homepage-title">
+            Quiz App
+        </div>
+
+        <!--contenitore principale-->
+        <div class="main-content">
+            <!--scoreboard-->
+            <div class="score-table-container">
+                <div class="score-header-container">
+                    <!--grid item-->
+                    <div class="score-header nickname-header">
+                        <span>Nickname</span>
+                    </div>
+
+                    <!--grid item-->
+                    <div class="score-header points-header">
+                        <span>Punteggio</span>
+                    </div>
+
+                    <div class="score-header correct-header">
+                        <span>Corrette</span>
+                    </div>
+
+                    <div class="score-header wrong-header">
+                        <span>Errate</span>
+                    </div>
+
+                </div>
+                <div id="scoreBoard" class="score-board">
+                </div>
+            </div>
+
+            <!--contenitore principale pfp, difficoltà e nickname-->
+            <div>
+                <!--contenitore riga pfp e difficoltà-->
+                <div>
+                    <!--container pfp-->
+                    <div>
+                        <div>
+                            <img id="currentPfp" name="user.png" src="/images/profile_pics/user.png">
+                        </div>
+                        <div>
+                            <button id="choosePfpBtn">
+                                Choose Pfp
+                            </button>
+                        </div>
+                    </div>
+                    <!--container difficoltà-->
+                    <div>
+                        <div>
+                            <span>Difficulty</span>
+                        </div>
+                        <!--contenitore difficoltà dropdown-->
+                        <div>
+                            <div>
+                                <button id="difficultySelected">Mixed</button>
+                                <ul>
+                                    <li>
+                                        <span>Mixed</span>
+                                    </li>
+                                    <li>
+                                        <span>Easy</span>
+                                    </li>
+                                    <li>
+                                        <span>Medium</span>
+                                    </li>
+                                    <li>
+                                        <span>Hard</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Contenitore riga nickname e start game btn-->
+                <div>
+                    <!--input nickname-->
+                    <div>
+                        <input id="nickname" type="text" placeholder="Nickname">
+                    </div>
+                    <!--bottone inizio gioco-->
+                    <div>
+                        <button id="startGameBtn">
+                            Start Game
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--contenitore pfp-->
+    <div>
+        <div>
+            <div>
+                <div id="pfpContainer">
+                    <div>
+                        <button>
+                            <img id="polar_bear.png" src="/images/profile_pics/polar_bear.png" class="js-pfp" alt="">
+                        </button>
+                        <button>
+                            <img id="bear.png" src="/images/profile_pics/bear.png" class="js-pfp" alt="">
+                        </button>
+                        <button>
+                            <img id="bird.png" src="/images/profile_pics/bird.png" class="js-pfp" alt="">
+                        </button>
+                        <button s>
+                            <img id="boy.png" src="/images/profile_pics/boy.png" class="js-pfp" alt="">
+                        </button>
+                        <button>
+                            <img id="fox.png" src="/images/profile_pics/fox.png" class="js-pfp" alt="">
+                        </button>
+                    </div>
+                    <div>
+                        <button>
+                            <img id="ghost.png" src="/images/profile_pics/ghost.png" class="js-pfp" alt="">
+                        </button>
+                        <button>
+                            <img id="graphic.png" src="/images/profile_pics/graphic.png" class="js-pfp" alt="">
+                        </button>
+                        <button>
+                            <img id="hippo.png" src="/images/profile_pics/hippo.png" class="js-pfp" alt="">
+                        </button>
+                        <button>
+                            <img id="hippopotam.png" src="/images/profile_pics/hippopotam.png" class="js-pfp" alt="">
+                        </button>
+                        <button>
+                            <img id="kitty.png" src="/images/profile_pics/kitty.png" class="js-pfp" alt="">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="homepage.js" type="module"></script>
+</body>
+
+</html>
