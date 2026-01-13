@@ -1,10 +1,10 @@
 import { loadFroamStorage, saveToStorage } from "./storage/storageFunctions.js";
 
-let nickname = document.getElementById('nickname');
+let nickname = document.getElementById('nickname'); //ok
 nickname.value = '';
 
 //aggiungo event listener per iniziare il gioco
-const startGameBtn = document.getElementById('startGameBtn');
+const startGameBtn = document.getElementById('startGameBtn'); //ok
 
 startGameBtn.addEventListener('click', () => {
     startGame();
@@ -16,8 +16,8 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-const scoreBoard = loadFroamStorage() || [];
-const scoreBoardHtml = document.getElementById('scoreBoard');
+const scoreBoard = loadFroamStorage() || []; //ok
+const scoreBoardHtml = document.getElementById('scoreBoard'); //ok
 let scoreHtml = '';
 
 scoreBoard.forEach((tentativo) => {
@@ -45,52 +45,63 @@ scoreBoard.forEach((tentativo) => {
     scoreBoardHtml.innerHTML += scoreHtml;
 })
 
-const choosePfpBtn = document.getElementById('choosePfpBtn');
-const pfpContainer = document.getElementById('pfpContainer');
-const currentPfp = document.getElementById('currentPfp');
-const difficultySelected = document.getElementById('difficultySelected');
+const choosePfpBtn = document.getElementById('pfp-btn'); //ok
+const pfpContainer = document.getElementById('pfp-stack-container'); //ok
+const currentPfp = document.getElementById('current-pfp'); //ok
+const difficultySelect = document.getElementById('difficulty'); //ok
+const mainContent = document.getElementById('main-content'); //ok
+const closePfpStackBtn = document.getElementById('close-pfp-stack-btn'); //ok
 let pfpShown = false;
 
+//ok
 choosePfpBtn.addEventListener('click', () => {
     if (!pfpShown) {
         pfpContainer.classList.remove('d-none');
-        difficultySelected.disabled = true;
+        pfpContainer.classList.add('d-flex');
+        mainContent.classList.add('blur');
+        //disabilito gli altri pulsanti
+        choosePfpBtn.disabled = true;
+        difficultySelect.disabled = true;
+        startGameBtn.disabled = true;
         pfpShown = true;
-    } else {
-        pfpContainer.classList.add('d-none');
-        difficultySelected.disabled = false;
-        pfpShown = false;
     }
 })
 
-document.querySelectorAll('.js-pfp').forEach((btn) => (
-    btn.addEventListener(('click'), () => {
-        pfpShown = false;
-        difficultySelected.disabled = false;
-        const srcNewPfp = btn.src;
-        currentPfp.src = srcNewPfp;
-        currentPfp.name = btn.id;
-        pfpContainer.classList.add('d-none');
-    })
-));
-
-document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', function () {
-        document.querySelector('.dropdown-toggle').textContent = this.textContent;
-    });
-});
-
-nickname.addEventListener('click', () => {
+//ok
+closePfpStackBtn.addEventListener('click', () => {
     if (pfpShown) {
         pfpContainer.classList.add('d-none');
-        difficultySelected.disabled = false;
+        pfpContainer.classList.remove('d-flex');
+        mainContent.classList.remove('blur');
+        //disabilito gli altri pulsanti
+        choosePfpBtn.disabled = false;
+        difficultySelect.disabled = false;
+        startGameBtn.disabled = false;
         pfpShown = false;
     }
 });
 
+//ok
+document.querySelectorAll('.js-pfp').forEach((btn) => (
+    btn.addEventListener(('click'), () => {
+        pfpContainer.classList.add('d-none');
+        pfpContainer.classList.remove('d-flex');
+        mainContent.classList.remove('blur');
+        //disabilito gli altri pulsanti
+        choosePfpBtn.disabled = false;
+        difficultySelect.disabled = false;
+        startGameBtn.disabled = false;
+        pfpShown = false;
+        const srcNewPfp = btn.src;
+        currentPfp.src = srcNewPfp;
+        currentPfp.name = btn.id;
+    })
+));
+
 function startGame() {
     const nickname = document.getElementById('nickname').value;
-    const difficulty = document.getElementById('difficultySelected').textContent.toLowerCase();
+    const difficulty = document.getElementById('difficulty').value.toLowerCase();
+    console.log(difficulty)
     const pfp = currentPfp.name;
     if (nickname.trim() === '') {
         alert('Please enter a nickname to start the game.');
