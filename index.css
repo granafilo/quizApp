@@ -96,6 +96,14 @@ body {
 
 .nickname-header {
     justify-content: start;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.nickname-header span{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nickname-header,
@@ -345,6 +353,12 @@ body {
 .game-info-header{
     display: flex;
     justify-content: space-between;
+}
+
+.game-info-user{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .close-btn-game-info{
