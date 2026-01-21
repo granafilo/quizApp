@@ -5,181 +5,132 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Homepage</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/index.css">
 
-    <link rel="stylesheet" href="stylesheet.css">
-    <style>
-        
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
-<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" class="container">
+<body>
 
+    <div class="main-container">
 
-    <div class="row" style="justify-content: center; font-size: 10vh; font-weight: 800;">
-        Quiz App
-    </div>
-
-    <!--contenitore principale-->
-    <div class="row d-flex flex-column bg-white" style="border-radius: 8px;">
-
-        <!--scoreboard-->
-        <div class="border-bottom d-flex flex-column" style="flex: 1; border-radius: 8px;">
-            <div class="m-2" style="flex: 1; display: grid; grid-template-columns:3fr 2fr 1fr 1fr; gap: 5px; ">
-                <!--grid item-->
-                <div class="scoreBoardHeader p-2" style="justify-content: start !important;">
-                    <span style="font-weight: 900; font-size: 30px; color: black;"
-                        class="text-wrap text-break">Nickname</span>
-                </div>
-
-                <!--grid item-->
-                <div class="scoreBoardHeader">
-                    <span style="font-weight: 800; font-size: 30px; color: black;"
-                        class="text-wrap text-break">Punteggio</span>
-                </div>
-
-                <!--grid item-->
-                <div class="scoreBoardHeader">
-                    <span style="font-weight: 800; font-size: 20px; color: black;"
-                        class="text-break text-wrap">Corrette</span>
-                </div>
-
-                <!--grid item-->
-                <div class="scoreBoardHeader">
-                    <span style="font-weight: 800; font-size: 20px; color: black;"
-                        class="text-break text-wrap">Errate</span>
-                </div>
-            </div>
-            <div id="scoreBoard" class="flex-grow-1 m-2"
-                style="display: grid; grid-template-columns:3fr 2fr 1fr 1fr; grid-auto-rows: 50px; gap: 5px; overflow-y: auto; height: 20vh;">
-
-            </div>
+        <div class="homepage-title">
+            Quiz App
         </div>
 
-        <!--contenitore principale pfp, difficoltà e nickname-->
-        <div class="d-flex flex-column align-items-center" style="flex: 1;">
-            <!--contenitore riga pfp e difficoltà-->
-            <div class="d-flex mt-3 w-50" style="flex: 1; min-height: 128px;">
-                <!--container pfp-->
-                <div class="d-flex flex-column" style="flex: 1;">
-                    <div class="d-flex justify-content-center" style="flex:1">
-                        <img id="currentPfp" name="user.png" src="/images/profile_pics/user.png">
+        <!--contenitore principale-->
+        <div id="main-content" class="main-content">
+            <!--scoreboard-->
+            <div class="score-table-container">
+                <div class="score-header-container">
+                    <!--grid item-->
+                    <div class="score-header nickname-header">
+                        <span>Nickname</span>
                     </div>
-                    <div class="d-flex justify-content-center" style="flex:1">
-                        <button id="choosePfpBtn" class="btn w-75 text-break text-wrap"
-                            style="height: 80%; font-size: 25px; font-weight: 700; background: linear-gradient(45deg, #667eea, #764ba2); color: white;">
-                            Choose Pfp
-                        </button>
+
+                    <!--grid item-->
+                    <div class="score-header points-header">
+                        <span>Score</span>
                     </div>
+
+                    <div class="score-header correct-header">
+                        <span>Correct</span>
+                    </div>
+
+                    <div class="score-header wrong-header">
+                        <span>Wrong</span>
+                    </div>
+
                 </div>
-                <!--container difficoltà-->
-                <div class="d-flex flex-column" style="flex: 1">
-                    <div class="d-flex flex-column align-items-center" style="flex: 1;">
-                        <span style="font-size: 40px; font-weight: 800;" class="">Difficulty</span>
-                    </div>
-                    <!--contenitore difficoltà dropdown-->
-                    <div class="d-flex flex-column align-items-center" style="flex: 1;">
-                        <div class="dropdown-center h-100 w-75">
-                            <button id="difficultySelected" class="btn dropdown-toggle w-100" data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                style="height: 80% ;background: linear-gradient(45deg, #667eea, #764ba2); color: white; font-weight: 700; font-size: 25px;">Mixed</button>
-                            <ul class="dropdown-menu text-center"
-                                style="background: linear-gradient(45deg, #667eea, #764ba2); font-size: 25px;">
-                                <li>
-                                    <span class="dropdown-item" style="color: white; font-weight: 700;">Mixed</span>
-                                </li>
-                                <li>
-                                    <span class="dropdown-item" style="color: white; font-weight: 700;">Easy</span>
-                                </li>
-                                <li>
-                                    <span class="dropdown-item" style="color: white; font-weight: 700;">Medium</span>
-                                </li>
-                                <li>
-                                    <span class="dropdown-item" style="color: white; font-weight: 700;">Hard</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <div id="scoreBoard" class="score-board">
+
                 </div>
             </div>
-            <!--Contenitore riga nickname e start game btn-->
-            <div class="d-flex flex-column" style="flex: 1;">
-                <!--input nickname-->
-                <div class="d-flex flex-column align-items-center" style="flex: 1;">
-                    <input class="2-100 p-2 rounded-3 text-center"
-                        style="font-size: 25px; color: black !important; border: 1px solid #e9ecef !important"
-                        id="nickname" type="text" placeholder="Nickname">
-                </div>
-                <!--bottone inizio gioco-->
-                <div class="d-flex flex-column align-items-center m-3" style="flex: 1;">
-                    <button id="startGameBtn" class="btn btn-primary boxShadow w-100 p-2 text-break text-wrap"
-                        style="font-size: 30px; font-weight: 800; background: linear-gradient(45deg, #667eea, #764ba2); color: white;">
-                        Start Game
+
+            <!-- container pfp e difficoltà -->
+            <div class="pfp-diff-container">
+                <div class="pfp-container">
+                    <button id="pfp-btn" class="pfp-btn">
+                        <img id="current-pfp" src="/images/profile_pics/user.png" alt="">
                     </button>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!--contenitore pfp-->
-    <div class="row d-flex align-items-center">
-        <div style="flex:1;" class="d-flex flex-column">
-            <div style="flex: 1" class="d-flex flex-column justify-content-center">
-                <div id="pfpContainer" class="m-2 d-flex flex-column gap-2 d-none rounded-3 boxShadow p-2"
-                    style="position: fixed; top: 30vh; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(45deg, #667eea, #764ba2);;">
-                    <div class="d-flex justify-content-center gap-2 p-2">
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="polar_bear.png" src="/images/profile_pics/polar_bear.png"
-                                style="height: 64px; width: 64px;" class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="bear.png" src="/images/profile_pics/bear.png" style="height: 64px; width: 64px;"
-                                class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="bird.png" src="/images/profile_pics/bird.png" style="height: 64px; width: 64px;"
-                                class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="boy.png" src="/images/profile_pics/boy.png" style="height: 64px; width: 64px;"
-                                class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="fox.png" src="/images/profile_pics/fox.png" style="height: 64px; width: 64px;"
-                                class="js-pfp" alt="">
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center gap-2">
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="ghost.png" src="/images/profile_pics/ghost.png" style="height: 64px; width: 64px;"
-                                class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="graphic.png" src="/images/profile_pics/graphic.png"
-                                style="height: 64px; width: 64px;" class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="hippo.png" src="/images/profile_pics/hippo.png" style="height: 64px; width: 64px;"
-                                class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="hippopotam.png" src="/images/profile_pics/hippopotam.png"
-                                style="height: 64px; width: 64px;" class="js-pfp" alt="">
-                        </button>
-                        <button style="background-color: rgb(234, 223, 251);" class="border-0 rounded-3">
-                            <img id="kitty.png" src="/images/profile_pics/kitty.png" style="height: 64px; width: 64px;"
-                                class="js-pfp" alt="">
-                        </button>
-                    </div>
+                <div class="diff-container">
+                    <div class="diff-title">DIFFICULTY</div>
+                    <select name="" id="difficulty" class="diff-select">
+                        <option value="Mixed" selected>Mixed</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
                 </div>
             </div>
+            <!-- contenitore nickname -->
+            <div class="nickname-container">
+                <input id="nickname" class="nickname-input" type="text" placeholder="NICKNAME">
+            </div>
+            <!-- contenitore start button -->
+            <div class="start-btn-container">
+                <button id="startGameBtn" class="start-btn">
+                    Start Game
+                </button>
+            </div>
         </div>
-    </div>
 
-    <script src="homepage.js" type="module"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
+        <!-- contenitore pfp stack -->
+        <div id="pfp-stack-container" class="pfp-stack-container">
+            <div class="pfp-grid">
+                <button>
+                    <img id="polar_bear.png" src="/images/profile_pics/polar_bear.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="bear.png" src="/images/profile_pics/bear.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="bird.png" src="/images/profile_pics/bird.png" class="js-pfp" alt="">
+                </button>
+                <button s>
+                    <img id="boy.png" src="/images/profile_pics/boy.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="fox.png" src="/images/profile_pics/fox.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="ghost.png" src="/images/profile_pics/ghost.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="graphic.png" src="/images/profile_pics/graphic.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="hippo.png" src="/images/profile_pics/hippo.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="hippopotam.png" src="/images/profile_pics/hippopotam.png" class="js-pfp" alt="">
+                </button>
+                <button>
+                    <img id="kitty.png" src="/images/profile_pics/kitty.png" class="js-pfp" alt="">
+                </button>
+            </div>
+            <div class="close-btn-container">
+                <button id="close-pfp-stack-btn" class="close-btn">Home</button>
+            </div>
+        </div>
+
+        <div class="game-selected">
+            <div class="game-info-header">
+                <div class="game-info-title">Game info</div>
+                <button class="close-btn-game-info">X</button>
+            </div>
+
+            <div class="game-info game-info-user">Username:</div>
+            <div class="game-info game-info-score">Punteggio</div>
+            <div class="game-info game-info-correct">Corrette</div>
+            <div class="game-info game-info-wrong">Errate</div>
+        </div>
+
+        <script src="/prova/homepage.js" type="module"></script>
 </body>
 
 </html>

@@ -281,7 +281,7 @@ async function renderPage() {
     //event listener per i pulsanti che fanno tornare alla homepage
     document.querySelectorAll('.js-homePageBtn').forEach((btn) => {
         btn.addEventListener(('click'), () => {
-            window.location.href = "/prova/index.html";
+            window.location.href = "index.html";
         })
     })
 
@@ -359,7 +359,6 @@ async function renderPage() {
     function fineDomande() {
 
         let userScore = {
-            gameId: Date.now() + Math.random().toString(16).substring(2),
             username: nickname,
             score: score
         }
@@ -406,7 +405,7 @@ if (pfpId == 'user.png') {
 const welcomeMsg = document.getElementById('welcomeMessage');
 welcomeMsg.innerHTML = `
     <img src="/images/profile_pics/${pfpId}" alt="">
-    <span>Welcome ${nickname}</span> 
+    <span>Benvenuto ${nickname}</span> 
     `
 
 let success = false;
