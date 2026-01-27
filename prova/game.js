@@ -281,7 +281,7 @@ async function renderPage() {
     //event listener per i pulsanti che fanno tornare alla homepage
     document.querySelectorAll('.js-homePageBtn').forEach((btn) => {
         btn.addEventListener(('click'), () => {
-            window.location.href = "/prova/index.html";
+            window.location.href = "/index.html";
         })
     })
 
