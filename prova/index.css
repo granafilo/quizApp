@@ -172,6 +172,10 @@ body {
     font-size: 1.1rem;
 }
 
+.score-board .score-header:hover{
+    background: rgb(200, 200, 200) !important;
+}
+
 .pfp-diff-container {
     display: flex;
     width: 75%;
@@ -193,7 +197,7 @@ body {
     margin: 4px;
     width: 120px;
     height: 120px;
-    border-radius: 30px;
+    border-radius: 20px;
     border: grey 1px solid;
     cursor: pointer;
 }
@@ -250,7 +254,7 @@ body {
     font-size: 2rem;
     padding: 0;
     border: grey 1px solid;
-    border-radius: 26px;
+    border-radius: 8px;
     text-align: center;
 }
 
@@ -270,7 +274,7 @@ body {
     width: 75%;
     height: 60px;
     border: none;
-    border-radius: 30px;
+    border-radius: 8px;
     background: rgb(110, 185, 107);
     cursor: pointer;
 }
@@ -295,11 +299,11 @@ body {
     gap: 10px;
     background-color: rgb(233, 231, 231);
     padding: 25px;
-    border-radius: 15px;
+    border-radius: 8px;
 }
 
 .pfp-grid button {
-    border-radius: 15px;
+    border-radius: 8px;
     border: grey 1px solid;
     padding: 2px;
     height: 70px;
@@ -317,13 +321,18 @@ body {
 }
 
 .close-btn{
-    color: red;
+    color: black;
     font-size: 1.3rem;
     font-weight: 400;
     border: none;
     border-radius: 8px;
     padding: 5px 10px;
     cursor: pointer;
+    transition: color 0.1s ease-in-out;
+}
+
+.close-btn:hover{
+    color: red;
 }
 
 .game-selected{
@@ -349,7 +358,7 @@ body {
 
 .game-info{
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 8px;
     background: white !important;
 }
 
@@ -368,7 +377,7 @@ body {
     color: red;
     font-weight: 600;
     border: none;
-    border-radius: 30%;
+    border-radius: 8px;
     background-color: white;
     cursor: pointer;
 }
