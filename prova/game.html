@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game-Quiz App</title>
+    <title>Playing-Quiz App</title>
     <link rel="stylesheet" href="./gamepage.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,23 +15,98 @@
 
 <body>
     <div class="main-container">
-        <!--div per il titolo-->
+
         <div class="homepage-title">
             Quiz App
         </div>
 
-        <!--div riga completa-->
-        <div id="gameContainer" class="">
-            <!--div contenitore gioco-->
-            <div>
-                <!--div riga di benvenuto e pausa-->
+        <!--main contenitore-->
+        <div class="main-content">
+            <!--riga per pfp, aiuti, pausa-->
+            <div class="header-row">
+                <div id="welcomeMessage" class="welcome-icon-container">
+                </div>
+                <div class="hint-section">
+                    <button id="hintBtn" class="hint-btn">
+                        <img src="images/light-bulb.png" class="hint-logo">
+                        <span>Hint</span>
+                    </button>
+                    <button id="fiftyPercent" class="fifty-hint-btn">
+                        <img src="images/50-percent.png" class="fifty-hint-logo">
+                        <span>Remove 2/4</span>
+                    </button>
+                </div>
+                <div class="pause-section">
+                    <button id="pauseBtn" class="pause-btn">
+                        <img src="images/pause.png" class="pause-logo">
+                    </button>
+                </div>
+            </div>
+
+            <!--container per il box di gioco-->
+            <div id="pageContainer" class="page-container">
+                <!--container per la domanda-->
+                <div class="question-container">
+                    <div id="domanda"></div>
+                </div>
+                <!--container per le opzioni-->
                 <div>
-                    <!--div messaggio di benvenuto-->
+                    <div id="option">
+                        <div id="option-container" class="option-container">
+
+                        </div>
+                    </div>
+                </div>
+                <div id="loading" class="loading-container">
+                    <img src="images/loading.gif">
+                </div>
+            </div>
+
+            <!--container per il menù quando il gioco è in pausa-->
+            <div>
+            </div>
+
+            <!--container per quando le risposte sono finite, visualizzato lo score-->
+            <div>
+            </div>
+
+            <div id="resultContainer" class="result-container">
+                <button id="nextQuestion" class="next-question-btn">
+                    Prossima Domanda
+                </button>
+            </div>
+
+            <div id="pauseMenu" class="d-none">
+                <div>
+                    <button id="continuePauseBtn">Continua</button>
+                    <button id="homePageBtn" class="js-homePageBtn">Home
+                        Page</button>
+                </div>
+            </div>
+
+            <div id="noMoreQuestions" class="d-none">
+                <div id="scoreDiv">
+                    Score: x Corrette, y Errate
+                </div>
+                <div>
+                    <button id="homePageBtn2">Home
+                        Page</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <!--        
+        <div id="gameContainer" class="">
+            <div>
+                <div>
+
                     <div>
                         <div id="welcomeMessage">
                         </div>
                     </div>
-                    <!--div messaggio pausa gioco-->
                     <div id="hint">
                         <div>
                             <button id="hintBtn">
@@ -54,20 +129,15 @@
                     </div>
                 </div>
 
-                <!--div contenitore domanda-->
                 <div id="pageContainer">
-                    <!--testo domanda-->
                     <div>
                         <div id="domanda"></div>
                     </div>
-                    <!--contenitore opzioni-->
                     <div id="option">
-                        <!--da tenere perchè container di riferimento per la pressione delle opzioni-->
                         <div id="option-container"></div>
                     </div>
                 </div>
 
-                <!--contenitore btn prossima domanda e risultato risposta-->
                 <div id="resultContainer">
                     <div id="answerResult">
                         Risultato Risposta
@@ -79,9 +149,7 @@
                     </div>
                 </div>
 
-                <!--div contenitore menu pausa-->
                 <div id="pauseMenu">
-                    <!--div contenitore pulsante per tornare al gioco e per tornare alla homepage-->
                     <div>
                         <button id="continuePauseBtn">Continua</button>
                         <button id="homePageBtn" class="js-homePageBtn">Home
@@ -89,29 +157,25 @@
                     </div>
                 </div>
 
-                <!--div contenitore menu fine domande-->
                 <div id="noMoreQuestions">
-                    <!--div contenitore score finale-->
                     <div id="scoreDiv">
                         Score: x Corrette, y Errate
                     </div>
-                    <!--div contenitore per tornare alla home page-->
                     <div>
                         <button id="homePageBtn2">Home
                             Page</button>
                     </div>
                 </div>
 
-                <!--icona di loading-->
                 <div id="loading">
                     <img src="images/loading.gif">
                 </div>
             </div>
+-->
+    </div>
 
-        </div>
 
-
-        <script src="./game.js" type="module"></script>
+    <script src="./game.js" type="module"></script>
 
 </body>
 

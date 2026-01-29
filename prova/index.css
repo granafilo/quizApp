@@ -48,7 +48,7 @@ body {
 .homepage-title {
     background: #8400ff;
     grid-area: title;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
     font-weight: 800;
     text-align: center;
@@ -58,18 +58,21 @@ body {
 
 @media (min-width: 768px) {
     .homepage-title {
-        font-size: 4rem;
+        font-size: 6rem;
     }
 }
 
 .main-content {
     grid-area: main-content;
+    display: grid;
+    place-items: center;
 
 }
 
 .score-table-container {
     margin: 20px;
     padding: 8px;
+    width: 75%;
     border-radius: 8px;
     background-color: rgb(217, 219, 219);
     height: fit-content;
@@ -198,8 +201,6 @@ body {
 .pfp-btn:hover {
     transform: scale(1.05);
 }
-
-
 
 .diff-container {
     flex: 1;

@@ -51,7 +51,6 @@ async function renderPage() {
     let numeroDomanda = 0;
 
     const nextQuestionBtn = document.getElementById('nextQuestion');
-    const answerResult = document.getElementById('answerResult');
     const resultContainer = document.getElementById('resultContainer');
     const pageContainer = document.getElementById('pageContainer');
     const pauseBtn = document.getElementById('pauseBtn');
@@ -76,7 +75,7 @@ async function renderPage() {
         }
         //ottengo la domanda
         currentQuestion = allQuestions[numeroDomanda];
-        console.log(currentQuestion);
+        //console.log(currentQuestion);   
 
         let questionHTML = '';
         const domanda = document.getElementById('domanda');
@@ -111,53 +110,22 @@ async function renderPage() {
                 fiftyPercentBtn.classList.remove('disabled');
             }
             questionHTML = `              
-                <div class="d-flex flex-column w-100">
-                    <div class="d-flex w-100 m-2">
-                        <div style="flex: 1;" class="d-flex justify-content-center">
-                            <button id="opt1"
-                                class="w-75 js-multiple-option btn border-0 boxShadow text-break text-wrap"
-                                style="font-style: italic; font-size: 25px; color: black; font-weight: 500; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
-                                correct="${answers[0].correct}">${answers[0].answer}</button>
-                        </div>
-                        <div style="flex: 1;" class="d-flex justify-content-center">
-                            <div style="flex: 1;" class="d-flex justify-content-center">
-                                <button id="opt2"
-                                    class="w-75 js-multiple-option btn border-0 boxShadow text-break text-wrap"
-                                    style="font-style: italic; font-size: 25px; color: black; font-weight: 500; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
-                                    correct="${answers[0].correct}">${answers[1].answer}</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex w-100 m-2">
-                        <div style="flex: 1;" class="d-flex justify-content-center">
-                            <div style="flex: 1;" class="d-flex justify-content-center">
-                                <button id="opt3" class="js-multiple-option btn border-0 boxShadow w-75"
-                                style="font-style: italic; font-size: 25px; color: black; font-weight: 500; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
-                                correct="${answers[2].correct}">${answers[2].answer}</button>
-                        </div>
-                        <div style="flex: 1;" class="d-flex justify-content-center">
-                            <div style="flex: 1;" class="d-flex justify-content-center">
-                                <button id="opt4" class="js-multiple-option btn border-0 boxShadow w-75"
-                                style="font-style: italic; font-size: 25px; color: black; font-weight: 500; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
-                                correct="${answers[3].correct}">${answers[3].answer}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <button id="opt1" class="js-multiple-option"
+                    correct="${answers[0].correct}">${answers[0].answer}</button>
+                <button id="opt2" class="js-multiple-option"
+                    correct="${answers[1].correct}">${answers[1].answer}</button>
+                <button id="opt3" class="js-multiple-option"
+                    correct="${answers[2].correct}">${answers[2].answer}</button>
+                <button id="opt4" class="js-multiple-option"
+                    correct="${answers[3].correct}">${answers[3].answer}</button>
             `;
         } else {
             fiftyPercentBtn.classList.add('disabled');
             questionHTML = `
-                <div style="flex: 1;" class="d-flex justify-content-center">
-                    <button class="js-boolean-option btn border-0 w-75 boxShadow"
-                        style=" font-style: italic; font-size: 25px; color: black; font-weight: 700; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
-                        correct="${currentQuestion.correct_answer === 'True' ? 'true' : 'false'}">True</button>
-                </div>
-                <div style="flex: 1;" class="d-flex justify-content-center">
-                    <button class="js-boolean-option btn border-0 w-75 boxShadow"
-                        style=" font-style: italic; font-size: 25px; color: black; font-weight: 700; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
-                        correct="${currentQuestion.correct_answer === 'False' ? 'true' : 'false'}">False</button>
-                </div>
+                <button class="js-boolean-option"
+                    correct="${currentQuestion.correct_answer === 'True' ? 'true' : 'false'}">True</button>
+                <button class="js-boolean-option"
+                    correct="${currentQuestion.correct_answer === 'False' ? 'true' : 'false'}">False</button>
             `
         }
 
@@ -173,40 +141,42 @@ async function renderPage() {
 
         if (clickedElement.classList.contains('js-multiple-option')) {
             if (clickedElement.getAttribute('correct') === "false") {
-                clickedElement.classList.add('btn-rosso');
-                answerResult.innerText = "Risposta Errata";
+                clickedElement.classList.add('wrong-option');
+                disableBtn("js-multiple-option");
+                clickedElement.classList.add("selezionato");
                 score.errate++;
                 calcScore(false);
+
             } else {
-                clickedElement.classList.add('btn-verde');
-                answerResult.innerText = "Risposta Corretta";
+                clickedElement.classList.add('correct-option');
+                disableBtn("js-multiple-option");
+                clickedElement.classList.add("selezionato");
                 score.corrette++;
                 calcScore(true);
             }
 
-            if (numeroDomanda + 1 < allQuestions.length) {
-                openNextQuestionMenu();
-            } else {
-                fineDomande();
-            }
+
         } else if (clickedElement.classList.contains('js-boolean-option')) {
 
             if (clickedElement.getAttribute('correct') === 'false') {
-                answerResult.innerText = "Risposta Errata";
-                clickedElement.classList.add('btn-rosso');
+                clickedElement.classList.add('wrong-option');
+                disableBtn("js-boolean-option");
+                clickedElement.classList.add("selezionato");
                 score.errate++;
                 calcScore(false);
             } else {
-                clickedElement.classList.add('btn-verde');
-                answerResult.innerText = "Risposta Corretta";
+                clickedElement.classList.add('correct-option');
+                disableBtn("js-boolean-option");
+                clickedElement.classList.add("selezionato");
                 score.corrette++;
                 calcScore(true);
             }
-            if (numeroDomanda + 1 < allQuestions.length) {
-                openNextQuestionMenu();
-            } else {
-                fineDomande();
-            }
+
+        }
+        if (numeroDomanda + 1 < allQuestions.length) {
+            openNextQuestionMenu();
+        } else {
+            fineDomande();
         }
     });
 
@@ -285,6 +255,13 @@ async function renderPage() {
         })
     })
 
+    //funzione per disabilitare le opzioni dopo che viene data la risposta
+    function disableBtn(classe) {
+        document.querySelectorAll(`.${classe}`).forEach((option) => {
+            option.disabled = true;
+        })
+    }
+
     //funzione per calcolare il punteggio di ogni singola domanda
     function calcScore(corretta) {
 
@@ -297,7 +274,7 @@ async function renderPage() {
                 score.punteggio += 3;
             }
         }
-        console.log(score, corretta);
+        //console.log(score, corretta);
     }
 
     //funzione per resettare il css e le classi delle risposte
@@ -313,7 +290,6 @@ async function renderPage() {
         pauseBtn.classList.remove('btnDisabilitato');
         hintBtn.classList.remove('disabled');
         nextQuestionIsDisplayed = false;
-        answerResult.innerText = "";
     }
 
     //funzione per aprire il menu per passare alla prossima domanda
@@ -405,8 +381,8 @@ if (pfpId == 'user.png') {
 
 const welcomeMsg = document.getElementById('welcomeMessage');
 welcomeMsg.innerHTML = `
-    <img src="/images/profile_pics/${pfpId}" alt="">
-    <span>Welcome ${nickname}</span> 
+    <img class="pfp-icon" src="/images/profile_pics/${pfpId}" alt="">
+    <span class="welcome-msg">Welcome ${nickname}</span> 
     `
 
 let success = false;
