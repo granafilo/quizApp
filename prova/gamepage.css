@@ -1,14 +1,17 @@
+* {
+    box-sizing: border-box;
+    color: black;
+    font-family: "Roboto", "sans-serif";
+}
+
 html,
 body {
     height: 100%;
     margin: 0;
-    width: 100%;
-    min-width: 390px;
+    width: 100vw;
     min-height: 100vh;
-    box-sizing: border-box;
-    font-family: "Roboto", "sans-serif";
-    color: black;
 }
+
 
 body {
     background: white;
@@ -73,14 +76,14 @@ body {
     margin: 20px auto;
     padding: 8px;
     align-items: center;
-    gap: 15px;
-    width: 75%;
+    gap: 1rem;
+    width: 100%;
 }
 
 .welcome-icon-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
     min-width: 0;
 }
 
@@ -94,9 +97,9 @@ body {
     text-overflow: ellipsis;
 }
 
-.button-container{
+.button-container {
     display: flex;
-    gap: 20px;
+    gap: 1rem;;
     justify-content: end;
 }
 
@@ -113,7 +116,7 @@ body {
     cursor: pointer;
     margin: 0;
     padding: 8px;
-    gap: 10px;
+    gap: 0.8rem;
     display: flex;
     align-items: center;
     transition: opacity 0.3s ease-in-out;
@@ -161,7 +164,7 @@ body {
     cursor: pointer;
     margin: 0;
     padding: 8px;
-    gap: 10px;
+    gap: 0.8rem;
     /* display: none; */
     align-items: center;
     z-index: 100;
@@ -230,7 +233,7 @@ body {
 
 .page-container {
     position: relative;
-    width: 75%;
+    width: 90%;
     margin: 0 auto;
     padding: 20px 25px;
     border-radius: 8px;
@@ -244,13 +247,13 @@ body {
     place-items: center;
     font-size: 1.5rem;
     font-weight: 600;
-    padding: 0px 0px 15px 0px;
+    padding: 0px 0px 30px 0px;
 }
 
 .option-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem;
     justify-content: center;
     min-height: 10vh;
 }
@@ -335,7 +338,7 @@ body {
     transition: opacity 0.3s ease-in-out;
 }
 
-.pause-container.show{
+.pause-container.show {
     opacity: 1;
     pointer-events: auto;
 }
@@ -367,7 +370,7 @@ body {
     padding: 20px 25px;
     border-radius: 8px;
     background-color: rgb(217, 219, 219);
-    gap: 10px
+    gap: 0.8rem;
 }
 
 .final-score {
@@ -400,7 +403,7 @@ body {
     flex: 1;
     border-radius: 8px;
     height: 200px;
-    gap: 8px;
+    gap: 0.5rem;
     display: flex;
     flex-direction: column;
 }
@@ -448,7 +451,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .back-home-btn:hover {
@@ -473,6 +476,13 @@ body {
 
 .loading-container img {
     width: 80px;
+}
+
+.footer-container {
+    position: fixed;
+    bottom: 0;
+    /* Il primo valore è il padding base, il secondo è lo spazio della gesture */
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
 }
 
 .d-none {
