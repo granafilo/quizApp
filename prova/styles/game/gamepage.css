@@ -1,8 +1,7 @@
-* {
-    box-sizing: border-box;
-    color: black;
-    font-family: "Roboto", "sans-serif";
-}
+@import url("/prova/styles/layout/header.css");
+@import url("/prova/styles/utils.css");
+
+
 
 html,
 body {
@@ -10,6 +9,10 @@ body {
     margin: 0;
     width: 100vw;
     min-height: 100vh;
+
+
+    color: black;
+    font-family: "Roboto", "sans-serif";
 }
 
 
@@ -46,23 +49,6 @@ body {
     }
 }
 
-
-.homepage-title {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    grid-area: title;
-    font-size: 3rem;
-    font-weight: bold;
-    font-weight: 800;
-    text-align: center;
-    padding: 15px;
-
-}
-
-@media (min-width: 768px) {
-    .homepage-title {
-        font-size: 4rem;
-    }
-}
 
 .main-content {
     display: grid;
@@ -485,18 +471,3 @@ body {
     padding-bottom: calc(20px + env(safe-area-inset-bottom));
 }
 
-.d-none {
-    display: none;
-}
-
-.d-grid {
-    display: grid;
-}
-
-.d-flex {
-    display: flex;
-}
-
-.blur {
-    filter: blur(5px);
-}

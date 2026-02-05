@@ -1,0 +1,15 @@
+.d-none {
+    display: none;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.blur {
+    filter: blur(5px);
+}

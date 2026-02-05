@@ -1,0 +1,15 @@
+.homepage-title {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    grid-area: title;
+    font-size: 3rem;
+    font-weight: bold;
+    font-weight: 800;
+    text-align: center;
+    padding: 15px;
+}
+
+@media (min-width: 768px) {
+    .homepage-title {
+        font-size: 4rem;
+    }
+}
