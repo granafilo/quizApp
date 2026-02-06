@@ -1,4 +1,4 @@
-import { loadFroamStorage, saveToStorage, deleteStorage } from "./storage/storageFunctions.js";
+import { loadFroamStorage, saveToStorage, deleteStorage } from "/storage/storageFunctions.js";
 
 const body = document.querySelector("body");
 const mainContent = document.getElementById('main-content');

@@ -70,4 +70,6 @@ body {
     display: grid;
     place-items: center;
     align-content: start;
+
+    min-height: 800px;
 }

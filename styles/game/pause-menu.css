@@ -6,6 +6,8 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
+    display: flex;
+    gap: 15px;
 }
 
 .pause-container.show {
@@ -15,6 +17,9 @@
 
 .play-btn,
 .homepage-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(45deg, #839aff, #c790ff);
     border: none;
     border-radius: 8px;

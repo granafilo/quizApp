@@ -5,7 +5,7 @@
 @import url("/styles/home/gameinfo.css");
 @import url("/styles/home/pfp-picker.css");
 @import url("/styles/layout/footer.css");
-@import url("/styles/full-score.css");
+/* @import url("/styles/full-score.css"); */
 
 .main-content{
     grid-template-areas: "scoreboard" "option-wrapper" ;

@@ -6,8 +6,7 @@
     border-radius: 8px;
     background-color: #DDDDDD;
     height: fit-content;
-    min-height: 20vh;
-    /* max-height: 40vh; */
+    height: 50vh;
 }
 
 @media (min-width: 1200px) {
@@ -115,7 +114,7 @@
     grid-template-columns: 3fr 2fr;
     /* gap: 8px; */
     overflow-y: auto;
-    max-height: 20vh;
+    max-height: 45vh;
 }
 
 @media (min-width: 768px) {
@@ -130,7 +129,7 @@
         grid-template-columns: 3fr 2fr;
         /* gap: 8px; */
         overflow-y: auto;
-        max-height: 20vh;
+        
     }
 }
 

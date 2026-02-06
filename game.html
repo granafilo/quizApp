@@ -45,6 +45,12 @@
                 </div>
             </div>
 
+            <div class="progress-bar-wrapper">
+                <div class="progress-bar">
+                </div>
+            </div>
+
+
             <div class="game-wrapper">
                 <!--container per il box di gioco-->
                 <div id="pageContainer" class="page-container">
@@ -66,65 +72,18 @@
                     </div>
                 </div>
 
-                <div class="progress-bar-wrapper">
-                    <div class="progress-bar">
-                    </div>
-                </div>
+
 
                 <div id="pauseMenu" class="pause-container ">
                     <button id="backToGame" class="play-btn">
-                        <img src="/images/play.png" alt="return to the game">
+                        <img src="/images/play.svg" alt="return to the game">
                     </button>
                     <button class="homepage-btn js-homePageBtn">
-                        <img src="/images/homepage.png" alt="back to the home page">
+                        <img src="/images/home.svg" alt="back to the home page">
                     </button>
                 </div>
 
             </div>
-
-
-            <div id="noMoreQuestions" class="game-selected d-none">
-                <div class="game-info-wrapper">
-                    <div class="game-info-score">
-                        <div id="finalScore" class="game-info-score-number score-number score-number-large"></div>
-                        <div class="score-caption score-caption">SCORE</div>
-                    </div>
-                    <div class="game-info-correct">
-                        <div id="correctFinalScore" class="game-info-correct-number score-number score-number-small"></div>
-                        <div class="score-caption">CORRECT</div>
-                    </div>
-                    <div class="game-info-wrong">
-                        <div id="wrongFinalScore"  class="game-info-wrong-number score-number score-number-small"></div>
-                        <div class="score-caption">WRONG</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div id="noMoreQuestions" class="no-more-question-container d-none">
-                <div class="final-score">
-                    <div id="finalScore" class="score-number">
-                    </div>
-                    <div class="score-caption">
-                        SCORE
-                    </div>
-                </div>
-                <div class="score-division">
-                    <div class="correct-container">
-                        <div id="correctFinalScore" class="score-number">
-                        </div>
-                        <div class="score-caption">
-                            CORRETTE
-                        </div>
-                    </div>
-                    <div class="wrong-container">
-                        <div id="wrongFinalScore" class="score-number">
-                        </div>
-                        <div class="score-caption">
-                            ERRATE
-                        </div>
-                    </div>
-                </div>
-            </div> -->
 
             <div id="resultContainer" class="result-container d-none">
                 <button id="nextQuestion" class="next-question-btn">
@@ -132,9 +91,30 @@
                 </button>
             </div>
 
+            
+            <div id="noMoreQuestions" class="game-selected d-none">
+                <div class="game-info-wrapper">
+                    <div class="game-info-score">
+                        <div id="finalScore" class="game-info-score-number score-number score-number-large"></div>
+                        <div class="score-caption score-caption">SCORE</div>
+                    </div>
+                    <div class="game-info-correct">
+                        <div id="correctFinalScore" class="game-info-correct-number score-number score-number-small">
+                        </div>
+                        <div class="score-caption">CORRECT</div>
+                    </div>
+                    <div class="game-info-wrong">
+                        <div id="wrongFinalScore" class="game-info-wrong-number score-number score-number-small"></div>
+                        <div class="score-caption">WRONG</div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <div id="backHome" class="back-home-container d-none">
                 <button id="nextQuestion" class="back-home-btn js-homePageBtn">
-                    <img src="/images/homepage.png" alt="">
+                    <img src="/images/home.svg" alt="">
                     <span>HomePage</span>
                 </button>
             </div>

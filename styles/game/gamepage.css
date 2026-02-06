@@ -6,8 +6,12 @@
 @import url("/styles/game/game-section.css");
 @import url("/styles/game/pause-menu.css");
 @import url("/styles/game/quiz-completed.css");
-@import url("/styles/full-score.css");
+@import url("/styles/game/full-score.css");
 @import url("/styles/game/progress-bar.css");
+
+.main-content{
+    margin-bottom: 25px;
+}
 
 .loading-container {
     position: absolute;
