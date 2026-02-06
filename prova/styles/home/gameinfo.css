@@ -1,17 +1,21 @@
-.modal-overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6); 
-    backdrop-filter: blur(4px);           
-    z-index: 999;
+.game-info-dialog {
+    padding: 0;
+    /* Importante: rimuove lo spazio vuoto interno al dialog */
+    border: none;
+    border-radius: 12px;
+    background: white;
+    /* Il colore di sfondo del tuo modal */
+}
+
+.game-info-dialog::backdrop{
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
 }
 
 .game-selected {
     background-color: #222222;
 
+    display: flex;
     flex-direction: column;
     width: 90%;
     height: 50%;
@@ -26,7 +30,6 @@
 
     padding: 10px;
     gap: 8px;
-
 
     border-radius: 8px;
 
@@ -110,12 +113,12 @@
 
     text-align: center;
     font-style: italic;
-    
+
     font-size: 0.7rem;
 }
 
-@media (min-width: 500px){
-    .score-caption{
+@media (min-width: 500px) {
+    .score-caption {
         font-size: 1rem;
     }
 }
@@ -134,12 +137,12 @@
     font-size: 3rem;
 }
 
-@media( min-width: 550px){
-    .score-number-large{
+@media(min-width: 550px) {
+    .score-number-large {
         font-size: 7rem;
     }
 
-    .score-number-small{
+    .score-number-small {
         font-size: 5rem;
     }
 }
@@ -163,6 +166,6 @@
 }
 
 .close-btn-game-info:hover {
-    background-color: #ff4d4d ;
+    background-color: #ff4d4d;
     color: white;
 }

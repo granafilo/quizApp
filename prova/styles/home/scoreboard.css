@@ -94,7 +94,7 @@
 }
 
 .score-board .score-header {
-    background: white !important;
+    background: white ;
     padding: 5px;
     border-radius: 8px;
 
@@ -102,11 +102,11 @@
 }
 
 .score-board .score-header:hover{
-    background: rgb(200, 200, 200) !important;
+    background: rgb(200, 200, 200) ;
 }
 
 @media (min-width: 768px){
     .score-board .score-header:hover{
-        background: white;
+        background: white ;
     }
 }

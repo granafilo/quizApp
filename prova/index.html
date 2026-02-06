@@ -82,71 +82,79 @@
         </div>
 
         <!-- contenitore pfp stack -->
-        <div id="pfp-stack-container" class="pfp-stack-container d-none">
-            <div class="pfp-grid">
-                <button>
-                    <img id="polar_bear.png" src="/images/profile_pics/polar_bear.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="bear.png" src="/images/profile_pics/bear.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="bird.png" src="/images/profile_pics/bird.png" class="js-pfp" alt="">
-                </button>
-                <button s>
-                    <img id="boy.png" src="/images/profile_pics/boy.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="fox.png" src="/images/profile_pics/fox.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="ghost.png" src="/images/profile_pics/ghost.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="graphic.png" src="/images/profile_pics/graphic.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="hippo.png" src="/images/profile_pics/hippo.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="hippopotam.png" src="/images/profile_pics/hippopotam.png" class="js-pfp" alt="">
-                </button>
-                <button>
-                    <img id="kitty.png" src="/images/profile_pics/kitty.png" class="js-pfp" alt="">
-                </button>
+        <dialog class="pfp-picker-dialog">
+            <div id="pfp-stack-container" class="pfp-stack-container">
+                <div class="pfp-grid">
+                    <button>
+                        <img id="albino.svg" src="/prova/images/profile_pics/albino.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="alessandro.svg" src="/prova/images/profile_pics/alessandro.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="ariana.svg" src="/prova/images/profile_pics/ariana.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="balo.svg" src="/prova/images/profile_pics/balo.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="carota.svg" src="/prova/images/profile_pics/carota.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="mamma.svg" src="/prova/images/profile_pics/mamma.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="nerd.svg" src="/prova/images/profile_pics/nerd.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="prof.svg" src="/prova/images/profile_pics/prof.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="sinner.svg" src="/prova/images/profile_pics/sinner.svg" class="js-pfp" alt="">
+                    </button>
+                    <button>
+                        <img id="topa.svg" src="/prova/images/profile_pics/topa.svg" class="js-pfp" alt="">
+                    </button>
+                </div>
+                <div class="close-btn-container">
+                    <button id="close-pfp-stack-btn" class="close-btn">CLOSE</button>
+                </div>
             </div>
-            <div class="close-btn-container">
-                <button id="close-pfp-stack-btn" class="close-btn">CLOSE</button>
+        </dialog>
+
+
+        <dialog class="game-info-dialog">
+            <div class="game-selected">
+                <div class="game-info-header">
+                    <div class="game-info-title">Game info</div>
+                </div>
+
+                <div class="game-info-wrapper">
+                    <div class="game-info-user">username</div>
+                    <div class="game-info-score">
+                        <div class="game-info-score-number score-number score-number-large"></div>
+                        <div class="score-caption score-caption">SCORE</div>
+                    </div>
+                    <div class="game-info-correct">
+                        <div class="game-info-correct-number score-number score-number-small"></div>
+                        <div class="score-caption">CORRECT</div>
+                    </div>
+                    <div class="game-info-wrong">
+                        <div class="game-info-wrong-number score-number score-number-small"></div>
+                        <div class="score-caption">WRONG</div>
+                    </div>
+                </div>
+
+                <button class="close-btn-game-info">X CLOSE</button>
             </div>
+        </dialog>
+
+
+        <div class="footer">
+            CIAO
         </div>
-
-        <div class="modal-overlay d-none" ></div>
-        <div class="game-selected d-none">
-            <div class="game-info-header">
-                <div class="game-info-title">Game info</div>
-            </div>
-
-            <div class="game-info-wrapper">
-                <div class="game-info-user">username</div>
-                <div class="game-info-score">
-                    <div class="game-info-score-number score-number score-number-large"></div>
-                    <div class="score-caption score-caption">SCORE</div>
-                </div>
-                <div class="game-info-correct">
-                    <div class="game-info-correct-number score-number score-number-small"></div>
-                    <div class="score-caption">CORRECT</div>
-                </div>
-                <div class="game-info-wrong">
-                    <div class="game-info-wrong-number score-number score-number-small"></div>
-                    <div class="score-caption">WRONG</div>
-                </div>
-            </div>
-
-
-            <button class="close-btn-game-info">X CLOSE</button>
-        </div>
-
-        <script src="/prova/index.js" type="module"></script>
+    </div>
+    <script src="/prova/index.js" type="module"></script>
 </body>
 
 </html>

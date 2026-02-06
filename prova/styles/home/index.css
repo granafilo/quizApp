@@ -4,6 +4,7 @@
 @import url("/prova/styles/home/scoreboard.css");
 @import url("/prova/styles/home/gameinfo.css");
 @import url("/prova/styles/home/pfp-picker.css");
+@import url("/prova/styles/layout/footer.css");
 
 .pfp-diff-container {
     display: flex;

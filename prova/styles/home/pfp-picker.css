@@ -1,30 +1,83 @@
+.pfp-picker-dialog {
+    padding: 0;
+    /* Importante: rimuove lo spazio vuoto interno al dialog */
+    border: none;
+    border-radius: 12px;
+    background: white;
+    /* Il colore di sfondo del tuo modal */
+}
+
+.pfp-picker-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
 /* pfp selector style */
 
 .pfp-stack-container {
+    display: flex;
+    flex-direction: column;
+
     position: fixed;
+    min-width: 330px;
+    width: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    flex-direction: column;
+
     z-index: 1000;
 }
 
 .pfp-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 700px;
+    max-height: 600px;
+    margin: 0 auto;
     gap: 10px;
+
     background-color: #DDDDDD;
-    padding: 25px;
+
+    padding: 15px;
+
     border-radius: 8px;
 }
 
 .pfp-grid button {
+    flex: 0 1 calc(33.33% - 15px);
+    /* Cresci, rimpicciolisci, ma parti da 100px */
+
+    /* Oppure usa le Media Queries per cambiare il numero di colonne */
+    max-width: 120px;
+    max-height: 120px;
+    /* Impedisce che diventino giganti se sono poche */
+    aspect-ratio: 1;
+
+    /* flex: 0 1 calc(20% - 10px); */
+
     border-radius: 8px;
     border: grey 1px solid;
-    padding: 2px;
-    height: 70px;
-    width: 70px;
+    padding: 5px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 500px) {
+  .pfp-gri button {
+    /* Su schermi piccoli, forziamo circa 3 colonne (100 / 3 = 33) */
+    
+    flex: 1 1 100px;
+  }
+}
+
+.pfp-grid button img {
+    border-radius: 8px;
+    min-width: 45px;
+    width: 90%;
+    height: 90%;
 }
 
 .pfp-stack-container button:hover {
@@ -50,4 +103,3 @@
 .close-btn:hover {
     color: red;
 }
-

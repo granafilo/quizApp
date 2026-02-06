@@ -30,8 +30,12 @@ body {
 .main-container {
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: auto 1fr auto;
     grid-template-areas: "title title title"
-        "main-content main-content main-content";
+        "main-content main-content main-content"
+        "footer footer footer";
+
+    min-height: 100vh;
 }
 
 @media (min-width: 768px) {
@@ -39,7 +43,8 @@ body {
         display: grid;
         grid-template-columns: 1fr 4fr 1fr;
         grid-template-areas: "title title title"
-            "main-content main-content main-content";
+            "main-content main-content main-content"
+            "footer footer footer";
     }
 }
 
@@ -48,7 +53,8 @@ body {
         display: grid;
         grid-template-columns: 1fr 8fr 1fr;
         grid-template-areas: "title title title"
-            ". main-content .";
+            ". main-content ."
+            "footer footer footer";
     }
 }
 
@@ -56,4 +62,5 @@ body {
     grid-area: main-content;
     display: grid;
     place-items: center;
+    align-content: start;
 }
