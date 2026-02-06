@@ -15,7 +15,7 @@ function shuffleArray(array) {
 }
 
 async function getQuestions(difficultySelected) {
-    const url = `https://opentdb.com/api.php?amount=1&difficulty=${difficultySelected}`;
+    const url = `https://opentdb.com/api.php?amount=3&difficulty=${difficultySelected}`;
     let domande = null;
     try {
         const response = await fetch(url);
@@ -58,6 +58,8 @@ async function renderPage() {
     const backToGame = document.getElementById('backToGame');
     const hintBtn = document.getElementById('hintBtn');
     const fiftyPercentBtn = document.getElementById('fiftyPercent');
+    const progressBarWrapper = document.querySelector(".progress-bar-wrapper");
+    const progressBar = document.querySelector(".progress-bar");
 
     let currentQuestion = {};
     let fiftyPercentUsed = false;
@@ -76,7 +78,8 @@ async function renderPage() {
         }
         //ottengo la domanda
         currentQuestion = allQuestions[numeroDomanda];
-        //console.log(currentQuestion);   
+        
+        progressBar.style.width = calcolaPercentuale(numeroDomanda) + "%";
 
         let questionHTML = '';
         const domanda = document.getElementById('domanda');
@@ -229,6 +232,7 @@ async function renderPage() {
     //ok
     nextQuestionBtn.addEventListener('click', () => {
         numeroDomanda++;
+        //calcolo percentuale aggiornata
         renderQuestion();
         resetAnswers();
     })
@@ -337,6 +341,10 @@ async function renderPage() {
         pauseMenuIsDisplayed = true;
 
         //disabilito il pulsante aiuti
+        if(fiftyPercentDisplayed){
+            fiftyPercentBtn.classList.add("d-none");
+            fiftyPercentDisplayed = false;
+        }
         hintBtn.disabled = true;
 
         //effetto blur sulla pagina
@@ -355,7 +363,10 @@ async function renderPage() {
 
         //rimuovo effetto blur dalla pagina
         pageContainer.classList.remove('blur');
+    }
 
+    function calcolaPercentuale(numeroDomanda) {
+        return ((numeroDomanda + 1) / allQuestions.length) * 100;
     }
 
     //funzione per gestire la fine delle domande
@@ -370,9 +381,11 @@ async function renderPage() {
         scoreBoard.unshift(userScore);
         saveToStorage(scoreBoard);
 
+        progressBarWrapper.classList.add("d-none");
+
         const backHomeContainer = document.getElementById("backHome");
         const noMoreQuestionsContainer = document.getElementById("noMoreQuestions");
-        
+
         backHomeContainer.classList.remove("d-none");
         backHomeContainer.classList.add("d-flex");
 
@@ -431,8 +444,8 @@ if (pfpId == 'user.png') {
 
 const welcomeMsg = document.getElementById('welcomeMessage');
 welcomeMsg.innerHTML = `
-    <img class="pfp-icon" src="/images/profile_pics/${pfpId}" alt="">
-    <span class="welcome-msg">Welcome ${nickname}</span> 
+    <img class="pfp-icon" src="/prova/images/profile_pics/${pfpId}" alt="">
+    <span class="welcome-msg">${nickname}</span> 
     `
 
 let success = false;
