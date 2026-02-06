@@ -3,155 +3,161 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylesheet.css">
-    <style>
-        html,
-        body {
-            min-width: 1000px !important;
-            width: 100%;
-            height: 100%;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Playing-Quiz App</title>
+    <link rel="stylesheet" href="/styles/game/gamepage.css">
 
-        #resultContainer {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        #resultContainer.show {
-            opacity: 1;
-        }
-
-        #drop-item:hover {
-            background-color: rgb(13, 50, 255) !important;
-        }
-
-        .dropdown-item:hover {
-            background-color: transparent !important;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
-<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"
-    class="d-flex flex-column align-items-center">
+<body>
+    <div class="main-container">
 
-    <!--div per il titolo-->
-    <div class="" style="justify-content: center; font-size: 10vh; font-weight: 800;">
-        Quiz App
-    </div>
-
-    <!--div riga completa-->
-    <div id="gameContainer" class=""
-        style="min-height: 50vh; max-width: 1300px; min-width: 800px; margin-left: 5vw; margin-right: 5vw;">
-        <!--div contenitore gioco-->
-        <div class="d-flex flex-column justify-content-center">
-            <!--div riga di benvenuto e pausa-->
-            <div class="d-flex" style="flex:1">
-                <!--div messaggio di benvenuto-->
-                <div style="flex:3;" class="p-2 w-100 align-self-center">
-                    <div id="welcomeMessage" class="align-items-center d-flex"
-                        style="font-size:clamp(20px, 3vh, 40px); font-weight: 600; color: black;">
-                    </div>
-                </div>
-                <!--div messaggio pausa gioco-->
-                <div id="hint" style="flex:1" class="align-self-center d-flex justify-content-end gap-2">
-                    <div class="dropdown-center">
-                        <button id="hintBtn"
-                            class="btn btn-primary w-auto dropdown-toggle d-flex align-items-center gap-2 p-2"
-                            data-bs-toggle="dropdown">
-                            <img src="images/light-bulb.png" style="height: 30px; width: auto;" alt="">
-                            <span style="color: black; font-weight: 700;">Hint</span>
-                        </button>
-                        <ul id="dropdownMenu" class="dropdown-menu"
-                            style="min-width: auto !important; width:auto !important;background-color: rgb(13, 110, 253) !important; padding: 0 !important;">
-                            <li id="drop-item" class="p-2 rounded-2">
-                                <button id="fiftyPercent" class="dropdown-item">
-                                    <img src="images/50-percent.png" style="height: 30px; width: auto;" alt="">
-                                    <span style="color: black; font-weight: 700;">Remove 2/4</span>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <button id="pauseBtn" class="btn btn-primary w-auto">
-                        <img src="images/pause.png" style="height: 30px; width: auto;" alt="">
-                    </button>
-                </div>
-            </div>
-
-            <!--div contenitore domanda-->
-            <div id="pageContainer" class="d-flex flex-column rounded-3 border border-black"
-                style="background-color: rgb(227, 210, 252); flex:3">
-                <!--testo domanda-->
-                <div style="flex: 1" class="d-flex text-center align-items-center justify-content-center">
-                    <div id="domanda" class="text-break text-wrap p-3"
-                        style="font-weight: bold; font-size: 35px; color: black;"></div>
-                </div>
-                <!--contenitore opzioni-->
-                <div id="option" class="mb-5">
-                    <!--da tenere perchè container di riferimento per la pressione delle opzioni-->
-                    <div id="option-container" class="d-flex" style="justify-content: center;"></div>
-                </div>
-            </div>
-
-            <!--contenitore btn prossima domanda e risultato risposta-->
-            <div id="resultContainer" class="d-flex d-non flex-column p-3 rounded-3 border border-black mt-3"
-                style="background-color: rgb(227, 210, 252); width: auto; z-index: 1000;">
-                <div id="answerResult"
-                    style="flex: 1; font-size: 25px; font-weight: 800; text-align: center; color: black;">
-                    Risultato Risposta
-                </div>
-                <div id="nextQuestion" class="d-flex justify-content-center mt-3 mb-3">
-                    <button class="btn btn-primary boxShadow w-50"
-                        style="font-size: 30px; color: black; font-weight: 700;">
-                        Prossima Domanda
-                    </button>
-                </div>
-            </div>
-
-            <!--div contenitore menu pausa-->
-            <div id="pauseMenu" class="d-flex flex-column w-auto boxShadow p-3 rounded-3 d-none"
-                style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgb(227, 210, 252);">
-                <!--div contenitore pulsante per tornare al gioco e per tornare alla homepage-->
-                <div class="d-flex flex-column gap-2">
-                    <button id="continuePauseBtn" class="btn btn-primary"
-                        style="font-size: 35px; color: black;">Continua</button>
-                    <button id="homePageBtn" class="js-homePageBtn btn btn-primary"
-                        style="font-size: 35px; color: black;">Home
-                        Page</button>
-                </div>
-            </div>
-
-            <!--div contenitore menu fine domande-->
-            <div id="noMoreQuestions" class="d-flex flex-column w-auto p-3 rounded-3 boxShadow d-none"
-                style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgb(227, 210, 252);">
-                <!--div contenitore score finale-->
-                <div id="scoreDiv" style="font-size: 35px; font-weight: 800; color: black;">
-                    Score: x Corrette, y Errate
-                </div>
-                <!--div contenitore per tornare alla home page-->
-                <div class="d-flex justify-content-center">
-                    <button id="homePageBtn2" style="font-size: 35px; color: black; font-weight: 600;"
-                        class="js-homePageBtn btn btn-primary">Home
-                        Page</button>
-                </div>
-            </div>
-
-            <!--icona di loading-->
-            <div id="loading" class="justify-content-center w-auto"
-                style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; ">
-                <img src="images/loading.gif" alt="" style="height: 65px;">
-            </div>
+        <div class="homepage-title">
+            Quiz App
         </div>
 
+        <!--main contenitore-->
+        <div class="main-content">
+            <!--riga per pfp, aiuti, pausa-->
+            <div class="header-row">
+                <div id="welcomeMessage" class="welcome-icon-container">
+                </div>
+                <div class="button-container">
+                    <div class="hint-section">
+                        <button id="hintBtn" class="hint-btn">
+                            <img src="images/light-bulb.png" class="hint-logo">
+                            <span>Hint</span>
+                        </button>
+                        <button id="fiftyPercent" class="fifty-hint-btn d-none">
+                            <img src="images/50-percent.png" class="fifty-hint-logo">
+                            <span>Remove 2/4</span>
+                        </button>
+                    </div>
+                    <div class="pause-section">
+                        <button id="pauseBtn" class="pause-btn">
+                            <img src="images/pause.png" class="pause-logo">
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-        <script src="game.js" type="module"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-            </script>
+            <div class="game-wrapper">
+                <!--container per il box di gioco-->
+                <div id="pageContainer" class="page-container">
+
+                    <!--container per la domanda-->
+                    <div class="question-text-box">
+                        <div id="domanda"></div>
+                    </div>
+                    <!--container per le opzioni-->
+                    <div>
+                        <div id="option">
+                            <div id="option-container" class="option-container">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="loading" class="loading-container">
+                        <img src="images/loading.gif">
+                    </div>
+                </div>
+
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar">
+                    </div>
+                </div>
+
+                <div id="pauseMenu" class="pause-container ">
+                    <button id="backToGame" class="play-btn">
+                        <img src="/images/play.png" alt="return to the game">
+                    </button>
+                    <button class="homepage-btn js-homePageBtn">
+                        <img src="/images/homepage.png" alt="back to the home page">
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div id="noMoreQuestions" class="game-selected d-none">
+                <div class="game-info-wrapper">
+                    <div class="game-info-score">
+                        <div id="finalScore" class="game-info-score-number score-number score-number-large"></div>
+                        <div class="score-caption score-caption">SCORE</div>
+                    </div>
+                    <div class="game-info-correct">
+                        <div id="correctFinalScore" class="game-info-correct-number score-number score-number-small"></div>
+                        <div class="score-caption">CORRECT</div>
+                    </div>
+                    <div class="game-info-wrong">
+                        <div id="wrongFinalScore"  class="game-info-wrong-number score-number score-number-small"></div>
+                        <div class="score-caption">WRONG</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div id="noMoreQuestions" class="no-more-question-container d-none">
+                <div class="final-score">
+                    <div id="finalScore" class="score-number">
+                    </div>
+                    <div class="score-caption">
+                        SCORE
+                    </div>
+                </div>
+                <div class="score-division">
+                    <div class="correct-container">
+                        <div id="correctFinalScore" class="score-number">
+                        </div>
+                        <div class="score-caption">
+                            CORRETTE
+                        </div>
+                    </div>
+                    <div class="wrong-container">
+                        <div id="wrongFinalScore" class="score-number">
+                        </div>
+                        <div class="score-caption">
+                            ERRATE
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div id="resultContainer" class="result-container d-none">
+                <button id="nextQuestion" class="next-question-btn">
+                    Prossima Domanda
+                </button>
+            </div>
+
+            <div id="backHome" class="back-home-container d-none">
+                <button id="nextQuestion" class="back-home-btn js-homePageBtn">
+                    <img src="/images/homepage.png" alt="">
+                    <span>HomePage</span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p>
+                Quiz questions sourced from <a href="https://opentdb.com/" target="_blank"><strong>Open Trivia
+                        DB</strong></a>. <br>
+                Licensed under
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
+                    rel="license noopener noreferrer">
+                    Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+                </a>.
+            </p>
+        </div>
+
+    </div>
+
+
+    <script src="./game.js" type="module"></script>
+
 </body>
 
 </html>

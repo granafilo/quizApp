@@ -1,10 +1,11 @@
-@import url("/prova/styles/layout/header.css");
-@import url("/prova/styles/utils.css");
-@import url("/prova/styles/layout/base.css");
-@import url("/prova/styles/home/scoreboard.css");
-@import url("/prova/styles/home/gameinfo.css");
-@import url("/prova/styles/home/pfp-picker.css");
-@import url("/prova/styles/layout/footer.css");
+@import url("/styles/layout/header.css");
+@import url("/styles/utils.css");
+@import url("/styles/layout/base.css");
+@import url("/styles/home/scoreboard.css");
+@import url("/styles/home/gameinfo.css");
+@import url("/styles/home/pfp-picker.css");
+@import url("/styles/layout/footer.css");
+@import url("/styles/full-score.css");
 
 .main-content{
     grid-template-areas: "scoreboard" "option-wrapper" ;
@@ -14,7 +15,7 @@
 
 @media (min-width: 1200px){
     .main-content{
-        padding-top: 25%;
+        padding-top: 15%;
         grid-template-columns: 1fr 1fr;
         grid-template-areas: " option-wrapper scoreboard";
         grid-template-rows: auto;

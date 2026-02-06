@@ -1,4 +1,4 @@
-import { loadFroamStorage, saveToStorage } from "./storage/storageFunctions.js";
+import { loadFroamStorage, saveToStorage, deleteStorage } from "./storage/storageFunctions.js";
 
 const body = document.querySelector("body");
 const mainContent = document.getElementById('main-content');
@@ -6,7 +6,7 @@ const modalOverlay = document.querySelector('.modal-overlay');
 
 const startGameBtn = document.getElementById('startGameBtn');
 
-const scoreBoard = loadFroamStorage() || [];
+let scoreBoard = loadFroamStorage() || [];
 const scoreBoardHtml = document.getElementById('scoreBoard');
 
 const choosePfpBtn = document.getElementById('pfp-btn');
@@ -22,13 +22,61 @@ let scoreHtml = '';
 
 nickname.value = '';
 
-scoreBoard.forEach((tentativo) => {
-    // console.log(tentativo)
-    const gameId = tentativo.gameId;
-    const nickname = tentativo.username;
-    const score = tentativo.score;
+loadScoreBoard();
 
-    scoreHtml = `
+startGameBtn.addEventListener('click', () => {
+    startGame();
+})
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        startGame();
+    }
+});
+
+choosePfpBtn.addEventListener('click', () => {
+    pfpPickerDialog.showModal();
+})
+
+
+closePfpStackBtn.addEventListener('click', () => {
+    pfpPickerDialog.close();
+});
+
+
+document.querySelectorAll('.js-pfp').forEach((btn) => (
+    btn.addEventListener(('click'), () => {
+        pfpPickerDialog.close();
+
+        const srcNewPfp = btn.src;
+        currentPfp.src = srcNewPfp;
+        currentPfp.name = btn.id;
+    })
+));
+
+pfpPickerDialog.addEventListener("click", (event) => {
+    if (event.target.nodeName == "DIALOG") {
+        pfpPickerDialog.close();
+    }
+})
+
+const deleteScore = document.querySelector(".delete-icon");
+
+deleteScore.addEventListener("click", () => {
+    deleteStorage();
+    scoreBoard = loadFroamStorage() || [];
+    loadScoreBoard();
+});
+
+function loadScoreBoard() {
+    scoreHtml = '';
+    scoreBoardHtml.innerHTML = '';
+    scoreBoard.forEach((tentativo) => {
+        const gameId = tentativo.gameId;
+        const nickname = tentativo.username;
+        const score = tentativo.score;
+
+        scoreHtml = `
             <button class="score-header nickname-header" data-id=${gameId}>
                 <span class="text-wrap text-break" >${nickname}</span>
             </button>
@@ -46,53 +94,9 @@ scoreBoard.forEach((tentativo) => {
             </div>
     `;
 
-    scoreBoardHtml.innerHTML += scoreHtml;
-})
-
-startGameBtn.addEventListener('click', () => {
-    startGame();
-})
-
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        startGame();
-    }
-});
-
-choosePfpBtn.addEventListener('click', () => {
-    pfpPickerDialog.showModal();
-    // if (!pfpShown) {
-    //     pfpMenuOn();
-    // }
-})
-
-
-closePfpStackBtn.addEventListener('click', () => {
-    pfpPickerDialog.close();
-    // if (pfpShown) {
-    //     pfpMenuOff();
-    // }
-});
-
-
-document.querySelectorAll('.js-pfp').forEach((btn) => (
-    btn.addEventListener(('click'), () => {
-        pfpPickerDialog.close();
-        // pfpMenuOff();
-
-        const srcNewPfp = btn.src;
-        currentPfp.src = srcNewPfp;
-        currentPfp.name = btn.id;
+        scoreBoardHtml.innerHTML += scoreHtml;
     })
-));
-
-pfpPickerDialog.addEventListener("click", (event) => {
-    if(event.target.nodeName == "DIALOG"){
-        pfpPickerDialog.close();
-    } 
-})
-
-
+}
 
 scoreBoardHtml.addEventListener('click', (event) => {
     const targetElement = event.target.closest('.nickname-header, .points-header');
@@ -122,7 +126,7 @@ gameInfoCloseBtn.addEventListener('click', () => {
 });
 
 gameInfoDialog.addEventListener('click', (event) => {
-    if(event.target.nodeName == "DIALOG"){
+    if (event.target.nodeName == "DIALOG") {
         gameInfoDialog.close();
     }
 })

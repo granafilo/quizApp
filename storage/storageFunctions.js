@@ -6,3 +6,6 @@ export function saveToStorage(scoreBoard){
     localStorage.setItem('scoreBoard', JSON.stringify(scoreBoard));
 }
 
+export function deleteStorage(){
+    localStorage.removeItem('scoreBoard');
+}

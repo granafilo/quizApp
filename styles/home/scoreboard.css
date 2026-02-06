@@ -16,10 +16,12 @@
     }
 }
 
-
 .score-header-container {
+    position: relative;
     display: grid;
     grid-template-columns: 3fr 2fr;
+    height: 40px;
+    margin: 5px 0;
 }
 
 @media (min-width: 768px) {
@@ -34,6 +36,7 @@
         display: grid;
         grid-template-columns: 3fr 2fr;
     }
+
 }
 
 .score-header {
@@ -93,6 +96,20 @@
     }
 }
 
+.delete-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.delete-icon:hover{
+    background-color: #ce4a4a;
+}
+
 .score-board {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -115,6 +132,10 @@
         overflow-y: auto;
         max-height: 20vh;
     }
+}
+
+.score-board .delete-icon {
+    width: 25px;
 }
 
 .score-header {
