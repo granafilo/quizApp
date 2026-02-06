@@ -15,7 +15,7 @@ function shuffleArray(array) {
 }
 
 async function getQuestions(difficultySelected) {
-    const url = `https://opentdb.com/api.php?amount=3&difficulty=${difficultySelected}`;
+    const url = `https://opentdb.com/api.php?amount=10&difficulty=${difficultySelected}`;
     let domande = null;
     try {
         const response = await fetch(url);
