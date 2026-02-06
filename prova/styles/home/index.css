@@ -6,116 +6,184 @@
 @import url("/prova/styles/home/pfp-picker.css");
 @import url("/prova/styles/layout/footer.css");
 
-.pfp-diff-container {
-    display: flex;
-    justify-content: center;
+.main-content{
+    grid-template-areas: "scoreboard" "option-wrapper" ;
+    grid-template-rows: auto;
+    padding-bottom: 10%;
+}
 
+@media (min-width: 1200px){
+    .main-content{
+        padding-top: 25%;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: " option-wrapper scoreboard";
+        grid-template-rows: auto;
+    }
+}
+
+.game-option-wrapper{
+    grid-area: option-wrapper;
+    display: grid;
+    grid-template-areas: "pfp-diff-container" "start-btn";
+    width: 100%;
+}
+
+.pfp-diff-container {
+    grid-area: pfp-diff-container;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "pfp option-wrapper";
+    justify-content: center;
+    gap: 15px;
     width: 95%;
-    
     margin: 0 auto;
 }
 
-@media (min-width: 500px){
+@media (min-width: 500px) {
+    .pfp-diff-container {
+        height: 150px;
+    }
+}
+
+@media (min-width: 1200px){
     .pfp-diff-container{
-        width: 95%;
+        height: auto;
+        grid-template-columns: 1fr;
+        grid-template-areas: "pfp" "option-wrapper";
     }
 }
 
 /* pfp button on homepage */
 
 .pfp-container {
+    grid-area: pfp;
     display: flex;
-    flex: 1;
-    
+    flex: 1fr;
+
     flex-shrink: 0;
     flex-grow: 0;
 
-    margin: 10px 20px 10px 0;
-
-    width: 100%;
     align-items: center;
     position: relative;
 }
 
-@media (min-width: 500px){
+@media (min-width: 1200px){
     .pfp-container{
         justify-content: center;
     }
 }
 
 .pfp-btn {
-    background-color: rgb(217, 219, 219);
-    width: 80px;
-    height: 80px;
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-color: #f8f8f8;
 
     margin: 0;
-    padding: 0;
+    padding: 8px;
 
-    border: none;
+    border: grey 1px solid;
     border-radius: 8px;
 
     cursor: pointer;
 }
 
-@media (min-width: 500px){
-    .pfp-btn{
-        width: 120px;
-        height: 120px;
-    }
+.current-pfp {
+    height: 80px;
+    width: 80px;
 }
 
-.current-pfp{
-    height: 60px;
-    width: 60px;
-}
-
-@media (min-width: 500px){
-    .current-pfp{
-        width: 100px;
-        height: 100px;
+@media (min-width: 500px) {
+    .current-pfp {
+        width: 125px;
+        height: 125px;
     }
 }
 
 .pfp-btn:hover {
     transform: scale(1.1);
+    background-color: #dfdfdf;
+}
+
+.option-wrapper {
+    grid-area: option-wrapper;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* nickname input style */
+
+.nickname-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    margin:  0;
+}
+
+.nickname-input {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: grey 1px solid;
+
+    font-size: 1.3rem;
+    text-align: center;
+
+    background: #f8f8f8 ;
+}
+
+.nickname-input:focus{
+    background: #dfdfdf;
+}
+
+@media (min-width: 500px) {
+    .nickname-input {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .nickname-input {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .nickname-input {
+        padding: 8px;
+    }
 }
 
 /* difficulty select style */
 
 .diff-container {
-    display: inline-flex;
-    flex-direction: column;
-    
+    display: flex;
+    flex: 1;
+    width: 100%;
     justify-content: center;
     align-items: center;
 
-    margin: 10px 0px;
-    
-    gap: 8px;
-}
-
-.diff-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-
-    white-space: nowrap;
-}
-
-@media(min-width: 500px){
-    .diff-title{
-        font-size: 2rem;
-    }
+    margin: 0 0 0 0;
 }
 
 .diff-select {
     width: 100%;
-    font-size: 1rem;
-    font-weight: 500;
-    text-align: center;
-    padding: 5px 0;
-    border: grey 1px solid;
+    height: 100%;
     border-radius: 8px;
+    border: grey 1px solid;
+
+    font-size: 1.3rem;
+    text-align: center;
     cursor: pointer;
+
+    background: #f8f8f8 ;
+}
+
+.diff-select:hover{
+    background-color: #dfdfdf;
 }
 
 @media (min-width: 500px) {
@@ -124,50 +192,43 @@
     }
 }
 
-/* nickname input style */
-
-.nickname-container {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-
-    margin: 10px 0px;
+@media (min-width: 768px) {
+    .diff-select {
+        font-size: 2rem;
+    }
 }
 
-.nickname-input {
-    width: 95%;
-    height: 50px;
-    font-size: 2rem;
-    padding: 0;
-    border: grey 1px solid;
-    border-radius: 8px;
-    text-align: center;
+@media (min-width: 1200px) {
+    .diff-select {
+        padding: 8px;
+    }
 }
+
 
 /* start button style */
 
 .start-btn-container {
+    grid-area: start-btn;
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
-    margin: 10px 0px;
+    margin: 10px 0px 0 0;
 }
 
 .start-btn {
     color: black;
     font-size: 2.5rem;
     font-weight: 600;
-    padding: 0;
+    padding: 8px;
     width: 95%;
     height: 60px;
     border: none;
     border-radius: 8px;
-    background: rgb(110, 185, 107);
+    background: #6eb96b;
     cursor: pointer;
 }
 
 .start-btn:hover {
-    background: rgb(95, 161, 93);
+    background: #589456;
 }

@@ -96,7 +96,7 @@ pfpPickerDialog.addEventListener("click", (event) => {
 
 scoreBoardHtml.addEventListener('click', (event) => {
     const targetElement = event.target.closest('.nickname-header, .points-header');
-    if (targetElement && (window.innerWidth <= 768)) {
+    if (targetElement && ((window.innerWidth <= 768) || (window.innerWidth >= 1200))) {
 
         gameInfoDialog.showModal();
 

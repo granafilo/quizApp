@@ -1,12 +1,21 @@
 .score-table-container {
+    grid-area: scoreboard;
     margin: 20px;
     padding: 8px;
     width: 95%;
     border-radius: 8px;
-    background-color: rgb(217, 219, 219);
+    background-color: #DDDDDD;
     height: fit-content;
     min-height: 20vh;
+    /* max-height: 40vh; */
 }
+
+@media (min-width: 1200px) {
+    .score-table-container {
+        height: 100%;
+    }
+}
+
 
 .score-header-container {
     display: grid;
@@ -17,6 +26,13 @@
     .score-header-container {
         grid-template-columns: 4fr 1fr 1fr 1fr;
         gap: 8px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .score-header-container {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
     }
 }
 
@@ -33,7 +49,7 @@
     min-width: 0;
 }
 
-.nickname-header span{
+.nickname-header span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -60,10 +76,20 @@
 }
 
 @media (min-width: 768px) {
+
     .correct-header,
     .wrong-header {
         display: flex;
         font-size: 1.5rem;
+    }
+}
+
+
+@media (min-width: 1200px) {
+
+    .correct-header,
+    .wrong-header {
+        display: none;
     }
 }
 
@@ -81,32 +107,54 @@
     }
 }
 
-.score-header{
+@media (min-width: 1200px) {
+    .score-board {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        /* gap: 8px; */
+        overflow-y: auto;
+        max-height: 20vh;
+    }
+}
+
+.score-header {
     margin: 4px 6px;
     border: none;
     cursor: pointer;
 }
 
 @media (min-width: 768px) {
-    .score-header{
-        cursor:default;
+    .score-header {
+        cursor: default;
+    }
+}
+
+@media (min-width: 1200px) {
+    .score-header {
+        cursor: pointer;
     }
 }
 
 .score-board .score-header {
-    background: white ;
+    background: #f8f8f8;
     padding: 5px;
     border-radius: 8px;
 
     font-size: 1.1rem;
 }
 
-.score-board .score-header:hover{
-    background: rgb(200, 200, 200) ;
+.score-board .score-header:hover {
+    background: #c6c6c6;
 }
 
-@media (min-width: 768px){
-    .score-board .score-header:hover{
-        background: white ;
+@media (min-width: 768px) {
+    .score-board .score-header:hover {
+        background: #f8f8f8;
+    }
+}
+
+@media (min-width: 1200px) {
+    .score-board .score-header:hover {
+        background: #c6c6c6;
     }
 }

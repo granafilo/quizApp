@@ -1,5 +1,9 @@
 .footer{
     grid-area: footer;
     background: linear-gradient(45deg, #667eea, #764ba2);
-    padding: 15px 0px;
+    padding: 8px 0px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: black;
 }

@@ -51,33 +51,36 @@
             </div>
 
             <!-- container pfp e difficoltà -->
-            <div class="pfp-diff-container">
-                <div class="pfp-container">
-                    <button id="pfp-btn" class="pfp-btn">
-                        <img id="current-pfp" class="current-pfp" src="/prova/images/profile_pics/user.svg" alt="">
+            <div class="game-option-wrapper">
+                <div class="pfp-diff-container">
+                    <div class="pfp-container">
+                        <button id="pfp-btn" class="pfp-btn">
+                            <img id="current-pfp" class="current-pfp" src="/prova/images/profile_pics/user.svg" alt="">
+                        </button>
+                    </div>
+                    <div class="option-wrapper">
+                        <!-- contenitore nickname -->
+                        <div class="nickname-container">
+                            <input id="nickname" class="nickname-input" type="text" placeholder="Type your name...">
+                        </div>
+                        <div class="diff-container">
+                            <select name="" id="difficulty" class="diff-select">
+                                <option value="" selected>DIFFICULTY</option>
+                                <option value="Mixed">Mixed</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- contenitore start button -->
+                <div class="start-btn-container">
+                    <button id="startGameBtn" class="start-btn">
+                        Start Game
                     </button>
                 </div>
-                <div class="diff-container">
-                    <div class="diff-title">DIFFICULTY</div>
-                    <select name="" id="difficulty" class="diff-select">
-                        <option value="Mixed" selected>Mixed</option>
-                        <option value="Easy">Easy</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Hard">Hard</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- contenitore nickname -->
-            <div class="nickname-container">
-                <input id="nickname" class="nickname-input" type="text" placeholder="NICKNAME">
-            </div>
-
-            <!-- contenitore start button -->
-            <div class="start-btn-container">
-                <button id="startGameBtn" class="start-btn">
-                    Start Game
-                </button>
             </div>
         </div>
 
@@ -86,25 +89,25 @@
             <div id="pfp-stack-container" class="pfp-stack-container">
                 <div class="pfp-grid">
                     <button>
-                        <img id="albino.svg" src="/prova/images/profile_pics/albino.svg" class="js-pfp" alt="">
+                        <img id="marco.svg" src="/prova/images/profile_pics/marco.svg" class="js-pfp" alt="">
                     </button>
                     <button>
                         <img id="alessandro.svg" src="/prova/images/profile_pics/alessandro.svg" class="js-pfp" alt="">
                     </button>
                     <button>
-                        <img id="ariana.svg" src="/prova/images/profile_pics/ariana.svg" class="js-pfp" alt="">
+                        <img id="arianna.svg" src="/prova/images/profile_pics/arianna.svg" class="js-pfp" alt="">
                     </button>
                     <button>
-                        <img id="balo.svg" src="/prova/images/profile_pics/balo.svg" class="js-pfp" alt="">
+                        <img id="mario.svg" src="/prova/images/profile_pics/mario.svg" class="js-pfp" alt="">
                     </button>
                     <button>
-                        <img id="carota.svg" src="/prova/images/profile_pics/carota.svg" class="js-pfp" alt="">
+                        <img id="fabio.svg" src="/prova/images/profile_pics/fabio.svg" class="js-pfp" alt="">
                     </button>
                     <button>
-                        <img id="mamma.svg" src="/prova/images/profile_pics/mamma.svg" class="js-pfp" alt="">
+                        <img id="elisa.svg" src="/prova/images/profile_pics/elisa.svg" class="js-pfp" alt="">
                     </button>
                     <button>
-                        <img id="nerd.svg" src="/prova/images/profile_pics/nerd.svg" class="js-pfp" alt="">
+                        <img id="paolo.svg" src="/prova/images/profile_pics/paolo.svg" class="js-pfp" alt="">
                     </button>
                     <button>
                         <img id="prof.svg" src="/prova/images/profile_pics/prof.svg" class="js-pfp" alt="">
@@ -113,7 +116,7 @@
                         <img id="sinner.svg" src="/prova/images/profile_pics/sinner.svg" class="js-pfp" alt="">
                     </button>
                     <button>
-                        <img id="topa.svg" src="/prova/images/profile_pics/topa.svg" class="js-pfp" alt="">
+                        <img id="maria.svg" src="/prova/images/profile_pics/maria.svg" class="js-pfp" alt="">
                     </button>
                 </div>
                 <div class="close-btn-container">
@@ -151,7 +154,14 @@
 
 
         <div class="footer">
-            CIAO
+            <p>
+                Quiz questions sourced from <a href="https://opentdb.com/" target="_blank"><strong>Open Trivia DB</strong></a>. <br>
+                Licensed under
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
+                    rel="license noopener noreferrer">
+                    Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+                </a>.
+            </p>
         </div>
     </div>
     <script src="/prova/index.js" type="module"></script>

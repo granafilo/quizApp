@@ -1,7 +1,7 @@
 @import url("/prova/styles/layout/header.css");
 @import url("/prova/styles/utils.css");
 @import url("/prova/styles/layout/base.css");
-
+@import url("/prova/styles/layout/footer.css");
 
 .header-row {
     display: grid;

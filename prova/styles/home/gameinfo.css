@@ -1,10 +1,9 @@
 .game-info-dialog {
     padding: 0;
-    /* Importante: rimuove lo spazio vuoto interno al dialog */
+
     border: none;
     border-radius: 12px;
     background: white;
-    /* Il colore di sfondo del tuo modal */
 }
 
 .game-info-dialog::backdrop{
@@ -13,11 +12,11 @@
 }
 
 .game-selected {
-    background-color: #222222;
+    background-color: #DDDDDD;
 
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 95%;
     height: 50%;
     min-height: 300px;
     max-height: 500px;
@@ -36,12 +35,18 @@
     z-index: 1000;
 }
 
+@media (min-width: 1200px){
+    .game-selected{
+        width: 60%;
+    }
+}
+
 .game-info-header {
     display: flex;
     justify-content: center;
     height: auto;
 
-    color: #DDDDDD;
+    color: #222222;
 }
 
 .game-info-title {
@@ -62,7 +67,7 @@
 }
 
 .game-info-user {
-    color: #DDDDDD;
+    color: #222222;
     grid-area: title;
 
     height: min-content;
@@ -78,7 +83,7 @@
 
 .game-info-score {
     grid-area: score;
-    background-color: #DDDDDD;
+    background-color: #f8f8f8;
 }
 
 .game-info-score,
@@ -167,5 +172,5 @@
 
 .close-btn-game-info:hover {
     background-color: #ff4d4d;
-    color: white;
+    color: #222222;
 }
