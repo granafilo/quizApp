@@ -1,0 +1,53 @@
+/* pfp selector style */
+
+.pfp-stack-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.pfp-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    background-color: #DDDDDD;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.pfp-grid button {
+    border-radius: 8px;
+    border: grey 1px solid;
+    padding: 2px;
+    height: 70px;
+    width: 70px;
+    cursor: pointer;
+}
+
+.pfp-stack-container button:hover {
+    transform: scale(1.1);
+}
+
+.close-btn-container {
+    display: flex;
+    margin: 10px auto;
+}
+
+.close-btn {
+    color: black;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: color 0.1s ease-in-out;
+}
+
+.close-btn:hover {
+    color: red;
+}
+

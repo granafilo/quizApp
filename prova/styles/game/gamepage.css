@@ -1,60 +1,7 @@
 @import url("/prova/styles/layout/header.css");
 @import url("/prova/styles/utils.css");
+@import url("/prova/styles/layout/base.css");
 
-
-
-html,
-body {
-    height: 100%;
-    margin: 0;
-    width: 100vw;
-    min-height: 100vh;
-
-
-    color: black;
-    font-family: "Roboto", "sans-serif";
-}
-
-
-body {
-    background: white;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-}
-
-.main-container {
-    display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-areas: "title title title"
-        "main-content main-content main-content";
-}
-
-@media (min-width: 768px) {
-    .main-container {
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
-        grid-template-areas: "title title title"
-            "main-content main-content main-content";
-    }
-}
-
-@media (min-width: 1200px) {
-    .main-container {
-        display: grid;
-        grid-template-columns: 1fr 8fr 1fr;
-        grid-template-areas: "title title title"
-            ". main-content .";
-    }
-}
-
-
-.main-content {
-    display: grid;
-    grid-area: main-content;
-
-}
 
 .header-row {
     display: grid;
@@ -295,7 +242,7 @@ body {
 .back-home-container {
     width: 75%;
     margin: 15px auto;
-    display: flex;
+    
     justify-content: center;
 }
 
@@ -350,7 +297,6 @@ body {
 }
 
 .no-more-question-container {
-    display: flex;
     width: 75%;
     margin: 0 auto;
     padding: 20px 25px;

@@ -1,24 +1,30 @@
 import { loadFroamStorage, saveToStorage } from "./storage/storageFunctions.js";
 
-let nickname = document.getElementById('nickname'); //ok
-nickname.value = '';
+const body = document.querySelector("body");
+const mainContent = document.getElementById('main-content');
+const modalOverlay = document.querySelector('.modal-overlay');
 
-//aggiungo event listener per iniziare il gioco
-const startGameBtn = document.getElementById('startGameBtn'); //ok
+const startGameBtn = document.getElementById('startGameBtn');
 
-startGameBtn.addEventListener('click', () => {
-    startGame();
-})
+const scoreBoard = loadFroamStorage() || [];
+const scoreBoardHtml = document.getElementById('scoreBoard');
 
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        startGame();
-    }
-});
+const choosePfpBtn = document.getElementById('pfp-btn');
+const pfpContainer = document.getElementById('pfp-stack-container');
+const currentPfp = document.getElementById('current-pfp');
+const closePfpStackBtn = document.getElementById('close-pfp-stack-btn');
 
-const scoreBoard = loadFroamStorage() || []; //ok
-const scoreBoardHtml = document.getElementById('scoreBoard'); //ok
+
+const difficultySelect = document.getElementById('difficulty');
+
+const gameSelectedContainer = document.querySelector('.game-selected');
+
+let nickname = document.getElementById('nickname');
 let scoreHtml = '';
+let pfpShown = false;
+let gameInfoShown = false;
+
+nickname.value = '';
 
 scoreBoard.forEach((tentativo) => {
     console.log(tentativo)
@@ -47,90 +53,75 @@ scoreBoard.forEach((tentativo) => {
     scoreBoardHtml.innerHTML += scoreHtml;
 })
 
-const choosePfpBtn = document.getElementById('pfp-btn'); //ok
-const pfpContainer = document.getElementById('pfp-stack-container'); //ok
-const currentPfp = document.getElementById('current-pfp'); //ok
-const difficultySelect = document.getElementById('difficulty'); //ok
-const mainContent = document.getElementById('main-content'); //ok
-const closePfpStackBtn = document.getElementById('close-pfp-stack-btn'); //ok
-let pfpShown = false;
-
-//ok
-choosePfpBtn.addEventListener('click', () => {
-    if (!pfpShown) {
-        pfpContainer.classList.remove('d-none');
-        pfpContainer.classList.add('d-flex');
-        mainContent.classList.add('blur');
-        //disabilito gli altri pulsanti
-        choosePfpBtn.disabled = true;
-        difficultySelect.disabled = true;
-        startGameBtn.disabled = true;
-        pfpShown = true;
-    }
+startGameBtn.addEventListener('click', () => {
+    startGame();
 })
 
-//ok
-closePfpStackBtn.addEventListener('click', () => {
-    if (pfpShown) {
-        pfpContainer.classList.add('d-none');
-        pfpContainer.classList.remove('d-flex');
-        mainContent.classList.remove('blur');
-        //disabilito gli altri pulsanti
-        choosePfpBtn.disabled = false;
-        difficultySelect.disabled = false;
-        startGameBtn.disabled = false;
-        pfpShown = false;
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        startGame();
     }
 });
 
-//ok
+choosePfpBtn.addEventListener('click', () => {
+    if (!pfpShown) {
+        pfpMenuOn();
+    }
+})
+
+
+closePfpStackBtn.addEventListener('click', () => {
+    if (pfpShown) {
+        pfpMenuOff();
+    }
+});
+
+
 document.querySelectorAll('.js-pfp').forEach((btn) => (
     btn.addEventListener(('click'), () => {
-        pfpContainer.classList.add('d-none');
-        pfpContainer.classList.remove('d-flex');
-        mainContent.classList.remove('blur');
-        //disabilito gli altri pulsanti
-        choosePfpBtn.disabled = false;
-        difficultySelect.disabled = false;
-        startGameBtn.disabled = false;
-        pfpShown = false;
+        pfpMenuOff();
+
         const srcNewPfp = btn.src;
         currentPfp.src = srcNewPfp;
         currentPfp.name = btn.id;
     })
 ));
 
-const gameSelectedContainer = document.querySelector('.game-selected');
+
 
 scoreBoardHtml.addEventListener('click', (event) => {
     const targetElement = event.target.closest('.nickname-header, .points-header');
     if (targetElement && (window.innerWidth <= 768)) {
 
-        gameSelectedContainer.classList.remove('d-none');
-        gameSelectedContainer.classList.add('d-flex');
-        mainContent.classList.add('blur');
-        
+        gameInfoMenuOn();
+
         const gameId = targetElement.dataset.id;
         const gameInfo = findGameById(gameId);
 
         const gameInfoUser = document.querySelector('.game-info-user');
-        const gameInfoScore = document.querySelector('.game-info-score');
-        const gameInfoCorrect = document.querySelector('.game-info-correct');
-        const gameInfoWrong = document.querySelector('.game-info-wrong');
+        const gameInfoScore = document.querySelector('.game-info-score-number');
+        const gameInfoCorrect = document.querySelector('.game-info-correct-number');
+        const gameInfoWrong = document.querySelector('.game-info-wrong-number');
 
-        gameInfoUser.innerText = `Username: ${gameInfo.username}`;
-        gameInfoScore.innerText = `Score: ${gameInfo.score.punteggio}`;
-        gameInfoCorrect.innerText = `Correct: ${gameInfo.score.corrette}`;
-        gameInfoWrong.innerText = `Wrong: ${gameInfo.score.errate}`;
+        gameInfoUser.innerText = `${gameInfo.username}`;
+        gameInfoScore.innerText = `${gameInfo.score.punteggio}`;
+        gameInfoCorrect.innerText = `${gameInfo.score.corrette}`;
+        gameInfoWrong.innerText = `${gameInfo.score.errate}`;
     }
 });
 
 const gameInfoCloseBtn = document.querySelector('.close-btn-game-info');
 
 gameInfoCloseBtn.addEventListener('click', () => {
-    gameSelectedContainer.classList.add('d-none');
-    gameSelectedContainer.classList.remove('d-flex');
-    mainContent.classList.remove('blur');
+    gameInfoMenuOff();
+});
+
+modalOverlay.addEventListener("click", () => {
+    if (pfpShown) {
+        pfpMenuOff();
+    } else if (gameInfoShown) {
+        gameInfoMenuOff();
+    }
 });
 
 function startGame() {
@@ -145,6 +136,59 @@ function startGame() {
     window.location.href = `/game.html?nickname=${nickname}&difficulty=${difficulty}&pfpId=${pfp}`
 }
 
-function findGameById(gameId){
+function findGameById(gameId) {
     return scoreBoard.find((tentativo) => tentativo.gameId === gameId);
+}
+
+function gameInfoMenuOff() {
+    body.classList.remove("no-scroll");
+    gameSelectedContainer.classList.add('d-none');
+    gameSelectedContainer.classList.remove('d-flex');
+    // mainContent.classList.remove('blur');
+    modalOverlay.classList.add("d-none");
+    mainContent.removeAttribute('inert');
+    gameInfoShown = false;
+}
+
+function gameInfoMenuOn() {
+    body.classList.add("no-scroll");
+
+    gameSelectedContainer.classList.remove('d-none');
+    gameSelectedContainer.classList.add('d-flex');
+    // mainContent.classList.add('blur');
+    modalOverlay.classList.remove("d-none");
+    mainContent.setAttribute('inert', '');
+
+    gameInfoShown = true;
+}
+
+function pfpMenuOn() {
+    body.classList.add("no-scroll");
+    pfpContainer.classList.remove('d-none');
+    pfpContainer.classList.add('d-flex');
+    // mainContent.classList.add('blur');
+    modalOverlay.classList.remove("d-none");
+    mainContent.setAttribute('inert', '');
+
+    //riabilito gli altri pulsanti
+    choosePfpBtn.disabled = true;
+    difficultySelect.disabled = true;
+    startGameBtn.disabled = true;
+    pfpShown = true;
+}
+
+function pfpMenuOff() {
+    body.classList.remove("no-scroll");
+
+    pfpContainer.classList.add('d-none');
+    pfpContainer.classList.remove('d-flex');
+    // mainContent.classList.remove('blur');
+    modalOverlay.classList.add("d-none");
+    mainContent.removeAttribute('inert');
+
+    //riabilito gli altri pulsanti
+    choosePfpBtn.disabled = false;
+    difficultySelect.disabled = false;
+    startGameBtn.disabled = false;
+    pfpShown = false;
 }

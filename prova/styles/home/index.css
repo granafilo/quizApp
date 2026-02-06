@@ -1,228 +1,129 @@
 @import url("/prova/styles/layout/header.css");
 @import url("/prova/styles/utils.css");
-
-html,
-body {
-    height: 100%;
-    margin: 0;
-    width: 100%;
-    min-width: 390px;
-    min-height: 100vh;
-    box-sizing: border-box;
-    font-family: "Roboto", "sans-serif";
-    color: black;
-}
-
-
-body {
-    background: white;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-}
-
-.main-container {
-    display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-areas: "title title title"
-        "main-content main-content main-content";
-}
-
-@media (min-width: 768px) {
-    .main-container {
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
-        grid-template-areas: "title title title"
-            "main-content main-content main-content";
-    }
-}
-
-@media (min-width: 1200px) {
-    .main-container {
-        display: grid;
-        grid-template-columns: 1fr 8fr 1fr;
-        grid-template-areas: "title title title"
-            ". main-content .";
-    }
-}
-
-.main-content {
-    grid-area: main-content;
-    display: grid;
-    place-items: center;
-
-}
-
-.score-table-container {
-    margin: 20px;
-    padding: 8px;
-    width: 75%;
-    border-radius: 8px;
-    background-color: rgb(217, 219, 219);
-    height: fit-content;
-    min-height: 20vh;
-}
-
-.score-header-container {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-}
-
-@media (min-width: 768px) {
-    .score-header-container {
-        grid-template-columns: 4fr 1fr 1fr 1fr;
-        gap: 8px;
-    }
-}
-
-.score-header {
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    color: black;
-}
-
-.nickname-header {
-    justify-content: start;
-    max-width: 100%;
-    min-width: 0;
-}
-
-.nickname-header span{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.nickname-header,
-.points-header {
-    font-size: 1.7rem;
-    font-weight: 600;
-}
-
-@media (min-width: 768px) {
-
-    .nickname-header,
-    .points-header {
-        font-size: 1.5rem;
-    }
-}
-
-.correct-header,
-.wrong-header {
-    display: none;
-    font-weight: 600;
-}
-
-@media (min-width: 768px) {
-    .correct-header,
-    .wrong-header {
-        display: flex;
-        font-size: 1.5rem;
-    }
-}
-
-.score-board {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    /* gap: 8px; */
-    overflow-y: auto;
-    max-height: 20vh;
-}
-
-@media (min-width: 768px) {
-    .score-board {
-        grid-template-columns: 4fr 1fr 1fr 1fr;
-    }
-}
-
-.score-header{
-    margin: 4px 6px;
-    border: none;
-    cursor: pointer;
-}
-
-@media (min-width: 768px) {
-    .score-header{
-        cursor:default;
-    }
-}
-
-.score-board .score-header {
-    background: white !important;
-    padding: 5px;
-    border-radius: 8px;
-
-    font-size: 1.1rem;
-}
-
-.score-board .score-header:hover{
-    background: rgb(200, 200, 200) !important;
-}
+@import url("/prova/styles/layout/base.css");
+@import url("/prova/styles/home/scoreboard.css");
+@import url("/prova/styles/home/gameinfo.css");
+@import url("/prova/styles/home/pfp-picker.css");
 
 .pfp-diff-container {
     display: flex;
-    width: 75%;
-    margin: 0 auto;
     justify-content: center;
+
+    width: 95%;
+    
+    margin: 0 auto;
 }
 
+@media (min-width: 500px){
+    .pfp-diff-container{
+        width: 95%;
+    }
+}
+
+/* pfp button on homepage */
+
 .pfp-container {
-    flex: 1;
     display: flex;
+    flex: 1;
+    
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    margin: 10px 20px 10px 0;
+
     width: 100%;
-    margin: 10px 0px;
-    justify-content: center;
     align-items: center;
     position: relative;
 }
 
+@media (min-width: 500px){
+    .pfp-container{
+        justify-content: center;
+    }
+}
+
 .pfp-btn {
-    margin: 4px;
-    width: 120px;
-    height: 120px;
-    border-radius: 20px;
-    border: grey 1px solid;
+    background-color: rgb(217, 219, 219);
+    width: 80px;
+    height: 80px;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-radius: 8px;
+
     cursor: pointer;
 }
 
-.pfp-btn:hover {
-    transform: scale(1.05);
+@media (min-width: 500px){
+    .pfp-btn{
+        width: 120px;
+        height: 120px;
+    }
 }
 
+.current-pfp{
+    height: 60px;
+    width: 60px;
+}
+
+@media (min-width: 500px){
+    .current-pfp{
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.pfp-btn:hover {
+    transform: scale(1.1);
+}
+
+/* difficulty select style */
+
 .diff-container {
-    flex: 1;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    width: 100%;
-    margin: 10px 0px;
+    
     justify-content: center;
     align-items: center;
+
+    margin: 10px 0px;
+    
     gap: 8px;
 }
 
 .diff-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
+
+    white-space: nowrap;
+}
+
+@media(min-width: 500px){
+    .diff-title{
+        font-size: 2rem;
+    }
 }
 
 .diff-select {
-    width: 60%;
+    width: 100%;
     font-size: 1rem;
     font-weight: 500;
     text-align: center;
-    padding: 8px 10px;
+    padding: 5px 0;
     border: grey 1px solid;
     border-radius: 8px;
     cursor: pointer;
 }
 
-@media (min-width: 500px){
-    .diff-select{
+@media (min-width: 500px) {
+    .diff-select {
         font-size: 1.5rem;
     }
 }
+
+/* nickname input style */
 
 .nickname-container {
     display: flex;
@@ -234,7 +135,7 @@ body {
 }
 
 .nickname-input {
-    width: 75%;
+    width: 95%;
     height: 50px;
     font-size: 2rem;
     padding: 0;
@@ -242,6 +143,8 @@ body {
     border-radius: 8px;
     text-align: center;
 }
+
+/* start button style */
 
 .start-btn-container {
     display: flex;
@@ -256,7 +159,7 @@ body {
     font-size: 2.5rem;
     font-weight: 600;
     padding: 0;
-    width: 75%;
+    width: 95%;
     height: 60px;
     border: none;
     border-radius: 8px;
@@ -266,103 +169,4 @@ body {
 
 .start-btn:hover {
     background: rgb(95, 161, 93);
-}
-
-.pfp-stack-container {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    flex-direction: column;
-
-}
-
-.pfp-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    background-color: rgb(233, 231, 231);
-    padding: 25px;
-    border-radius: 8px;
-}
-
-.pfp-grid button {
-    border-radius: 8px;
-    border: grey 1px solid;
-    padding: 2px;
-    height: 70px;
-    width: 70px;
-    cursor: pointer;
-}
-
-.pfp-stack-container button:hover {
-    transform: scale(1.1);
-}
-
-.close-btn-container{
-    display: flex;
-    margin: 10px auto;  
-}
-
-.close-btn{
-    color: black;
-    font-size: 1.3rem;
-    font-weight: 400;
-    border: none;
-    border-radius: 8px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: color 0.1s ease-in-out;
-}
-
-.close-btn:hover{
-    color: red;
-}
-
-.game-selected{
-    display: none;
-    flex-direction: column;
-    width: 50%;
-
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px;
-    gap: 8px;
-    
-    background-color: rgb(217, 219, 219);
-    border-radius: 8px;
-}
-
-.game-info-title{
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.game-info{
-    padding: 5px;
-    border-radius: 8px;
-    background: white !important;
-}
-
-.game-info-header{
-    display: flex;
-    justify-content: space-between;
-}
-
-.game-info-user{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.close-btn-game-info{
-    color: red;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    background-color: white;
-    cursor: pointer;
 }

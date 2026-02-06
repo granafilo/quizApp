@@ -312,6 +312,7 @@ async function renderPage() {
         pauseBtn.disabled = false;
         //nascondo next question button
         resultContainer.classList.add('d-none');
+        resultContainer.classList.remove('d-flex');
         nextQuestionIsDisplayed = false;
     }
 
@@ -324,6 +325,7 @@ async function renderPage() {
         hintBtn.disabled = true;
         //mostro next question button - result container
         resultContainer.classList.remove('d-none');
+        resultContainer.classList.add('d-flex');
         nextQuestionIsDisplayed = true;
     }
 
@@ -370,26 +372,25 @@ async function renderPage() {
 
         const backHomeContainer = document.getElementById("backHome");
         const noMoreQuestionsContainer = document.getElementById("noMoreQuestions");
+        
         backHomeContainer.classList.remove("d-none");
+        backHomeContainer.classList.add("d-flex");
+
         pageContainer.classList.add("d-none");
+
         noMoreQuestionsContainer.classList.remove("d-none");
+        noMoreQuestionsContainer.classList.add("d-none");
 
         const finalScore = document.getElementById("finalScore");
         finalScore.innerText = `${score.punteggio}`;
+
         const correctFinalScore = document.getElementById("correctFinalScore");
         const wrongFinalScore = document.getElementById("wrongFinalScore");
         correctFinalScore.innerText = `${score.corrette}`;
         wrongFinalScore.innerText = `${score.errate}`;
+
         pauseBtn.disabled = true;
         hintBtn.disabled = true;
-
-        // const noMoreQuestions = document.getElementById('noMoreQuestions');
-        // noMoreQuestions.classList.remove('d-none');
-        // pageContainer.classList.add('blur');
-        // const scoreDiv = document.getElementById('scoreDiv');
-        // scoreDiv.innerText = `Score: ${score.corrette} Corrette, ${score.errate} Errate!`
-
-
     }
 
     //ok

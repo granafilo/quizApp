@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Homepage</title>
-    <link rel="stylesheet" href="./styles/home/index.css">
+    <link rel="stylesheet" href="/prova/styles/home/index.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,9 +23,11 @@
 
         <!--contenitore principale-->
         <div id="main-content" class="main-content">
+
             <!--scoreboard-->
             <div class="score-table-container">
                 <div class="score-header-container">
+
                     <!--grid item-->
                     <div class="score-header nickname-header">
                         <span>Nickname</span>
@@ -45,16 +47,14 @@
                     </div>
 
                 </div>
-                <div id="scoreBoard" class="score-board">
-
-                </div>
+                <div id="scoreBoard" class="score-board"></div>
             </div>
 
             <!-- container pfp e difficoltà -->
             <div class="pfp-diff-container">
                 <div class="pfp-container">
                     <button id="pfp-btn" class="pfp-btn">
-                        <img id="current-pfp" src="/images/profile_pics/user.png" alt="">
+                        <img id="current-pfp" class="current-pfp" src="/prova/images/profile_pics/user.svg" alt="">
                     </button>
                 </div>
                 <div class="diff-container">
@@ -67,20 +67,22 @@
                     </select>
                 </div>
             </div>
+
             <!-- contenitore nickname -->
             <div class="nickname-container">
                 <input id="nickname" class="nickname-input" type="text" placeholder="NICKNAME">
             </div>
+
             <!-- contenitore start button -->
             <div class="start-btn-container">
-                <button id="startGameBtn" class="start-btn" >
+                <button id="startGameBtn" class="start-btn">
                     Start Game
                 </button>
             </div>
         </div>
 
         <!-- contenitore pfp stack -->
-        <div id="pfp-stack-container" class="pfp-stack-container">
+        <div id="pfp-stack-container" class="pfp-stack-container d-none">
             <div class="pfp-grid">
                 <button>
                     <img id="polar_bear.png" src="/images/profile_pics/polar_bear.png" class="js-pfp" alt="">
@@ -114,20 +116,34 @@
                 </button>
             </div>
             <div class="close-btn-container">
-                <button id="close-pfp-stack-btn" class="close-btn">Exit</button>
+                <button id="close-pfp-stack-btn" class="close-btn">CLOSE</button>
             </div>
         </div>
 
-        <div class="game-selected">
+        <div class="modal-overlay d-none" ></div>
+        <div class="game-selected d-none">
             <div class="game-info-header">
                 <div class="game-info-title">Game info</div>
-                <button class="close-btn-game-info">X</button>
             </div>
 
-            <div class="game-info game-info-user">Username:</div>
-            <div class="game-info game-info-score">Punteggio</div>
-            <div class="game-info game-info-correct">Corrette</div>
-            <div class="game-info game-info-wrong">Errate</div>
+            <div class="game-info-wrapper">
+                <div class="game-info-user">username</div>
+                <div class="game-info-score">
+                    <div class="game-info-score-number score-number score-number-large"></div>
+                    <div class="score-caption score-caption">SCORE</div>
+                </div>
+                <div class="game-info-correct">
+                    <div class="game-info-correct-number score-number score-number-small"></div>
+                    <div class="score-caption">CORRECT</div>
+                </div>
+                <div class="game-info-wrong">
+                    <div class="game-info-wrong-number score-number score-number-small"></div>
+                    <div class="score-caption">WRONG</div>
+                </div>
+            </div>
+
+
+            <button class="close-btn-game-info">X CLOSE</button>
         </div>
 
         <script src="/prova/index.js" type="module"></script>
