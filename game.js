@@ -1,4 +1,4 @@
-import { loadFroamStorage, saveToStorage } from "./storage/storageFunctions.js";
+import { loadFroamStorage, saveToStorage } from "/storage/storageFunctions.js";
 
 function decodeHTMLEntities(text) {
     const textarea = document.createElement("textarea");
@@ -15,7 +15,7 @@ function shuffleArray(array) {
 }
 
 async function getQuestions(difficultySelected) {
-    const url = `https://opentdb.com/api.php?amount=10&difficulty=${difficultySelected}`;
+    const url = `https://opentdb.com/api.php?amount=15&difficulty=${difficultySelected}`;
     let domande = null;
     try {
         const response = await fetch(url);
