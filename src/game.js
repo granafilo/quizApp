@@ -15,7 +15,7 @@ function shuffleArray(array) {
 }
 
 async function getQuestions(difficultySelected) {
-    const url = `https://opentdb.com/api.php?amount=15&difficulty=${difficultySelected}`;
+    const url = `https://opentdb.com/api.php?amount=1&difficulty=${difficultySelected}`;
     let domande = null;
     try {
         const response = await fetch(url);
@@ -180,6 +180,7 @@ async function renderPage() {
                 fineDomande();
             }
         }
+        
     });
 
     //event listener per il pulsante aiuti
@@ -371,7 +372,8 @@ async function renderPage() {
 
     //funzione per gestire la fine delle domande
     function fineDomande() {
-
+        fiftyPercentBtn.classList.add("d-none");
+        
         let userScore = {
             gameId: Date.now() + Math.random().toString(16).substring(2),
             username: nickname,
