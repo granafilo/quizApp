@@ -78,7 +78,7 @@ async function renderPage() {
         }
         //ottengo la domanda
         currentQuestion = allQuestions[numeroDomanda];
-        
+
         progressBar.style.width = calcolaPercentuale(numeroDomanda) + "%";
 
         let questionHTML = '';
@@ -180,7 +180,7 @@ async function renderPage() {
                 fineDomande();
             }
         }
-        
+
     });
 
     //event listener per il pulsante aiuti
@@ -324,6 +324,8 @@ async function renderPage() {
     //funzione per aprire il menu per passare alla prossima domanda
     //ok
     function openNextQuestionMenu() {
+        fiftyPercentBtn.classList.add("d-none");
+        fiftyPercentDisplayed = false;
         //disabilito pulsante pausa
         pauseBtn.disabled = true;
         //disabilito pulsante aiuti
@@ -342,7 +344,7 @@ async function renderPage() {
         pauseMenuIsDisplayed = true;
 
         //disabilito il pulsante aiuti
-        if(fiftyPercentDisplayed){
+        if (fiftyPercentDisplayed) {
             fiftyPercentBtn.classList.add("d-none");
             fiftyPercentDisplayed = false;
         }
@@ -373,6 +375,7 @@ async function renderPage() {
     //funzione per gestire la fine delle domande
     function fineDomande() {
         fiftyPercentBtn.classList.add("d-none");
+        fiftyPercentDisplayed = false;
 
         let userScore = {
             gameId: Date.now() + Math.random().toString(16).substring(2),
