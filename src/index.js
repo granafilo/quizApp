@@ -140,7 +140,7 @@ function startGame() {
         alert('Please enter a nickname to start the game.');
         return;
     }
-    window.location.href = `/game.html?nickname=${nickname}&difficulty=${difficulty}&pfpId=${pfp}`
+    window.location.href = `./game.html?nickname=${nickname}&difficulty=${difficulty}&pfpId=${pfp}`
 }
 
 function findGameById(gameId) {

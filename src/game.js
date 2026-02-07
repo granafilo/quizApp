@@ -272,7 +272,7 @@ async function renderPage() {
     //ok
     document.querySelectorAll('.js-homePageBtn').forEach((btn) => {
         btn.addEventListener(('click'), () => {
-            window.location.href = "/index.html";
+            window.location.href = "./index.html";
         })
     })
 
