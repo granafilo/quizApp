@@ -1,0 +1,235 @@
+@import url("/src/styles/layout/base.css");
+@import url("/src/styles/utils.css");
+@import url("/src/styles/layout/base.css");
+@import url("/src/styles/home/scoreboard.css");
+@import url("/src/styles/home/gameinfo.css");
+@import url("/src/styles/home/pfp-picker.css");
+@import url("/src/styles/layout/footer.css");
+/* @import url("/styles/full-score.css"); */
+
+.main-content{
+    grid-template-areas: "scoreboard" "option-wrapper" ;
+    grid-template-rows: auto;
+    padding-bottom: 10%;
+}
+
+@media (min-width: 1200px){
+    .main-content{
+        padding-top: 15%;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: " option-wrapper scoreboard";
+        grid-template-rows: auto;
+    }
+}
+
+.game-option-wrapper{
+    grid-area: option-wrapper;
+    display: grid;
+    grid-template-areas: "pfp-diff-container" "start-btn";
+    width: 100%;
+}
+
+.pfp-diff-container {
+    grid-area: pfp-diff-container;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "pfp option-wrapper";
+    justify-content: center;
+    gap: 15px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+@media (min-width: 500px) {
+    .pfp-diff-container {
+        height: 150px;
+    }
+}
+
+@media (min-width: 1200px){
+    .pfp-diff-container{
+        height: auto;
+        grid-template-columns: 1fr;
+        grid-template-areas: "pfp" "option-wrapper";
+    }
+}
+
+/* pfp button on homepage */
+
+.pfp-container {
+    grid-area: pfp;
+    display: flex;
+    flex: 1fr;
+
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    align-items: center;
+    position: relative;
+}
+
+@media (min-width: 1200px){
+    .pfp-container{
+        justify-content: center;
+    }
+}
+
+.pfp-btn {
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-color: #f8f8f8;
+
+    margin: 0;
+    padding: 8px;
+
+    border: grey 1px solid;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+.current-pfp {
+    height: 80px;
+    width: 80px;
+}
+
+@media (min-width: 500px) {
+    .current-pfp {
+        width: 125px;
+        height: 125px;
+    }
+}
+
+.pfp-btn:hover {
+    transform: scale(1.1);
+    background-color: #dfdfdf;
+}
+
+.option-wrapper {
+    grid-area: option-wrapper;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* nickname input style */
+
+.nickname-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    margin:  0;
+}
+
+.nickname-input {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: grey 1px solid;
+
+    font-size: 1.3rem;
+    text-align: center;
+
+    background: #f8f8f8 ;
+}
+
+.nickname-input:focus{
+    background: #dfdfdf;
+}
+
+@media (min-width: 500px) {
+    .nickname-input {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .nickname-input {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .nickname-input {
+        padding: 8px;
+    }
+}
+
+/* difficulty select style */
+
+.diff-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 0 0 0;
+}
+
+.diff-select {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: grey 1px solid;
+
+    font-size: 1.3rem;
+    text-align: center;
+    cursor: pointer;
+
+    background: #f8f8f8 ;
+}
+
+.diff-select:hover{
+    background-color: #dfdfdf;
+}
+
+@media (min-width: 500px) {
+    .diff-select {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .diff-select {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .diff-select {
+        padding: 8px;
+    }
+}
+
+
+/* start button style */
+
+.start-btn-container {
+    grid-area: start-btn;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px 0 0;
+}
+
+.start-btn {
+    color: black;
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding: 8px;
+    width: 95%;
+    height: 60px;
+    border: none;
+    border-radius: 8px;
+    background: #6eb96b;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    background: #589456;
+}

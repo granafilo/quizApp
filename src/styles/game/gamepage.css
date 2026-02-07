@@ -1,0 +1,26 @@
+@import url("/src/styles/layout/header.css");
+@import url("/src/styles/utils.css");
+@import url("/src/styles/layout/base.css");
+@import url("/src/styles/layout/footer.css");
+@import url("/src/styles/game/gamepage-header.css");
+@import url("/src/styles/game/game-section.css");
+@import url("/src/styles/game/pause-menu.css");
+@import url("/src/styles/game/quiz-completed.css");
+@import url("/src/styles/game/full-score.css");
+@import url("/src/styles/game/progress-bar.css");
+
+.main-content{
+    margin-bottom: 25px;
+}
+
+.loading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-container img {
+    width: 80px;
+}
+
