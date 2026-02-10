@@ -1,36 +1,94 @@
-# **Quiz App 🧠**
+# 🧠 QuizApp
 
-A dynamic and interactive web-based Quiz Application built with modern JavaScript (ES6+), HTML5, and CSS3. This app challenges users with questions across different difficulty levels, fetching real-time data from the [Open Trivia Database API](https://www.google.com/search?q=https://opentdb.com/api.php).
+![License](https://img.shields.io/github/license/granafilo/quizApp)
+![Repo size](https://img.shields.io/github/repo-size/granafilo/quizApp)
+![Last commit](https://img.shields.io/github/last-commit/granafilo/quizApp)
+![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-blue)
 
-## **🚀 Features**
+**QuizApp** is a dynamic browser-based quiz web app.  
+Questions are fetched from the **Open Trivia Database (OpenTDB)** API and the game includes scoring, difficulty levels, and a persistent local leaderboard.
 
-* **Dynamic Question Fetching:** Uses asynchronous fetch requests to retrieve 10 randomized questions per session based on the selected difficulty.  
-* **Difficulty Settings:** Users can choose between *Easy*, *Medium*, *Hard*, or *Mixed* levels to tailor the challenge.  
-* **User Personalization:** Supports custom nicknames and profile picture selection via an interactive modal.  
-* **Lifelines/Hints:** Includes a "50/50" hint (Remove 2/4) to help players when they are stuck on multiple-choice questions.  
-* **Real-time Scoring:** Tracks correct and incorrect answers, calculating a total score based on the difficulty of the questions answered.  
-* **Local Leaderboard:** Saves game history (nickname, score, correct/incorrect ratio) to the browser's localStorage, allowing users to track their progress over time.  
-* **Responsive Design:** Fully responsive UI built with **Bootstrap 5**, optimized for both desktop and mobile viewing.
+The application is fully client-side and requires no backend.
 
-## **🛠️ Built With**
+---
 
-* **Frontend:** HTML5, CSS3 (Custom Flexbox/Grid layouts).  
-* **Logic:** JavaScript (ES Modules).  
-* **API:** [Open Trivia DB](https://opentdb.com/).  
-* **Storage:** Browser localStorage for persistent scoreboards.
+## ✨ Features
 
-## **🕹️ How to Play**
+- 🎯 Dynamic quiz generation via OpenTDB API  
+- 🧩 Multiple difficulty levels: Easy / Medium / Hard / Mixed  
+- 👤 Player personalization with nickname and avatar  
+- 💡 50/50 lifeline to remove incorrect answers  
+- 📊 Real-time scoring system  
+- 📈 Local leaderboard stored in browser storage  
+- 📱 Responsive interface (desktop + mobile)
 
-1. Enter your **Nickname**.  
-2. Click on the profile icon to choose an **Avatar**.  
-3. Select your preferred **Difficulty**.  
-4. Answer the questions\! Use the **Hint** button if you need help.  
-5. View your final stats and check the **Scoreboard** on the home page to see where you rank.
+---
 
-## **📁 Project Structure**
+## 🌐 Deployment
 
-* index.html / homepage.js: The landing page where users set up their profile and view the leaderboard.  
-* game.html / game.js: The core engine that handles fetching questions, validating answers, and managing the game state.  
-* storageFunctions.js: Modular utility functions to handle data persistence.  
-* index.css / stylesheet.css: Custom styling and animations.
+The project is distributed as a static website via **GitHub Pages**.
 
+The app is built using **Vite**, which is used for:
+
+- optimized static build output
+- JavaScript bundling
+- asset handling
+- fast development workflow
+- GitHub Pages–ready deployment
+
+This architecture ensures:
+
+- fast loading times
+- lightweight bundles
+- free hosting
+- zero backend infrastructure
+
+👉 The entire application runs client-side.
+
+---
+
+## 🧱 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **HTML5** | Application structure and page layout |
+| **CSS3** | Styling, responsive design and UI layout |
+| **JavaScript (ES6+)** | Game logic, API handling, scoring system |
+| **Vite** | Build tool, bundler and development server |
+| **Open Trivia DB API** | External quiz question source |
+| **localStorage API** | Persistent leaderboard and player data |
+
+No external frameworks or backend services are required.
+
+---
+
+## 📁 Project Structure
+
+quizApp/
+├── public/
+├── src/
+│ ├── index.html
+│ ├── game.html
+│ ├── index.css
+│ ├── game.js
+│ ├── storageFunctions.js
+│ └── ...
+├── package.json
+├── vite.config.js
+├── LICENSE
+└── README.md
+
+
+---
+
+## 📜 License
+
+This project is released under the **GPL-2.0 License**.  
+You are free to use, modify and redistribute it under the terms of the license.
+
+---
+
+## 🚀 Live Demo
+
+Hosted via GitHub Pages on a personal domain:  
+👉 https://quizapp.granafilo-ha.foo/
