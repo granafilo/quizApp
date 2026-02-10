@@ -448,8 +448,9 @@ if (pfpId == 'user.png') {
 }
 
 const welcomeMsg = document.getElementById('welcomeMessage');
+console.log(pfpId);
 welcomeMsg.innerHTML = `
-    <img class="pfp-icon" src="/src/images/profile_pics/${pfpId}" alt="">
+    <img class="pfp-icon" src="/images/profile_pics/${pfpId}" alt="">
     <span class="welcome-msg">${nickname}</span> 
     `
 
