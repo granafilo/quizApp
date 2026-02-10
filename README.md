@@ -62,25 +62,6 @@ No external frameworks or backend services are required.
 
 ---
 
-## 📁 Project Structure
-
-quizApp/
-├── public/
-├── src/
-│ ├── index.html
-│ ├── game.html
-│ ├── index.css
-│ ├── game.js
-│ ├── storageFunctions.js
-│ └── ...
-├── package.json
-├── vite.config.js
-├── LICENSE
-└── README.md
-
-
----
-
 ## 📜 License
 
 This project is released under the **GPL-2.0 License**.  
