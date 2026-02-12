@@ -4,13 +4,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Homepage</title>
+    <title>Interactive Quiz App - Test Your Knowledge</title>
+    <meta name="description"
+        content="Welcome to the ultimate Quiz App! Enter your nickname and challenge yourself with our interactive trivia. Are you ready to climb the leaderboard?">
+    <link rel="icon" href="/favicon.ico" />
+
     <link rel="stylesheet" href="/src/styles/home/index.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Quiz",
+            "name": "Nome della tua Quiz App",
+            "description": "Un divertente quiz interattivo per testare le tue conoscenze.",
+            "hasPart": {
+                "@type": "Question",
+                "name": "Esempio di domanda del quiz"
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -29,7 +47,7 @@
                 <div class="score-header-container">
 
                     <!--grid item-->
-                    <div class="score-header nickname-header" >
+                    <div class="score-header nickname-header">
                         <span>Nickname</span>
                     </div>
 
@@ -65,7 +83,8 @@
                     <div class="option-wrapper">
                         <!-- contenitore nickname -->
                         <div class="nickname-container">
-                            <input id="nickname" class="nickname-input" type="text" placeholder="Type your name..." alt="nickname input text">
+                            <input id="nickname" class="nickname-input" type="text" placeholder="Type your name..."
+                                alt="nickname input text">
                         </div>
                         <div class="diff-container">
                             <select name="" id="difficulty" class="diff-select" alt="difficulty select">

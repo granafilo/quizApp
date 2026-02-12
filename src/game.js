@@ -78,7 +78,7 @@ async function renderPage() {
         }
         //ottengo la domanda
         currentQuestion = allQuestions[numeroDomanda];
-
+        // console.log(currentQuestion)
         progressBar.style.width = calcolaPercentuale(numeroDomanda) + "%";
 
         let questionHTML = '';
@@ -115,22 +115,16 @@ async function renderPage() {
                 fiftyPercentBtn.classList.remove('disabled');
             }
             questionHTML = `              
-                <button id="opt1" class="js-multiple-option"
-                    correct="${answers[0].correct}">${answers[0].answer}</button>
-                <button id="opt2" class="js-multiple-option"
-                    correct="${answers[1].correct}">${answers[1].answer}</button>
-                <button id="opt3" class="js-multiple-option"
-                    correct="${answers[2].correct}">${answers[2].answer}</button>
-                <button id="opt4" class="js-multiple-option"
-                    correct="${answers[3].correct}">${answers[3].answer}</button>
+                <button id="opt1" class="js-multiple-option">${answers[0].answer}</button>
+                <button id="opt2" class="js-multiple-option">${answers[1].answer}</button>
+                <button id="opt3" class="js-multiple-option">${answers[2].answer}</button>
+                <button id="opt4" class="js-multiple-option">${answers[3].answer}</button>
             `;
         } else {
             fiftyPercentBtn.classList.add('disabled');
             questionHTML = `
-                <button class="js-boolean-option"
-                    correct="${currentQuestion.correct_answer === 'True' ? 'true' : 'false'}">True</button>
-                <button class="js-boolean-option"
-                    correct="${currentQuestion.correct_answer === 'False' ? 'true' : 'false'}">False</button>
+                <button class="js-boolean-option">True</button>
+                <button class="js-boolean-option">False</button>
             `
         }
 
@@ -145,40 +139,21 @@ async function renderPage() {
     document.getElementById('option').addEventListener('click', (event) => {
         const clickedElement = event.target;
         if (clickedElement.classList.contains('js-multiple-option')) {
-            if (clickedElement.getAttribute('correct') === "false") {
-                clickedElement.classList.add('wrong-option');
-                disableBtn("js-multiple-option", clickedElement);
-                score.errate++;
-                calcScore(false);
+
+            if (escapeHtml(decodeHTMLEntities(currentQuestion.correct_answer)) == clickedElement.innerText) {
+                checkAnswer(true, clickedElement);
             } else {
-                clickedElement.classList.add('correct-option');
-                disableBtn("js-multiple-option", clickedElement);
-                score.corrette++;
-                calcScore(true);
-            }
-            if (numeroDomanda + 1 < allQuestions.length) {
-                openNextQuestionMenu();
-            } else {
-                fineDomande();
+                checkAnswer(false, clickedElement);
             }
 
         } else if (clickedElement.classList.contains('js-boolean-option')) {
-            if (clickedElement.getAttribute('correct') === 'false') {
-                clickedElement.classList.add('wrong-option');
-                disableBtn("js-boolean-option", clickedElement);
-                score.errate++;
-                calcScore(false);
+            // console.log(clickedElement.innerText, escapeHtml(decodeHTMLEntities(currentQuestion.correct_answer)))
+            if (escapeHtml(decodeHTMLEntities(currentQuestion.correct_answer)) == clickedElement.innerText) {
+                checkAnswer(true, clickedElement);
             } else {
-                clickedElement.classList.add('correct-option');
-                disableBtn("js-boolean-option", clickedElement);
-                score.corrette++;
-                calcScore(true);
+                checkAnswer(false, clickedElement);
             }
-            if (numeroDomanda + 1 < allQuestions.length) {
-                openNextQuestionMenu();
-            } else {
-                fineDomande();
-            }
+
         }
 
     });
@@ -290,6 +265,19 @@ async function renderPage() {
             option.disabled = true;
         })
         clicked.classList.add("selezionato");
+    }
+
+    //funzione per verificare se la risposta è corretta
+    function checkAnswer(correct, clickedElement) {
+        clickedElement.classList.add(correct ? "correct-option" : 'wrong-option');
+        disableBtn("js-multiple-option", clickedElement);
+        score.errate++;
+        calcScore(correct ? true : false);
+        if (numeroDomanda + 1 < allQuestions.length) {
+            openNextQuestionMenu();
+        } else {
+            fineDomande();
+        }
     }
 
     //funzione per calcolare il punteggio di ogni singola domanda
@@ -448,7 +436,7 @@ if (pfpId == 'user.png') {
 }
 
 const welcomeMsg = document.getElementById('welcomeMessage');
-console.log(pfpId);
+// console.log(pfpId);
 welcomeMsg.innerHTML = `
     <img class="pfp-icon" src="/images/profile_pics/${pfpId}" alt="">
     <span class="welcome-msg">${nickname}</span> 
