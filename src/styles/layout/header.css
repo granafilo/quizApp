@@ -6,6 +6,7 @@
     font-weight: 800;
     text-align: center;
     padding: 15px;
+    margin: 0;
 }
 
 @media (min-width: 768px) {
