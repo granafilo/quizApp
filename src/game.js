@@ -442,14 +442,78 @@ welcomeMsg.innerHTML = `
     <span class="welcome-msg">${nickname}</span> 
     `
 
+// let success = false;
+
+// while (!success) {
+//     try {
+//         await renderPage();
+//         success = true;
+//         document.getElementById('loading').classList.add('d-none');
+//     } catch (error) {
+//         console.log('');
+//     }
+// }
+
+
+// Funzione di supporto per mettere in pausa (usata internamente)
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Nuova funzione per gestire il countdown visivo
+async function waitWithCountdown(seconds) {
+    const counterElement = document.getElementById('retryCounter');
+    
+    // Ciclo che conta alla rovescia
+    for (let i = seconds; i > 0; i--) {
+        if (counterElement) {
+            counterElement.innerText = `Troppe richieste. Nuovo tentativo tra ${i} secondi...`;
+        }
+        await wait(1000); // Aspetta esattamente 1 secondo
+    }
+    
+    // Testo da mostrare mentre fa effettivamente il nuovo tentativo
+    if (counterElement) {
+        counterElement.innerText = "Sto riprovando...";
+    }
+}
+
+// ---- LOGICA PRINCIPALE ----
+
 let success = false;
+let attempt = 1; 
+const delayInSeconds = 5; // <-- Usiamo i secondi invece dei millisecondi
 
 while (!success) {
     try {
-        await renderPage();
+        // Assicuriamoci che il loading sia visibile a ogni ciclo
+        document.getElementById('loading').classList.remove('d-none');
+        
+        await renderPage(); // Se fallisce, salta direttamente al catch
+        
+        // Se arriva qui, ha avuto successo!
         success = true;
+        document.getElementById('loading').classList.remove('d-flex');
         document.getElementById('loading').classList.add('d-none');
+        
     } catch (error) {
-        console.log('');
+        console.log(`Errore API. Ritento tra ${delayInSeconds} secondi... (Tentativo ${attempt})`);
+        
+        // Chiamiamo il countdown al posto dell'attesa fissa
+        await waitWithCountdown(delayInSeconds);
+        
+        attempt++;
+        
+        if (attempt > 6) { 
+            console.error("Server irraggiungibile dopo vari tentativi.");
+            
+            const counterElement = document.getElementById('retryCounter');
+            if (counterElement) {
+                counterElement.innerText = "Impossibile caricare le domande. Riprova più tardi.";
+            }
+            
+            // Rimuoviamo l'animazione di caricamento o mostriamo un tasto "Torna alla Home"
+            // document.getElementById('loading').classList.add('d-none'); 
+            
+            break; 
+        }
     }
 }
