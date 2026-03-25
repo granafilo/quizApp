@@ -200,7 +200,9 @@ async function renderPage() {
                 fiftyPercentDisplayed = false;
             }
         } else {
-            alert('Hai già usato questo aiuto')
+            alert('Hai già usato questo aiuto');
+            fiftyPercentBtn.classList.add("d-none");
+            fiftyPercentDisplayed = false;
         }
     })
 
@@ -271,7 +273,11 @@ async function renderPage() {
     function checkAnswer(correct, clickedElement) {
         clickedElement.classList.add(correct ? "correct-option" : 'wrong-option');
         disableBtn("js-multiple-option", clickedElement);
-        score.errate++;
+        if (correct){
+            score.corrette++;
+        }else{
+            score.errate++;
+        }
         calcScore(correct ? true : false);
         if (numeroDomanda + 1 < allQuestions.length) {
             openNextQuestionMenu();
@@ -461,7 +467,7 @@ const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Nuova funzione per gestire il countdown visivo
 async function waitWithCountdown(seconds) {
     const counterElement = document.getElementById('retryCounter');
-    
+
     // Ciclo che conta alla rovescia
     for (let i = seconds; i > 0; i--) {
         if (counterElement) {
@@ -469,7 +475,7 @@ async function waitWithCountdown(seconds) {
         }
         await wait(1000); // Aspetta esattamente 1 secondo
     }
-    
+
     // Testo da mostrare mentre fa effettivamente il nuovo tentativo
     if (counterElement) {
         counterElement.innerText = "Sto riprovando...";
@@ -479,41 +485,41 @@ async function waitWithCountdown(seconds) {
 // ---- LOGICA PRINCIPALE ----
 
 let success = false;
-let attempt = 1; 
+let attempt = 1;
 const delayInSeconds = 5; // <-- Usiamo i secondi invece dei millisecondi
 
 while (!success) {
     try {
         // Assicuriamoci che il loading sia visibile a ogni ciclo
         document.getElementById('loading').classList.remove('d-none');
-        
+
         await renderPage(); // Se fallisce, salta direttamente al catch
-        
+
         // Se arriva qui, ha avuto successo!
         success = true;
         document.getElementById('loading').classList.remove('d-flex');
         document.getElementById('loading').classList.add('d-none');
-        
+
     } catch (error) {
         console.log(`Errore API. Ritento tra ${delayInSeconds} secondi... (Tentativo ${attempt})`);
-        
+
         // Chiamiamo il countdown al posto dell'attesa fissa
         await waitWithCountdown(delayInSeconds);
-        
+
         attempt++;
-        
-        if (attempt > 6) { 
+
+        if (attempt > 6) {
             console.error("Server irraggiungibile dopo vari tentativi.");
-            
+
             const counterElement = document.getElementById('retryCounter');
             if (counterElement) {
                 counterElement.innerText = "Impossibile caricare le domande. Riprova più tardi.";
             }
-            
+
             // Rimuoviamo l'animazione di caricamento o mostriamo un tasto "Torna alla Home"
             // document.getElementById('loading').classList.add('d-none'); 
-            
-            break; 
+
+            break;
         }
     }
 }
