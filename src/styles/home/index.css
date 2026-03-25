@@ -3,18 +3,45 @@
 @import url("/src/styles/layout/base.css");
 @import url("/src/styles/home/scoreboard.css");
 @import url("/src/styles/home/gameinfo.css");
-@import url("/src/styles/home/pfp-picker.css");
+/* @import url("/src/styles/home/pfp-picker.css"); */
 @import url("/src/styles/layout/footer.css");
 /* @import url("/styles/full-score.css"); */
 
-.main-content{
-    grid-template-areas: "scoreboard" "option-wrapper" ;
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-primary: #37274d;
+  --color-secondary: #eedcff;
+}
+
+
+@layer components {
+    .diff-select-options {
+        @apply hover:bg-primary! hover:text-secondary transition-all duration-300 justify-center;
+    }
+
+    .scoreBoardMax { 
+        @apply  overflow-y-auto;
+    }
+}
+
+
+.main-content {
+    grid-template-areas: "scoreboard" "option-wrapper";
     grid-template-rows: auto;
     padding-bottom: 10%;
 }
 
-@media (min-width: 1200px){
-    .main-content{
+@media (min-width: 1200px) {
+    .main-content {
         padding-top: 15%;
         grid-template-columns: 1fr 1fr;
         grid-template-areas: " option-wrapper scoreboard";
@@ -22,7 +49,7 @@
     }
 }
 
-.game-option-wrapper{
+.game-option-wrapper {
     grid-area: option-wrapper;
     display: grid;
     grid-template-areas: "pfp-diff-container" "start-btn";
@@ -46,8 +73,8 @@
     }
 }
 
-@media (min-width: 1200px){
-    .pfp-diff-container{
+@media (min-width: 1200px) {
+    .pfp-diff-container {
         height: auto;
         grid-template-columns: 1fr;
         grid-template-areas: "pfp" "option-wrapper";
@@ -68,8 +95,8 @@
     position: relative;
 }
 
-@media (min-width: 1200px){
-    .pfp-container{
+@media (min-width: 1200px) {
+    .pfp-container {
         justify-content: center;
     }
 }
@@ -121,7 +148,7 @@
     justify-content: center;
     align-items: center;
 
-    margin:  0;
+    margin: 0;
 }
 
 .nickname-input {
@@ -133,10 +160,10 @@
     font-size: 1.3rem;
     text-align: center;
 
-    background: #f8f8f8 ;
+    background: #f8f8f8;
 }
 
-.nickname-input:focus{
+.nickname-input:focus {
     background: #dfdfdf;
 }
 
@@ -180,10 +207,10 @@
     text-align: center;
     cursor: pointer;
 
-    background: #f8f8f8 ;
+    background: #f8f8f8;
 }
 
-.diff-select:hover{
+.diff-select:hover {
     background-color: #dfdfdf;
 }
 
