@@ -271,7 +271,11 @@ async function renderPage() {
     function checkAnswer(correct, clickedElement) {
         clickedElement.classList.add(correct ? "correct-option" : 'wrong-option');
         disableBtn("js-multiple-option", clickedElement);
-        score.errate++;
+        if (correct){
+            score.corrette++;
+        }else{
+            score.errate++;
+        }
         calcScore(correct ? true : false);
         if (numeroDomanda + 1 < allQuestions.length) {
             openNextQuestionMenu();

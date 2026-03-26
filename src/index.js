@@ -63,13 +63,13 @@ document.querySelectorAll('.js-pfp').forEach((btn) => (
 //     }
 // })
 
-const deleteScore = document.querySelector(".delete-icon");
+// const deleteScore = document.querySelector(".delete-icon");
 
-deleteScore.addEventListener("click", () => {
-    deleteStorage();
-    scoreBoard = loadFroamStorage() || [];
-    loadScoreBoard();
-});
+// deleteScore.addEventListener("click", () => {
+//     deleteStorage();
+//     scoreBoard = loadFroamStorage() || [];
+//     loadScoreBoard();
+// });
 
 function loadScoreBoard() {
     scoreHtml = '';

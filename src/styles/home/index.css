@@ -25,7 +25,7 @@
 
 @layer components {
     .diff-select-options {
-        @apply hover:bg-primary! hover:text-secondary transition-all duration-300 justify-center;
+        @apply hover:bg-primary! hover:text-secondary transition-all duration-300 lg:justify-center;
     }
 
     .scoreBoardMax { 

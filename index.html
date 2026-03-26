@@ -35,14 +35,14 @@
 
 <body class="min-h-screen flex flex-col">
 
-    <header class=" bg-[#FAFAFA] w-full flex justify-between items-center px-15 py-5">
+    <header class="bg-[#FAFAFA] w-full flex justify-between items-center px-5 lg:px-15 py-5">
         <h1 class="text-3xl lg:text-4xl font-extrabold text-[#4F00D0] flex-1">Quiz App</h1>
-        <div class="flex gap-5 text-lg flex-1 justify-center">
+        <div class="flex gap-5 text-lg flex-1 justify-center lg:justify-end">
             <button class="font-bold text-[#4F00D0] border-b-2 border-transparent cursor-pointer">Home</button>
             <button
                 class="text-[#64748b] cursor-pointer border-b-2 border-transparent hover:border-[#4F00D0] transition-all duration-300">Github</button>
         </div>
-        <div class="flex-1  flex justify-end">
+        <div class="flex-1 lg:hidden flex justify-end">
             <button class="btn border-none rounded-full group">
                 <svg class="group-hover:fill-[#4F00D0] fill-[#000000] cursor-pointer tansition-all duration-200"
                     xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" stroke="#FAFAFA">
@@ -62,8 +62,9 @@
         </section> -->
 
         <!-- main content -->
-        <section class="w-full flex gap-5 px-15  items-start max-h-[920px]">
-            <div id="scoreBoardWrapper" class=" hidden w-4/12 3xl:w-3/12 xl:flex flex-col shadow-lg py-15  rounded-[25px] gap-5 transition-all duration-500 ">
+        <section class="w-full flex gap-5 px-2 lg:px-15  items-start max-h-[920px]">
+            <div id="scoreBoardWrapper"
+                class=" hidden w-4/12 3xl:w-3/12 xl:flex flex-col shadow-lg py-15  rounded-[25px] gap-5 transition-all duration-500 ">
                 <div class="flex justify-between items-center px-10 ">
                     <h1 class="text-3xl font-bold">Last Matches</h1>
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
@@ -72,17 +73,21 @@
                             clip-rule="evenodd" />
                     </svg>
                 </div>
-                <div id="scoreBoard" class="justify-start overflow-y-auto flex-1 flex flex-col gap-5 px-10">
+                <div id="scoreBoard" class="justify-start overflow-y-auto flex-1 flex flex-col gap-5 px-10 py-5">
 
                 </div>
                 <div class="w-full px-10">
-                    <button id="viewMoreScoreBoard" class=" w-full btn btn-soft btn-primary p-2 text-lg h-auto rounded-full">View more</button>
+                    <button id="viewMoreScoreBoard"
+                        class=" w-full btn btn-soft btn-primary p-2 text-lg h-auto rounded-full">View more</button>
                 </div>
                 <div class="px-10">
-                    <button id="viewLessScoreBoard" class="hidden w-full btn btn-soft btn-primary p-2 text-lg h-auto rounded-full">View Less</button>
+                    <button id="viewLessScoreBoard"
+                        class="hidden w-full btn btn-soft btn-primary p-2 text-lg h-auto rounded-full">View
+                        Less</button>
                 </div>
             </div>
-            <div id="right-panel" class="w-full 3xl:w-9/12 bg-[#FAFAFA] rounded-xl px-30 2xl:px-100 py-15 flex flex-col gap-5">
+            <div id="right-panel"
+                class="w-full 3xl:w-9/12 bg-[#FAFAFA] rounded-xl px-5 lg:px-30 2xl:px-100 py-15 flex flex-col gap-5">
                 <div class="flex justify-center">
                     <button id="pfp-btn" class="relative bg-secondary p-7  rounded-full cursor-pointer"
                         onclick="pfpModal.showModal()">
@@ -108,7 +113,7 @@
 
                     <select id="difficulty"
                         class="select w-full justify-center h-auto p-5 text-2xl font-bold text-primary bg-secondary rounded-[15px] cursor-pointer">
-                        <option disabled selected value="" class="justify-center">DIFFICULTY</option>
+                        <option disabled selected value="" class="lg:justify-center">DIFFICULTY</option>
                         <option value="Mixed" class="diff-select-options">Mixed</option>
                         <option value="Easy" class="diff-select-options">Easy</option>
                         <option value="Medium" class="diff-select-options">Medium</option>
@@ -126,46 +131,60 @@
 
         <!-- You can open the modal using ID.showModal() method -->
         <dialog id="pfpModal" class="modal">
-            <div class="modal-box w-400 max-w-none bg-secondary flex flex-col justify-center gap-5">
+            <form method="dialog" class="modal-backdrop cursor-default">
+                    <button>close</button>
+                </form>
+            <div class="modal-box lg:max-w-300 bg-secondary flex flex-col justify-center gap-5">
                 <div class="h-auto grid grid-cols-[repeat(auto-fill,minmax(100px,16%))] gap-10 justify-center">
                     <button class="overflow-hidden">
                         <img id="marco.svg" src="/images/profile_pics/marco.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="alessandro.svg" src="/images/profile_pics/alessandro.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="arianna.svg" src="/images/profile_pics/arianna.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="mario.svg" src="/images/profile_pics/mario.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="fabio.svg" src="/images/profile_pics/fabio.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="elisa.svg" src="/images/profile_pics/elisa.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="paolo.svg" src="/images/profile_pics/paolo.svg"
-                           class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
-                        <img id="prof.svg" src="/images/profile_pics/prof.svg" class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                        <img id="prof.svg" src="/images/profile_pics/prof.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="sinner.svg" src="/images/profile_pics/sinner.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                     <button class="overflow-hidden">
                         <img id="maria.svg" src="/images/profile_pics/maria.svg"
-                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400" alt="">
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                 </div>
                 <form class="w-full" method="dialog">
@@ -173,6 +192,7 @@
                         CLOSE
                     </button>
                 </form>
+                
             </div>
         </dialog>
 
@@ -216,7 +236,7 @@
         </p>
     </footer>
 
-    
+
 
     <script src="./src/index.js" type="module"></script>
 </body>
