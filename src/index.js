@@ -17,7 +17,7 @@ const pfpPickerDialog = document.querySelector(".pfp-picker-dialog");
 const currentPfp = document.getElementById('current-pfp');
 const closePfpStackBtn = document.getElementById('close-pfp-stack-btn');
 
-const gameInfoDialog = document.querySelector('.game-info-dialog');
+const gameInfoModal = document.getElementById('gameInfoModal');
 const gameInfoCloseBtn = document.querySelector('.close-btn-game-info');
 
 let nickname = document.getElementById('nickname');
@@ -89,29 +89,14 @@ function loadScoreBoard() {
             const nickname = tentativo.username;
             const score = tentativo.score;
             scoreHtml = `
-                    <div class="flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-400" data-id=${gameId}>
+            <div class="js-score-card flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-400" data-id=${gameId}>
                 <div class="text-2xl font-extrabold text-gray-600">${count}</div>
                 <div class="w-full flex justify-between">
                     <div class="font-bold text-xl">${nickname}</div>
                     <div class="text-[#4F00D0] font-bold text-lg">${score.punteggio}</div>
                 </div>
-            </div>
-                    
+            </div>  
                 `;
-            // scoreHtml = `
-            //     <button class="score-header nickname-header" data-id=${gameId}>
-            //         <span class="text-wrap text-break" >${nickname}</span>
-            //     </button>
-            //     <button class="score-header points-header" data-id=${gameId}>
-            //         <span class="text-wrap text-break" >${score.punteggio}</span>
-            //     </button>
-            //     <div class="score-header correct-header" data-id=${gameId}>
-            //         <span class="text-break text-wrap" >${score.corrette}</span>
-            //     </div>
-            //     <div class="score-header wrong-header" data-id=${gameId}>
-            //         <span class="text-break text-wrap" >${score.errate}</span>
-            //     </div>
-            //`;
             scoreBoardHtml.innerHTML += scoreHtml;
         })
     } else {
@@ -122,7 +107,7 @@ function loadScoreBoard() {
             const score = tentativo.score;
 
             scoreHtml = `
-            <div class="flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-400" data-id=${gameId}>
+            <div class="js-score-card flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-400" data-id=${gameId}>
                 <div class="text-2xl font-extrabold text-gray-600">${i + 1}</div>
                 <div class="w-full flex justify-between">
                     <div class="font-bold text-xl">${nickname}</div>
@@ -196,10 +181,10 @@ function loadScoreBoard() {
 }
 
 scoreBoardHtml.addEventListener('click', (event) => {
-    const targetElement = event.target.closest('.nickname-header, .points-header');
-    if (targetElement && ((window.innerWidth <= 768) || (window.innerWidth >= 1200))) {
+    const targetElement = event.target.closest('.js-score-card');
+    if (targetElement ) {
 
-        gameInfoDialog.showModal();
+        gameInfoModal.showModal();
 
         const gameId = targetElement.dataset.id;
         const gameInfo = findGameById(gameId);
@@ -236,12 +221,12 @@ viewLessBtn.addEventListener("click", () => {
 
 
 gameInfoCloseBtn.addEventListener('click', () => {
-    gameInfoDialog.close();
+    gameInfoModal.close();
 });
 
-gameInfoDialog.addEventListener('click', (event) => {
+gameInfoModal.addEventListener('click', (event) => {
     if (event.target.nodeName == "DIALOG") {
-        gameInfoDialog.close();
+        gameInfoModal.close();
     }
 })
 
