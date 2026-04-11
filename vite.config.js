@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/', 
+  base: '/',
   build: {
     rollupOptions: {
       input: {
@@ -11,4 +12,8 @@ export default defineConfig({
       },
     },
   },
+  plugins: [
+    tailwindcss(),
+  ],
 })
+

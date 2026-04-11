@@ -9,12 +9,15 @@ const startGameBtn = document.getElementById('startGameBtn');
 let scoreBoard = loadFroamStorage() || [];
 const scoreBoardHtml = document.getElementById('scoreBoard');
 
+const viewMoreBtn = document.getElementById("viewMoreScoreBoard");
+const viewLessBtn = document.getElementById("viewLessScoreBoard");
+
 const choosePfpBtn = document.getElementById('pfp-btn');
 const pfpPickerDialog = document.querySelector(".pfp-picker-dialog");
 const currentPfp = document.getElementById('current-pfp');
 const closePfpStackBtn = document.getElementById('close-pfp-stack-btn');
 
-const gameInfoDialog = document.querySelector('.game-info-dialog');
+const gameInfoModal = document.getElementById('gameInfoModal');
 const gameInfoCloseBtn = document.querySelector('.close-btn-game-info');
 
 let nickname = document.getElementById('nickname');
@@ -34,19 +37,19 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-choosePfpBtn.addEventListener('click', () => {
-    pfpPickerDialog.showModal();
-})
+// choosePfpBtn.addEventListener('click', () => {
+//     pfpPickerDialog.showModal();
+// })
 
 
-closePfpStackBtn.addEventListener('click', () => {
-    pfpPickerDialog.close();
-});
+// closePfpStackBtn.addEventListener('click', () => {
+//     pfpPickerDialog.close();
+// });
 
 
 document.querySelectorAll('.js-pfp').forEach((btn) => (
     btn.addEventListener(('click'), () => {
-        pfpPickerDialog.close();
+        document.getElementById('pfpModal').close();
 
         const srcNewPfp = btn.src;
         currentPfp.src = srcNewPfp;
@@ -54,55 +57,134 @@ document.querySelectorAll('.js-pfp').forEach((btn) => (
     })
 ));
 
-pfpPickerDialog.addEventListener("click", (event) => {
-    if (event.target.nodeName == "DIALOG") {
-        pfpPickerDialog.close();
-    }
-})
+// pfpPickerDialog.addEventListener("click", (event) => {
+//     if (event.target.nodeName == "DIALOG") {
+//         pfpPickerDialog.close();
+//     }
+// })
 
-const deleteScore = document.querySelector(".delete-icon");
+// const deleteScore = document.querySelector(".delete-icon");
 
-deleteScore.addEventListener("click", () => {
-    deleteStorage();
-    scoreBoard = loadFroamStorage() || [];
-    loadScoreBoard();
-});
+// deleteScore.addEventListener("click", () => {
+//     deleteStorage();
+//     scoreBoard = loadFroamStorage() || [];
+//     loadScoreBoard();
+// });
 
 function loadScoreBoard() {
     scoreHtml = '';
     scoreBoardHtml.innerHTML = '';
-    scoreBoard.forEach((tentativo) => {
-        const gameId = tentativo.gameId;
-        const nickname = tentativo.username;
-        const score = tentativo.score;
+    console.log(scoreBoard.length)
+    // console.log(scoreBoard.length > 3 ? 3 : scoreBoard.length)
 
-        scoreHtml = `
-            <button class="score-header nickname-header" data-id=${gameId}>
-                <span class="text-wrap text-break" >${nickname}</span>
-            </button>
+    if (scoreBoard.length <= 3) {
+        viewMoreBtn.classList.add("hidden");
+    }
 
-            <button class="score-header points-header" data-id=${gameId}>
-                <span class="text-wrap text-break" >${score.punteggio}</span>
-            </button>
+    if (viewMoreBtn.classList.contains("hidden")) {
+        let count = 0;
+        scoreBoard.forEach((tentativo) => {
+            count++;
+            const gameId = tentativo.gameId;
+            const nickname = tentativo.username;
+            const score = tentativo.score;
+            scoreHtml = `
+            <div class="js-score-card flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-400" data-id=${gameId}>
+                <div class="text-2xl font-extrabold text-gray-600">${count}</div>
+                <div class="w-full flex justify-between">
+                    <div class="font-bold text-xl">${nickname}</div>
+                    <div class="text-[#4F00D0] font-bold text-lg">${score.punteggio}</div>
+                </div>
+            </div>  
+                `;
+            scoreBoardHtml.innerHTML += scoreHtml;
+        })
+    } else {
+        for (let i = 0; i < (scoreBoard.length > 3 ? 3 : scoreBoard.length); i++) {
+            let tentativo = scoreBoard[i];
+            const gameId = tentativo.gameId;
+            const nickname = tentativo.username;
+            const score = tentativo.score;
 
-            <div class="score-header correct-header" data-id=${gameId}>
-                <span class="text-break text-wrap" >${score.corrette}</span>
+            scoreHtml = `
+            <div class="js-score-card flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-400" data-id=${gameId}>
+                <div class="text-2xl font-extrabold text-gray-600">${i + 1}</div>
+                <div class="w-full flex justify-between">
+                    <div class="font-bold text-xl">${nickname}</div>
+                    <div class="text-[#4F00D0] font-bold text-lg">${score.punteggio}</div>
+                </div>
             </div>
+        `;
 
-            <div class="score-header wrong-header" data-id=${gameId}>
-                <span class="text-break text-wrap" >${score.errate}</span>
-            </div>
-    `;
+            scoreBoardHtml.innerHTML += scoreHtml;
+        }
 
-        scoreBoardHtml.innerHTML += scoreHtml;
-    })
+    }
+
+    // for (let i = 0; i < (scoreBoard.length > 3 ? 3 : scoreBoard.length); i++) {
+    //     let tentativo = scoreBoard[i];
+    //     const gameId = tentativo.gameId;
+    //     const nickname = tentativo.username;
+    //     const score = tentativo.score;
+
+    //     scoreHtml = `
+    //         <div class="flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-400" data-id=${gameId}>
+    //             <div class="text-2xl font-extrabold text-gray-600">${i + 1}</div>
+    //             <div class="w-full flex justify-between">
+    //                 <div class="font-bold text-xl">${nickname}</div>
+    //                 <div class="text-[#4F00D0] font-bold text-lg">${score.punteggio}</div>
+    //             </div>
+    //         </div>
+    //     `;
+
+    //     scoreBoardHtml.innerHTML += scoreHtml;
+    // }
+
+
+
+    // scoreBoard.forEach((tentativo) => {
+    //     count++;
+    //     const gameId = tentativo.gameId;
+    //     const nickname = tentativo.username;
+    //     const score = tentativo.score;
+
+    //     scoreHtml = `
+    //         <div class="flex items-center p-5 bg-[#FAFAFA] gap-5 rounded-2xl" data-id=${gameId}>
+    //             <div class="text-2xl font-extrabold">${count}</div>
+    //             <div class="w-full flex justify-between">
+    //                 <div class="font-bold text-xl">${nickname}</div>
+    //                 <div class="text-[#4F00D0] font-bold text-lg">${score.punteggio}</div>
+    //             </div>
+    //         </div>
+    //     `;
+
+    //     // scoreHtml = `
+    //     //     <button class="score-header nickname-header" data-id=${gameId}>
+    //     //         <span class="text-wrap text-break" >${nickname}</span>
+    //     //     </button>
+
+    //     //     <button class="score-header points-header" data-id=${gameId}>
+    //     //         <span class="text-wrap text-break" >${score.punteggio}</span>
+    //     //     </button>
+
+    //     //     <div class="score-header correct-header" data-id=${gameId}>
+    //     //         <span class="text-break text-wrap" >${score.corrette}</span>
+    //     //     </div>
+
+    //     //     <div class="score-header wrong-header" data-id=${gameId}>
+    //     //         <span class="text-break text-wrap" >${score.errate}</span>
+    //     //     </div>
+    // //`;
+
+    //     scoreBoardHtml.innerHTML += scoreHtml;
+    // })
 }
 
 scoreBoardHtml.addEventListener('click', (event) => {
-    const targetElement = event.target.closest('.nickname-header, .points-header');
-    if (targetElement && ((window.innerWidth <= 768) || (window.innerWidth >= 1200))) {
+    const targetElement = event.target.closest('.js-score-card');
+    if (targetElement ) {
 
-        gameInfoDialog.showModal();
+        gameInfoModal.showModal();
 
         const gameId = targetElement.dataset.id;
         const gameInfo = findGameById(gameId);
@@ -119,15 +201,32 @@ scoreBoardHtml.addEventListener('click', (event) => {
     }
 });
 
+viewMoreBtn.addEventListener("click", () => {
+    const wrapper = document.getElementById('scoreBoardWrapper');
+    const rightPanelHeight = document.getElementById('right-panel').offsetHeight;
+    console.log(rightPanelHeight)
+    wrapper.style.height= rightPanelHeight + 'px';
+    viewMoreBtn.classList.add("hidden");
+    viewLessBtn.classList.remove("hidden");
+    loadScoreBoard();
+});
+
+viewLessBtn.addEventListener("click", () => {
+    document.getElementById('scoreBoardWrapper').style.height = 'auto';
+    viewMoreBtn.classList.remove("hidden");
+    viewLessBtn.classList.add("hidden");
+    loadScoreBoard();
+});
+
 
 
 gameInfoCloseBtn.addEventListener('click', () => {
-    gameInfoDialog.close();
+    gameInfoModal.close();
 });
 
-gameInfoDialog.addEventListener('click', (event) => {
+gameInfoModal.addEventListener('click', (event) => {
     if (event.target.nodeName == "DIALOG") {
-        gameInfoDialog.close();
+        gameInfoModal.close();
     }
 })
 

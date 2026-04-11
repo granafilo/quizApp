@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -29,124 +29,209 @@
             }
         }
     </script>
+
+
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
 
-    <div class="main-container">
+    <header class="bg-[#FAFAFA] w-full flex justify-between items-center px-5 lg:px-15 py-5">
+        <h1 class="text-3xl lg:text-4xl font-extrabold text-[#4F00D0] flex-1">Quiz App</h1>
+        <div class="flex gap-5 text-lg flex-1 justify-center lg:justify-end">
+            <button class="font-bold text-[#4F00D0] border-b-2 border-transparent cursor-pointer">Home</button>
+            <button
+                class="text-[#64748b] cursor-pointer border-b-2 border-transparent hover:border-[#4F00D0] transition-all duration-300">Github</button>
+        </div>
+        <div class="flex-1 lg:hidden flex justify-end">
+            <button class="btn border-none rounded-full group">
+                <svg class="group-hover:fill-[#4F00D0] fill-[#000000] cursor-pointer tansition-all duration-200"
+                    xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" stroke="#FAFAFA">
+                    <path fill=""
+                        d="m12 7.09l2.45 1.49l-.65-2.81L16 3.89l-2.89-.25L12 1l-1.13 2.64L8 3.89l2.18 1.88l-.68 2.81zM15 23H9V10h6zM1 17v6h6v-6zm4 4H3v-2h2zm12-8v10h6V13zm4 8h-2v-6h2z" />
+                </svg>
+            </button>
+        </div>
+    </header>
 
-        <h1 class="homepage-title">
-            Quiz App
-        </h1>
+    <main class="w-full flex-1 bg-[#fbf3ff]! py-5">
+        <!-- title -->
+        <!-- <section class="w-full flex flex-col justify-center items-center gap-8 px-15 py-25">
+            <h1 class="text-9xl font-extrabold text-[#4F00D0]">Quiz App</h1>
+            <p class="text-[#66547d] text-lg">Test your knowledge and try your best in the most vibrant trivia
+                experience</p>
+        </section> -->
 
-        <!--contenitore principale-->
-        <div id="main-content" class="main-content">
-
-            <!--scoreboard-->
-            <div class="score-table-container">
-                <div class="score-header-container">
-
-                    <!--grid item-->
-                    <div class="score-header nickname-header">
-                        <span>Nickname</span>
-                    </div>
-
-                    <!--grid item-->
-                    <div class="score-header points-header">
-                        <span>Score</span>
-                    </div>
-
-                    <div class="score-header correct-header">
-                        <span>Correct</span>
-                    </div>
-
-                    <div class="score-header wrong-header">
-                        <span>Wrong</span>
-                    </div>
-
-
-                    <img class="delete-icon" src="/images/trashbin.svg" alt="">
-
+        <!-- main content -->
+        <section class="w-full flex gap-5 px-2 lg:px-15  items-start max-h-[920px]">
+            <div id="scoreBoardWrapper"
+                class=" hidden w-4/12 3xl:w-3/12 xl:flex flex-col shadow-lg py-15  rounded-[25px] gap-5 transition-all duration-500 ">
+                <div class="flex justify-between items-center px-10 ">
+                    <h1 class="text-3xl font-bold">Last Matches</h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
+                        <path fill="currentColor" fill-rule="evenodd"
+                            d="M13.667 1.712a.75.75 0 1 1 1.385.576l-1.04 2.5a.75.75 0 1 1-1.385-.576zm3.647-.015a.75.75 0 1 1 1.372.606l-3.435 7.78a6.75 6.75 0 1 1-6.923.252l-4-8a.75.75 0 1 1 1.342-.67l4 7.998a6.7 6.7 0 0 1 1.875-.398L8.16 2.33a.75.75 0 0 1 1.348-.658l3.755 7.697q.306.059.6.143zM12.05 12.9a.75.75 0 0 1 1.2.6v5a.75.75 0 0 1-1.5 0V15l-.8.6a.75.75 0 0 1-.9-1.2z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div id="scoreBoard" class="justify-start overflow-y-auto flex-1 flex flex-col gap-5 px-10 py-5">
 
                 </div>
-                <div id="scoreBoard" class="score-board"></div>
+                <div class="w-full px-10">
+                    <button id="viewMoreScoreBoard"
+                        class=" w-full btn btn-soft btn-primary p-2 text-lg h-auto rounded-full">View more</button>
+                </div>
+                <div class="px-10">
+                    <button id="viewLessScoreBoard"
+                        class="hidden w-full btn btn-soft btn-primary p-2 text-lg h-auto rounded-full">View
+                        Less</button>
+                </div>
             </div>
-
-            <!-- container pfp e difficoltà -->
-            <div class="game-option-wrapper">
-                <div class="pfp-diff-container">
-                    <div class="pfp-container">
-                        <button id="pfp-btn" class="pfp-btn">
-                            <img id="current-pfp" class="current-pfp" src="/images/profile_pics/user.svg" alt="">
-                        </button>
-                    </div>
-                    <div class="option-wrapper">
-                        <!-- contenitore nickname -->
-                        <div class="nickname-container">
-                            <input id="nickname" class="nickname-input" type="text" placeholder="Type your name..."
-                                alt="nickname input text">
+            <div id="right-panel"
+                class="w-full 3xl:w-9/12 bg-[#FAFAFA] rounded-xl px-5 lg:px-30 2xl:px-100 py-15 flex flex-col gap-5">
+                <div class="flex justify-center">
+                    <button id="pfp-btn" class="relative bg-secondary p-7  rounded-full cursor-pointer"
+                        onclick="pfpModal.showModal()">
+                        <img id="current-pfp" class="aspect-square object-fit" width="150px"
+                            src="/images/profile_pics/user.svg" alt="">
+                        <div class="absolute top-40 left-39 bg-[#4F00D0] p-2.5 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="#eedcff"
+                                    d="M19 16.25a.75.75 0 0 1 .727.568l.291 1.163l1.164.291a.75.75 0 0 1 0 1.455l-1.164.291l-.29 1.164a.75.75 0 0 1-1.456 0l-.29-1.164l-1.164-.29a.75.75 0 0 1 0-1.456l1.163-.29l.291-1.164A.75.75 0 0 1 19 16.25M4.104 2.507c.298-.871 1.585-.842 1.818.087l.296 1.188l1.188.297c.96.24.96 1.603 0 1.842l-1.188.297l-.296 1.188c-.24.96-1.603.96-1.843 0l-.297-1.188l-1.188-.297c-.96-.24-.96-1.602 0-1.842l1.188-.297l.297-1.188zM5 4.797A1 1 0 0 1 4.797 5A1 1 0 0 1 5 5.203A1 1 0 0 1 5.203 5A1 1 0 0 1 5 4.796m11.738-1.069a1.3 1.3 0 0 1 1.838 0l1.697 1.697a1.3 1.3 0 0 1 0 1.838l-1.909 1.91l-3.536-3.536zm-7.92 14.991a.5.5 0 0 1-.255.136l-3.536.707a.5.5 0 0 1-.588-.588l.707-3.535a.5.5 0 0 1 .137-.256l8.838-8.839l3.536 3.536z" />
+                            </svg>
                         </div>
-                        <div class="diff-container">
-                            <select name="" id="difficulty" class="diff-select" alt="difficulty select">
-                                <option value="" selected>DIFFICULTY</option>
-                                <option value="Mixed">Mixed</option>
-                                <option value="Easy">Easy</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Hard">Hard</option>
-                            </select>
-                        </div>
-                    </div>
+                    </button>
 
                 </div>
-                <!-- contenitore start button -->
-                <div class="start-btn-container">
-                    <button id="startGameBtn" class="start-btn" alt="start the game button">
+                <div class="flex w-full flex-col gap-2.5 justify-center">
+                    <h1 class="font-extrabold text-5xl text-center text-primary">Ready to Play?</h1>
+                    <h6 class="text-[#66547d] text-center">Enter your nickname and choose your difficulty</h6>
+                </div>
+                <!-- input section -->
+                <div class="flex flex-col w-full gap-7.5">
+                    <input id="nickname" type="text" placeholder="Type your name..."
+                        class="text-center w-full h-auto p-5 input bg-secondary rounded-[15px] text-2xl" />
+
+                    <select id="difficulty"
+                        class="select w-full justify-center h-auto p-5 text-2xl font-bold text-primary bg-secondary rounded-[15px] cursor-pointer">
+                        <option disabled selected value="" class="lg:justify-center">DIFFICULTY</option>
+                        <option value="Mixed" class="diff-select-options">Mixed</option>
+                        <option value="Easy" class="diff-select-options">Easy</option>
+                        <option value="Medium" class="diff-select-options">Medium</option>
+                        <option value="Hard" class="diff-select-options">Hard</option>
+                    </select>
+
+                    <button id="startGameBtn"
+                        class="btn w-full p-5 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-4xl text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300"
+                        alt="start the game button">
                         Start Game
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- contenitore pfp stack -->
-        <dialog class="pfp-picker-dialog">
-            <div id="pfp-stack-container" class="pfp-stack-container">
-                <div class="pfp-grid">
-                    <button>
-                        <img id="marco.svg" src="/images/profile_pics/marco.svg" class="js-pfp" alt="">
+        <dialog id="pfpModal" class="modal">
+            <form method="dialog" class="modal-backdrop cursor-default">
+                <button>close</button>
+            </form>
+            <div class="modal-box lg:max-w-300 bg-secondary flex flex-col justify-center gap-5">
+                <div class="h-auto grid grid-cols-[repeat(auto-fill,minmax(100px,16%))] gap-10 justify-center">
+                    <button class="overflow-hidden">
+                        <img id="marco.svg" src="/images/profile_pics/marco.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="alessandro.svg" src="/images/profile_pics/alessandro.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="alessandro.svg" src="/images/profile_pics/alessandro.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="arianna.svg" src="/images/profile_pics/arianna.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="arianna.svg" src="/images/profile_pics/arianna.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="mario.svg" src="/images/profile_pics/mario.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="mario.svg" src="/images/profile_pics/mario.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="fabio.svg" src="/images/profile_pics/fabio.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="fabio.svg" src="/images/profile_pics/fabio.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="elisa.svg" src="/images/profile_pics/elisa.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="elisa.svg" src="/images/profile_pics/elisa.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="paolo.svg" src="/images/profile_pics/paolo.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="paolo.svg" src="/images/profile_pics/paolo.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="prof.svg" src="/images/profile_pics/prof.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="prof.svg" src="/images/profile_pics/prof.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="sinner.svg" src="/images/profile_pics/sinner.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="sinner.svg" src="/images/profile_pics/sinner.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
-                    <button>
-                        <img id="maria.svg" src="/images/profile_pics/maria.svg" class="js-pfp" alt="">
+                    <button class="overflow-hidden">
+                        <img id="maria.svg" src="/images/profile_pics/maria.svg"
+                            class="js-pfp w-full h-full object-cover cursor-pointer hover:scale-105 transition-all duration-400"
+                            alt="">
                     </button>
                 </div>
-                <div class="close-btn-container">
-                    <button id="close-pfp-stack-btn" class="close-btn">CLOSE</button>
-                </div>
+                <form class="w-full" method="dialog">
+                    <button class="btn btn-soft btn-error text-2xl p-2 h-auto w-full rounded-full" method="dialog">
+                        CLOSE
+                    </button>
+                </form>
+
             </div>
         </dialog>
+
+        <dialog id="gameInfoModal" class="modal">
+            <form method="dialog" class="modal-backdrop cursor-default">
+                <button>close</button>
+            </form>
+            <div class="modal-box lg:max-w-300 rounded-[30px] p-10 flex flex-col justify-center gap-10">
+                <div class="flex flex-col gap-5">
+                    <h1 class="text-5xl text-primary font-extrabold">Match Details</h1>
+                    <p class="text-xl">Player: <span class="italic game-info-user text-2xl">Granafilo</span></p>
+                </div>
+                <div class="flex gap-10">
+                    <div
+                        class="flex-1 flex flex-col w-full items-center justify-center p-10 bg-secondary rounded-[25px] text-primary text-2xl font-bold gap-2">
+                        <div>PUNTEGGIO</div>
+                        <div class="text-4xl game-info-score-number"></div>
+                    </div>
+                    <div
+                        class="flex-1 flex flex-col w-full items-center justify-center p-10 bg-[#ecfdec] rounded-[25px] text-[#0d6c26] text-2xl font-bold gap-2">
+                        <div>CORRETTE</div>
+                        <div class="text-4xl game-info-correct-number">100</div>
+                    </div>
+                    <div
+                        class="flex-1 flex flex-col w-full items-center justify-center p-10 bg-[#feedf0] rounded-[25px] text-[#b4113d] text-2xl font-bold gap-2">
+                        <div>ERRATE</div>
+                        <div class="text-4xl game-info-wrong-number">100</div>
+                    </div>
+                </div>
+                <form class="w-full" method="dialog">
+                    <button class="btn btn-soft btn-error text-2xl p-2 h-auto w-full rounded-full" method="dialog">
+                        CLOSE
+                    </button>
+                </form>
+            </div>
+        </dialog>
+
+
+
+
 
         <dialog class="game-info-dialog">
             <div class="game-selected d-flex">
@@ -173,20 +258,21 @@
                 <button class="close-btn-game-info" alt="close the menu button">X CLOSE</button>
             </div>
         </dialog>
+    </main>
+
+    <footer class=" bg-[#FAFAFA] flex justify-center p-5">
+        <p>
+            Quiz questions sourced from <a href="https://opentdb.com/" target="_blank" class="text-primary"><strong>Open
+                    Trivia DB</strong></a>.
+            Licensed under
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer">
+                Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+            </a>.
+        </p>
+    </footer>
 
 
-        <div class="footer">
-            <p>
-                Quiz questions sourced from <a href="https://opentdb.com/" target="_blank"><strong>Open Trivia
-                        DB</strong></a>. <br>
-                Licensed under
-                <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank"
-                    rel="license noopener noreferrer">
-                    Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
-                </a>.
-            </p>
-        </div>
-    </div>
+
     <script src="./src/index.js" type="module"></script>
 </body>
 
