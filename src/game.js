@@ -1,538 +1,468 @@
-/**
- * @file game.js
- * @description Core game logic, API data fetching, user interaction, and score management for Quiz App.
- */
-
 import { loadFroamStorage, saveToStorage } from "/src/storage/storageFunctions.js";
 
-/* ==========================================================================
-   Helper Functions
-   ========================================================================== */
-
-/**
- * Decodes HTML entities from API response strings.
- * @param {string} text 
- * @returns {string}
- */
 function decodeHTMLEntities(text) {
-    if (!text) return "";
     const textarea = document.createElement("textarea");
     textarea.innerHTML = text;
     return textarea.value;
 }
 
-/**
- * Shuffles an array randomly using the Fisher-Yates algorithm.
- * @template T
- * @param {T[]} array 
- * @returns {T[]}
- */
 function shuffleArray(array) {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
+    for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        [array[i], array[j]] = [array[j], array[i]];
     }
-    return shuffled;
+    return array;
 }
 
-/**
- * Delays execution for a specified duration.
- * @param {number} ms - Milliseconds to wait
- * @returns {Promise<void>}
- */
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+async function getQuestions(difficulty, category) {
+    let url = `https://opentdb.com/api.php?amount=15`;
+    if (difficulty && difficulty !== 'mixed') {
+        url += `&difficulty=${encodeURIComponent(difficulty)}`;
+    }
+    if (category) {
+        url += `&category=${encodeURIComponent(category)}`;
+    }
 
-/* ==========================================================================
-   Game State
-   ========================================================================== */
+    let domande = null;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
 
-const params = new URLSearchParams(window.location.search);
-const rawDifficulty = (params.get("difficulty") || "").toLowerCase();
-const rawCategory = params.get("category") || "";
-let rawPfp = params.get("pfpId") || "user.svg";
-if (rawPfp === "undefined" || rawPfp.trim() === "") {
-    rawPfp = "user.svg";
+        const json = await response.json();
+        domande = json.results;
+    } catch (error) {
+        console.error(error.message);
+    }
+
+    return domande;
 }
 
-const gameState = {
-    nickname: params.get("nickname") || "Player",
-    difficulty: rawDifficulty === "mixed" ? "" : rawDifficulty,
-    category: rawCategory,
-    pfpId: rawPfp,
-    allQuestions: [],
-    currentIndex: 0,
-    score: {
-        punteggio: 0,
-        corrette: 0,
-        errate: 0
-    },
-    streak: 0,
-    maxStreak: 0,
-    fiftyPercentUsed: false,
-    isWaitingNext: false,
-    currentAnswers: []
+const score = {
+    punteggio: 0,
+    corrette: 0,
+    errate: 0
 };
 
-/* ==========================================================================
-   DOM Element References
-   ========================================================================== */
+// URL Parameters
+const params = new URLSearchParams(window.location.search);
+const nickname = params.get('nickname') || 'Player';
+let difficultySelected = params.get('difficulty') || '';
+let categorySelected = params.get('category') || '';
+let pfpId = params.get('pfpId');
 
-const playerNicknameEl = document.getElementById("playerNickname");
-const playerPfpEl = document.getElementById("playerPfp");
-const questionCounterEl = document.getElementById("questionCounter");
-const scoreTrackerEl = document.getElementById("scoreTracker");
-const streakBadgeEl = document.getElementById("streakBadge");
-const streakTextEl = document.getElementById("streakText");
-const progressBarEl = document.getElementById("progressBar");
-const difficultyBadgeEl = document.getElementById("difficultyBadge");
-const domandaEl = document.getElementById("domanda");
-const optionContainerEl = document.getElementById("option-container");
-const resultContainerEl = document.getElementById("resultContainer");
-const nextQuestionBtn = document.getElementById("nextQuestion");
-const hintBtn = document.getElementById("hintBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const pauseModal = document.getElementById("pauseModal");
-const resumeGameBtn = document.getElementById("resumeGameBtn");
-const pageContainer = document.getElementById("pageContainer");
-const noMoreQuestionsContainer = document.getElementById("noMoreQuestions");
-const finalScoreEl = document.getElementById("finalScore");
-const correctFinalScoreEl = document.getElementById("correctFinalScore");
-const wrongFinalScoreEl = document.getElementById("wrongFinalScore");
-const maxStreakFinalScoreEl = document.getElementById("maxStreakFinalScore");
-const playAgainBtn = document.getElementById("playAgainBtn");
-const loadingOverlay = document.getElementById("loading");
-const retryCounterEl = document.getElementById("retryCounter");
-const homePageBtns = document.querySelectorAll(".js-homePageBtn");
-
-/* ==========================================================================
-   API & Loading Functions
-   ========================================================================== */
-
-/**
- * Fetches 15 quiz questions from Open Trivia DB.
- * @param {string} difficulty 
- * @param {string} category
- * @returns {Promise<Array<Object>>}
- */
-async function fetchQuestions(difficulty, category) {
-    const diffQuery = difficulty ? `&difficulty=${encodeURIComponent(difficulty)}` : "";
-    const catQuery = category ? `&category=${encodeURIComponent(category)}` : "";
-    const url = `https://opentdb.com/api.php?amount=15${diffQuery}${catQuery}`;
-
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`API HTTP Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    if (!data.results || data.results.length === 0) {
-        throw new Error("No questions available for the selected filters.");
-    }
-
-    return data.results;
+if (difficultySelected === 'mixed') {
+    difficultySelected = '';
 }
 
-/**
- * Displays countdown timer when OpenTDB rate-limits requests.
- * @param {number} seconds 
- */
-async function displayCountdown(seconds) {
-    for (let i = seconds; i > 0; i--) {
-        if (retryCounterEl) {
-            retryCounterEl.innerText = `Too many requests. Retrying in ${i}s...`;
-        }
-        await wait(1000);
-    }
-    if (retryCounterEl) {
-        retryCounterEl.innerText = "Loading questions...";
-    }
+const validPfp = (pfpId && pfpId !== 'user.png' && pfpId !== 'undefined' && pfpId !== '') ? pfpId : 'user.svg';
+
+const welcomeMsg = document.getElementById('welcomeMessage');
+if (welcomeMsg) {
+    welcomeMsg.innerHTML = `
+        <img class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-contain bg-secondary p-1 border-2 border-[#4F00D0] shrink-0" src="/images/profile_pics/${validPfp}" alt="Player avatar">
+        <span class="font-black text-base sm:text-xl text-primary truncate max-w-[140px] sm:max-w-[240px] italic">${escapeHtml(nickname)}</span> 
+    `;
 }
 
-/* ==========================================================================
-   Render & UI Updates
-   ========================================================================== */
+async function renderPage() {
+    let allQuestions = [];
+    let scoreBoard = loadFroamStorage() || [];
 
-/**
- * Initializes the top bar with player profile picture and nickname.
- */
-function initPlayerHeader() {
-    if (playerNicknameEl) {
-        playerNicknameEl.innerText = gameState.nickname;
-    }
-    if (playerPfpEl) {
-        playerPfpEl.src = `/images/profile_pics/${gameState.pfpId}`;
-        playerPfpEl.onerror = () => {
-            playerPfpEl.src = "/images/profile_pics/user.svg";
-        };
-    }
-    updateScoreTracker();
-}
-
-/**
- * Updates the score tracker badge.
- */
-function updateScoreTracker() {
-    if (scoreTrackerEl) {
-        scoreTrackerEl.innerText = `${gameState.score.punteggio} pts`;
-    }
-}
-
-/**
- * Renders the active question and options.
- */
-function renderQuestion() {
-    const totalQuestions = gameState.allQuestions.length;
-    if (gameState.currentIndex >= totalQuestions) {
-        handleFinishGame();
-        return;
+    try {
+        allQuestions = await getQuestions(difficultySelected, categorySelected);
+    } catch (error) {
+        console.log(error);
     }
 
-    const questionObj = gameState.allQuestions[gameState.currentIndex];
-    const currentNum = gameState.currentIndex + 1;
-
-    // Update progress
-    const progressPercent = Math.round((currentNum / totalQuestions) * 100);
-    if (progressBarEl) {
-        progressBarEl.style.width = `${progressPercent}%`;
-    }
-    if (questionCounterEl) {
-        questionCounterEl.innerText = `Question ${currentNum} of ${totalQuestions}`;
+    if (!allQuestions || allQuestions.length === 0) {
+        throw new Error("No questions returned from API");
     }
 
-    // Update difficulty / category badge
-    if (difficultyBadgeEl) {
-        const diffText = questionObj.difficulty ? questionObj.difficulty.toUpperCase() : "QUIZ";
-        difficultyBadgeEl.innerText = `${diffText} • ${decodeHTMLEntities(questionObj.category || "General")}`;
+    let numeroDomanda = 0;
+
+    const currentScoreElem = document.getElementById('currentScore');
+    const currentQuestionNumElem = document.getElementById('currentQuestionNum');
+    const totalQuestionsNumElem = document.getElementById('totalQuestionsNum');
+    const questionCategoryElem = document.getElementById('questionCategory');
+    const questionDifficultyElem = document.getElementById('questionDifficulty');
+
+    const nextQuestionBtn = document.getElementById('nextQuestion');
+    const resultContainer = document.getElementById('resultContainer');
+    const pageContainer = document.getElementById('pageContainer');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const pauseMenu = document.getElementById('pauseMenu');
+    const backToGame = document.getElementById('backToGame');
+    const fiftyPercentBtn = document.getElementById('fiftyPercent');
+    const progressBarWrapper = document.querySelector(".progress-bar-wrapper");
+    const progressBar = document.querySelector(".progress-bar");
+
+    let currentQuestion = {};
+    let fiftyPercentUsed = false;
+    let pauseMenuIsDisplayed = false;
+    let nextQuestionIsDisplayed = false;
+    let answers = [];
+
+    if (totalQuestionsNumElem) {
+        totalQuestionsNumElem.innerText = `${allQuestions.length}`;
     }
 
-    // Update question text
-    if (domandaEl) {
-        domandaEl.innerText = decodeHTMLEntities(questionObj.question);
-    }
-
-    // Prepare answers list
-    const decodedCorrect = decodeHTMLEntities(questionObj.correct_answer);
-    const answers = [
-        { text: decodedCorrect, isCorrect: true },
-        ...questionObj.incorrect_answers.map((ans) => ({
-            text: decodeHTMLEntities(ans),
-            isCorrect: false
-        }))
-    ];
-
-    gameState.currentAnswers = shuffleArray(answers);
-
-    // Build option buttons HTML
-    optionContainerEl.innerHTML = "";
-    gameState.currentAnswers.forEach((ans, index) => {
-        const btn = document.createElement("button");
-        btn.id = `opt-${index}`;
-        btn.className = "option-btn";
-        btn.innerText = ans.text;
-        btn.dataset.correct = ans.isCorrect ? "true" : "false";
-
-        btn.addEventListener("click", () => handleOptionSelect(btn, ans.isCorrect));
-        optionContainerEl.appendChild(btn);
-    });
-
-    // Reset next question button and states
-    resultContainerEl.classList.add("hidden");
-    gameState.isWaitingNext = false;
-
-    // Trigger smooth question transition animation
-    if (pageContainer) {
-        pageContainer.classList.remove("question-animate");
-        void pageContainer.offsetWidth; // Reflow to reset animation
-        pageContainer.classList.add("question-animate");
-    }
-
-    // Update Hint button state
-    if (hintBtn) {
-        if (questionObj.type === "multiple" && !gameState.fiftyPercentUsed) {
-            hintBtn.disabled = false;
-            hintBtn.classList.remove("opacity-40", "cursor-not-allowed");
-        } else {
-            hintBtn.disabled = true;
-            hintBtn.classList.add("opacity-40", "cursor-not-allowed");
-        }
-    }
-}
-
-/**
- * Handles selection of an answer option.
- * @param {HTMLButtonElement} selectedBtn 
- * @param {boolean} isCorrect 
- */
-function handleOptionSelect(selectedBtn, isCorrect) {
-    if (gameState.isWaitingNext) return;
-
-    const questionObj = gameState.allQuestions[gameState.currentIndex];
-
-    // Disable all option buttons
-    const allOptions = optionContainerEl.querySelectorAll(".option-btn");
-    allOptions.forEach((btn) => {
-        btn.disabled = true;
-        if (btn.dataset.correct === "true") {
-            btn.classList.add("correct-option");
-        }
-    });
-
-    if (isCorrect) {
-        selectedBtn.classList.add("correct-option");
-        gameState.score.corrette++;
-        gameState.streak++;
-        if (gameState.streak > gameState.maxStreak) {
-            gameState.maxStreak = gameState.streak;
-        }
-
-        // Base points according to difficulty
-        let basePoints = 1;
-        if (questionObj.difficulty === "hard") {
-            basePoints = 3;
-        } else if (questionObj.difficulty === "medium") {
-            basePoints = 2;
-        }
-
-        // Streak combo bonus
-        let streakBonus = 0;
-        if (gameState.streak >= 5) {
-            streakBonus = 3;
-        } else if (gameState.streak >= 3) {
-            streakBonus = 2;
-        } else if (gameState.streak === 2) {
-            streakBonus = 1;
-        }
-
-        gameState.score.punteggio += (basePoints + streakBonus);
-
-        // Update streak combo badge in UI
-        if (streakBadgeEl && streakTextEl) {
-            if (gameState.streak >= 2) {
-                streakTextEl.innerText = `x${gameState.streak} (+${streakBonus} pts)`;
-                streakBadgeEl.classList.remove("hidden");
-                streakBadgeEl.classList.add("inline-flex");
-            }
-        }
-    } else {
-        selectedBtn.classList.add("wrong-option");
-        gameState.score.errate++;
-        gameState.streak = 0;
-
-        // Hide streak badge on wrong answer
-        if (streakBadgeEl) {
-            streakBadgeEl.classList.remove("inline-flex");
-            streakBadgeEl.classList.add("hidden");
-        }
-    }
-
-    updateScoreTracker();
-
-    // Disable hint during resolution
-    if (hintBtn) hintBtn.disabled = true;
-
-    // Reveal next button
-    resultContainerEl.classList.remove("hidden");
-    gameState.isWaitingNext = true;
-}
-
-/**
- * 50/50 Hint: eliminates two wrong answers from multiple-choice questions.
- */
-function handleFiftyPercentHint() {
-    if (gameState.fiftyPercentUsed || gameState.isWaitingNext) return;
-
-    const questionObj = gameState.allQuestions[gameState.currentIndex];
-    if (questionObj.type !== "multiple") {
-        return;
-    }
-
-    const wrongButtons = [];
-    const allOptions = optionContainerEl.querySelectorAll(".option-btn");
-    allOptions.forEach((btn) => {
-        if (btn.dataset.correct === "false") {
-            wrongButtons.push(btn);
-        }
-    });
-
-    const shuffledWrongs = shuffleArray(wrongButtons);
-    // Eliminate up to 2 wrong buttons
-    shuffledWrongs.slice(0, 2).forEach((btn) => {
-        btn.disabled = true;
-        btn.classList.add("eliminated-option");
-    });
-
-    gameState.fiftyPercentUsed = true;
-    gameState.score.punteggio = Math.max(0, gameState.score.punteggio - 1);
-    updateScoreTracker();
-
-    if (hintBtn) {
-        hintBtn.disabled = true;
-        hintBtn.classList.add("opacity-40", "cursor-not-allowed");
-    }
-}
-
-/**
- * Advances to the next question or finishes the game.
- */
-function handleNextQuestion() {
-    if (!gameState.isWaitingNext) return;
-    gameState.currentIndex++;
+    updateScoreDisplay();
     renderQuestion();
-}
 
-/**
- * Finalizes the game, stores results in localStorage, and shows final stats.
- */
-function handleFinishGame() {
-    // Save to localStorage
-    const userScore = {
-        gameId: Date.now() + Math.random().toString(16).substring(2),
-        username: gameState.nickname,
-        score: gameState.score,
-        maxStreak: gameState.maxStreak
-    };
-
-    const scoreBoard = loadFroamStorage() || [];
-    scoreBoard.unshift(userScore);
-    saveToStorage(scoreBoard);
-
-    // Hide question area, show completion screen
-    if (pageContainer) pageContainer.classList.add("hidden");
-    if (noMoreQuestionsContainer) {
-        noMoreQuestionsContainer.classList.remove("hidden");
-        noMoreQuestionsContainer.classList.add("flex");
+    function updateScoreDisplay() {
+        if (currentScoreElem) {
+            currentScoreElem.innerText = `${score.punteggio}`;
+        }
     }
 
-    if (finalScoreEl) finalScoreEl.innerText = `${gameState.score.punteggio}`;
-    if (correctFinalScoreEl) correctFinalScoreEl.innerText = `${gameState.score.corrette}`;
-    if (wrongFinalScoreEl) wrongFinalScoreEl.innerText = `${gameState.score.errate}`;
-    if (maxStreakFinalScoreEl) maxStreakFinalScoreEl.innerText = `${gameState.maxStreak}`;
+    function renderQuestion() {
+        if (numeroDomanda >= allQuestions.length) {
+            fineDomande();
+            return;
+        }
 
-    if (hintBtn) hintBtn.disabled = true;
-    if (pauseBtn) pauseBtn.disabled = true;
-}
+        currentQuestion = allQuestions[numeroDomanda];
 
-/* ==========================================================================
-   Modal & Pause Handling
-   ========================================================================== */
+        if (currentQuestionNumElem) {
+            currentQuestionNumElem.innerText = `${numeroDomanda + 1}`;
+        }
 
-function openPauseModal() {
-    if (pauseModal && !pauseModal.open) {
-        pauseModal.showModal();
-        if (pageContainer) pageContainer.classList.add("game-blur");
-    }
-}
+        if (questionCategoryElem) {
+            questionCategoryElem.innerText = decodeHTMLEntities(currentQuestion.category || 'General Knowledge');
+        }
 
-function closePauseModal() {
-    if (pauseModal && pauseModal.open) {
-        pauseModal.close();
-        if (pageContainer) pageContainer.classList.remove("game-blur");
-    }
-}
+        if (questionDifficultyElem) {
+            questionDifficultyElem.innerText = (currentQuestion.difficulty || 'Medium').toUpperCase();
+        }
 
-/* ==========================================================================
-   Event Listeners & Keyboard Shortcuts
-   ========================================================================== */
+        if (progressBar) {
+            progressBar.style.width = calcolaPercentuale(numeroDomanda) + "%";
+        }
 
-function initEventListeners() {
-    // Next Question Click & Enter Key
-    if (nextQuestionBtn) {
-        nextQuestionBtn.addEventListener("click", handleNextQuestion);
-    }
+        let questionHTML = '';
+        const domanda = document.getElementById('domanda');
+        const optionContainer = document.getElementById('option-container');
 
-    // 50/50 Hint Click
-    if (hintBtn) {
-        hintBtn.addEventListener("click", handleFiftyPercentHint);
-    }
-
-    // Pause Modal Controls
-    if (pauseBtn) {
-        pauseBtn.addEventListener("click", openPauseModal);
-    }
-    if (resumeGameBtn) {
-        resumeGameBtn.addEventListener("click", closePauseModal);
-    }
-    if (pauseModal) {
-        pauseModal.addEventListener("close", () => {
-            if (pageContainer) pageContainer.classList.remove("game-blur");
-        });
-        pauseModal.addEventListener("cancel", (event) => {
-            if (pageContainer) pageContainer.classList.remove("game-blur");
-        });
-    }
-
-    // Global Keyboard Shortcuts
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            event.preventDefault();
-            if (pauseModal && pauseModal.open) {
-                closePauseModal();
-            } else if (!noMoreQuestionsContainer || noMoreQuestionsContainer.classList.contains("hidden")) {
-                openPauseModal();
+        answers = [
+            {
+                answer: escapeHtml(decodeHTMLEntities(currentQuestion.correct_answer)),
+                correct: "true"
+            },
+            {
+                answer: escapeHtml(decodeHTMLEntities(currentQuestion.incorrect_answers[0])),
+                correct: "false"
+            },
+            {
+                answer: escapeHtml(decodeHTMLEntities(currentQuestion.incorrect_answers[1])),
+                correct: "false"
+            },
+            {
+                answer: escapeHtml(decodeHTMLEntities(currentQuestion.incorrect_answers[2])),
+                correct: "false"
             }
-        } else if (event.key === "Enter" && gameState.isWaitingNext) {
-            event.preventDefault();
-            handleNextQuestion();
+        ];
+
+        answers = shuffleArray(answers);
+        const letters = ['A', 'B', 'C', 'D'];
+
+        if (currentQuestion.type === 'multiple') {
+            questionHTML = answers.map((ans, idx) => `
+                <button id="opt${idx + 1}" data-answer="${ans.answer}" class="js-multiple-option group w-full min-h-[58px] sm:min-h-[64px] py-3.5 sm:py-4 px-4 bg-[#f3eef8] hover:bg-[#eedcff] text-[#2d3748] hover:text-[#37274d] rounded-2xl font-bold text-base sm:text-lg border-2 border-transparent transition-all shadow-xs active:scale-98 cursor-pointer flex items-center gap-3 text-left break-words">
+                    <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white/80 group-hover:bg-[#4F00D0] group-hover:text-white text-[#4F00D0] font-black text-xs sm:text-sm flex items-center justify-center shrink-0 transition-colors shadow-2xs">${letters[idx]}</span>
+                    <span class="flex-1">${ans.answer}</span>
+                </button>
+            `).join('');
+        } else {
+            questionHTML = `
+                <button id="opt1" data-answer="True" class="js-boolean-option group w-full min-h-[58px] sm:min-h-[64px] py-3.5 sm:py-4 px-4 bg-[#f3eef8] hover:bg-[#eedcff] text-[#2d3748] hover:text-[#37274d] rounded-2xl font-bold text-base sm:text-lg border-2 border-transparent transition-all shadow-xs active:scale-98 cursor-pointer flex items-center justify-center gap-3 text-center break-words">
+                    <span>True</span>
+                </button>
+                <button id="opt2" data-answer="False" class="js-boolean-option group w-full min-h-[58px] sm:min-h-[64px] py-3.5 sm:py-4 px-4 bg-[#f3eef8] hover:bg-[#eedcff] text-[#2d3748] hover:text-[#37274d] rounded-2xl font-bold text-base sm:text-lg border-2 border-transparent transition-all shadow-xs active:scale-98 cursor-pointer flex items-center justify-center gap-3 text-center break-words">
+                    <span>False</span>
+                </button>
+            `;
+        }
+
+        if (optionContainer) {
+            optionContainer.innerHTML = questionHTML;
+        }
+
+        if (domanda) {
+            domanda.innerText = decodeHTMLEntities(currentQuestion.question);
+        }
+    }
+
+    // Answer click handler
+    document.getElementById('option')?.addEventListener('click', (event) => {
+        const clickedElement = event.target.closest('button');
+        if (!clickedElement) return;
+
+        if (clickedElement.classList.contains('js-multiple-option') || clickedElement.classList.contains('js-boolean-option')) {
+            const correctAnswerText = escapeHtml(decodeHTMLEntities(currentQuestion.correct_answer));
+            const selectedAnswer = clickedElement.dataset.answer;
+            const isCorrect = (correctAnswerText === selectedAnswer);
+            checkAnswer(isCorrect, clickedElement);
         }
     });
 
-    // Play Again Button
-    if (playAgainBtn) {
-        playAgainBtn.addEventListener("click", () => {
-            window.location.reload();
-        });
-    }
+    // Direct 50/50 Lifeline Button
+    fiftyPercentBtn?.addEventListener('click', () => {
+        if (fiftyPercentUsed) {
+            alert('Hai già utilizzato il tuo aiuto 50/50 per questa partita!');
+            return;
+        }
 
-    // Return to Homepage Buttons
-    homePageBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
+        if (currentQuestion.type !== "multiple") {
+            alert('Questo aiuto si può usare solo nelle domande a scelta multipla!');
+            return;
+        }
+
+        let wrongIndices = [];
+        for (let i in answers) {
+            if (answers[i].correct === 'false') {
+                wrongIndices.push(parseInt(i));
+            }
+        }
+
+        wrongIndices = shuffleArray(wrongIndices);
+        let removed = 0;
+        while (removed < 2 && removed < wrongIndices.length) {
+            let optId = `opt${wrongIndices[removed] + 1}`;
+            const optElem = document.getElementById(optId);
+            if (optElem) {
+                optElem.disabled = true;
+                optElem.classList.add('opacity-30', 'line-through', 'cursor-not-allowed', 'pointer-events-none');
+            }
+            removed++;
+        }
+
+        fiftyPercentUsed = true;
+        score.punteggio = Math.max(0, score.punteggio - 1);
+        updateScoreDisplay();
+
+        fiftyPercentBtn.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
+        fiftyPercentBtn.setAttribute('title', 'Aiuto già utilizzato');
+    });
+
+    // Next question handler
+    nextQuestionBtn?.addEventListener('click', () => {
+        numeroDomanda++;
+        renderQuestion();
+        resetAnswers();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === "Enter" && nextQuestionIsDisplayed) {
+            numeroDomanda++;
+            renderQuestion();
+            resetAnswers();
+        }
+    });
+
+    // Pause button
+    pauseBtn?.addEventListener('click', () => {
+        if (pauseMenuIsDisplayed) {
+            hidePauseMenu();
+        } else {
+            showPauseMenu();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === "Escape") {
+            if (pauseMenuIsDisplayed) {
+                hidePauseMenu();
+            } else {
+                showPauseMenu();
+            }
+        }
+    });
+
+    // Back to homepage buttons
+    document.querySelectorAll('.js-homePageBtn').forEach((btn) => {
+        btn.addEventListener('click', () => {
             window.location.href = "./index.html";
         });
     });
-}
 
-/* ==========================================================================
-   Game Bootstrap
-   ========================================================================== */
+    // Resume game button
+    backToGame?.addEventListener('click', () => {
+        hidePauseMenu();
+    });
 
-async function startGame() {
-    initPlayerHeader();
-    initEventListeners();
+    function disableBtn(classe, clicked) {
+        document.querySelectorAll(`.${classe}`).forEach((option) => {
+            option.disabled = true;
+        });
+        clicked.classList.add("selezionato");
+    }
 
-    let attempts = 0;
-    const maxAttempts = 5;
-    const delaySec = 5;
+    function checkAnswer(correct, clickedElement) {
+        clickedElement.classList.add(correct ? "correct-option" : 'wrong-option');
+        disableBtn("js-multiple-option", clickedElement);
+        disableBtn("js-boolean-option", clickedElement);
 
-    while (attempts < maxAttempts) {
-        try {
-            if (loadingOverlay) loadingOverlay.classList.remove("hidden");
-            gameState.allQuestions = await fetchQuestions(gameState.difficulty, gameState.category);
-
-            // Successfully fetched
-            if (loadingOverlay) loadingOverlay.classList.add("hidden");
-            renderQuestion();
-            return;
-        } catch (error) {
-            attempts++;
-            console.warn(`Attempt ${attempts} failed:`, error.message);
-
-            if (attempts >= maxAttempts) {
-                if (retryCounterEl) {
-                    retryCounterEl.innerHTML = `
-                        <span class="text-rose-600 block mb-2">Unable to load questions from the server.</span>
-                        <button onclick="window.location.reload()" class="btn btn-sm btn-primary rounded-full mt-2">Try Again</button>
-                    `;
-                }
-                const spinner = loadingOverlay?.querySelector(".loading-spinner");
-                if (spinner) spinner.classList.add("hidden");
-                return;
-            }
-
-            await displayCountdown(delaySec);
+        if (correct) {
+            score.corrette++;
+        } else {
+            score.errate++;
         }
+        calcScore(correct);
+        updateScoreDisplay();
+
+        if (numeroDomanda + 1 < allQuestions.length) {
+            openNextQuestionMenu();
+        } else {
+            fineDomande();
+        }
+    }
+
+    function calcScore(corretta) {
+        if (corretta) {
+            if (currentQuestion.difficulty === 'easy') {
+                score.punteggio += 1;
+            } else if (currentQuestion.difficulty === 'medium') {
+                score.punteggio += 2;
+            } else {
+                score.punteggio += 3;
+            }
+        }
+    }
+
+    function resetAnswers() {
+        if (pauseBtn) pauseBtn.disabled = false;
+        if (resultContainer) {
+            resultContainer.classList.add('hidden');
+            resultContainer.classList.remove('flex');
+        }
+        nextQuestionIsDisplayed = false;
+    }
+
+    function openNextQuestionMenu() {
+        if (pauseBtn) pauseBtn.disabled = true;
+        if (resultContainer) {
+            resultContainer.classList.remove('hidden');
+            resultContainer.classList.add('flex');
+        }
+        nextQuestionIsDisplayed = true;
+    }
+
+    function showPauseMenu() {
+        if (pauseMenu) {
+            pauseMenu.classList.remove('hidden');
+            pauseMenu.classList.add('flex');
+        }
+        pauseMenuIsDisplayed = true;
+        if (pageContainer) pageContainer.classList.add('blur-xs', 'pointer-events-none');
+    }
+
+    function hidePauseMenu() {
+        if (pauseMenu) {
+            pauseMenu.classList.add('hidden');
+            pauseMenu.classList.remove('flex');
+        }
+        pauseMenuIsDisplayed = false;
+        if (pageContainer) pageContainer.classList.remove('blur-xs', 'pointer-events-none');
+    }
+
+    function calcolaPercentuale(numero) {
+        return ((numero + 1) / allQuestions.length) * 100;
+    }
+
+    function fineDomande() {
+        let userScore = {
+            gameId: Date.now() + Math.random().toString(16).substring(2),
+            username: nickname,
+            score: score
+        };
+        scoreBoard = loadFroamStorage() || [];
+        scoreBoard.unshift(userScore);
+        saveToStorage(scoreBoard);
+
+        if (progressBarWrapper) progressBarWrapper.classList.add("hidden");
+
+        const noMoreQuestionsContainer = document.getElementById("noMoreQuestions");
+
+        if (pageContainer) pageContainer.classList.add("hidden");
+
+        if (noMoreQuestionsContainer) {
+            noMoreQuestionsContainer.classList.remove("hidden");
+            noMoreQuestionsContainer.classList.add("flex");
+        }
+
+        const finalScore = document.getElementById("finalScore");
+        if (finalScore) finalScore.innerText = `${score.punteggio}`;
+
+        const correctFinalScore = document.getElementById("correctFinalScore");
+        const wrongFinalScore = document.getElementById("wrongFinalScore");
+        if (correctFinalScore) correctFinalScore.innerText = `${score.corrette}`;
+        if (wrongFinalScore) wrongFinalScore.innerText = `${score.errate}`;
+
+        if (pauseBtn) pauseBtn.disabled = true;
     }
 }
 
-// Start Game on Page Load
-startGame();
+function escapeHtml(text) {
+    if (!text) return '';
+    var map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return String(text).replace(/[&<>"']/g, function (m) { return map[m]; });
+}
+
+// Countdown & API retry loop
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function waitWithCountdown(seconds) {
+    const counterElement = document.getElementById('retryCounter');
+    for (let i = seconds; i > 0; i--) {
+        if (counterElement) {
+            counterElement.innerText = `Troppe richieste. Nuovo tentativo tra ${i} secondi...`;
+        }
+        await wait(1000);
+    }
+    if (counterElement) {
+        counterElement.innerText = "Sto riprovando...";
+    }
+}
+
+let success = false;
+let attempt = 1;
+const delayInSeconds = 5;
+
+while (!success) {
+    try {
+        const loadingElem = document.getElementById('loading');
+        if (loadingElem) {
+            loadingElem.classList.remove('hidden');
+            loadingElem.classList.add('flex');
+        }
+
+        await renderPage();
+
+        success = true;
+        if (loadingElem) {
+            loadingElem.classList.remove('flex');
+            loadingElem.classList.add('hidden');
+        }
+    } catch (error) {
+        console.log(`Errore API. Ritento tra ${delayInSeconds} secondi... (Tentativo ${attempt})`);
+        await waitWithCountdown(delayInSeconds);
+        attempt++;
+
+        if (attempt > 6) {
+            console.error("Server irraggiungibile dopo vari tentativi.");
+            const counterElement = document.getElementById('retryCounter');
+            if (counterElement) {
+                counterElement.innerText = "Impossibile caricare le domande. Riprova più tardi.";
+            }
+            break;
+        }
+    }
+}

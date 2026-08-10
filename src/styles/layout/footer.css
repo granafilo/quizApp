@@ -1,16 +1,1 @@
-.footer{
-    grid-area: footer;
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    padding: 8px 0px;
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: black;
-}
-
-.footer a{
-    text-decoration: none;
-    color: black;
-    font-weight: 600;
-}
-
+/* Streamlined with Tailwind CSS */
