@@ -53,7 +53,7 @@
                 <!-- Progress Bar & Score Tracker -->
                 <div class="flex-1 min-w-[200px] flex flex-col gap-1.5 px-2">
                     <div class="flex justify-between items-center text-xs lg:text-sm font-bold text-[#66547d]">
-                        <span id="questionCounter">Domanda 1 di 15</span>
+                        <span id="questionCounter">Question 1 of 15</span>
                         <div class="flex items-center gap-2">
                             <div id="streakBadge" class="hidden items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-2.5 py-0.5 rounded-full shadow-xs animate-bounce">
                                 <span>🔥</span>
@@ -69,11 +69,11 @@
 
                 <!-- Powerups & Pause Action -->
                 <div class="flex items-center gap-2">
-                    <button id="hintBtn" class="btn btn-sm btn-secondary text-primary font-bold rounded-full gap-1.5 hover:scale-105 transition-all shadow-xs cursor-pointer" title="Hint: Elimina 2 risposte errate">
+                    <button id="hintBtn" class="btn btn-sm btn-secondary text-primary font-bold rounded-full gap-1.5 hover:scale-105 transition-all shadow-xs cursor-pointer" title="Hint: Eliminate 2 wrong answers">
                         <img src="/images/50-percent.png" class="w-4 h-4 object-contain" alt="Hint 50%">
                         <span class="hidden sm:inline">50/50</span>
                     </button>
-                    <button id="pauseBtn" class="btn btn-sm btn-circle btn-ghost text-primary hover:bg-secondary transition-colors cursor-pointer" title="Pausa (Esc)">
+                    <button id="pauseBtn" class="btn btn-sm btn-circle btn-ghost text-primary hover:bg-secondary transition-colors cursor-pointer" title="Pause (Esc)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
                         </svg>
@@ -91,7 +91,7 @@
 
                 <!-- Question Text -->
                 <div class="w-full min-h-[90px] flex items-center justify-center text-center px-2">
-                    <h2 id="domanda" class="text-2xl lg:text-3xl font-extrabold text-primary leading-snug">Caricamento domanda...</h2>
+                    <h2 id="domanda" class="text-2xl lg:text-3xl font-extrabold text-primary leading-snug">Loading question...</h2>
                 </div>
 
                 <!-- Options Grid Container -->
@@ -102,7 +102,7 @@
                 <!-- Next Question Button Container -->
                 <div id="resultContainer" class="w-full hidden pt-4">
                     <button id="nextQuestion" class="btn w-full p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-2xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
-                        Prossima Domanda &rarr;
+                        Next Question &rarr;
                     </button>
                 </div>
             </div>
@@ -110,22 +110,22 @@
             <!-- Quiz Completed / Final Score Screen -->
             <div id="noMoreQuestions" class="w-full hidden flex-col items-center gap-8 py-4">
                 <div class="text-center flex flex-col gap-2">
-                    <h2 class="text-4xl lg:text-5xl font-extrabold text-primary">Quiz Completato! 🎉</h2>
-                    <p class="text-[#66547d] text-lg">Ecco il riassunto della tua partita:</p>
+                    <h2 class="text-4xl lg:text-5xl font-extrabold text-primary">Quiz Completed! 🎉</h2>
+                    <p class="text-[#66547d] text-lg">Here is your match summary:</p>
                 </div>
 
                 <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 lg:gap-4 max-w-3xl">
                     <div class="bg-secondary/50 border border-[#eedcff] p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
                         <span id="finalScore" class="text-4xl lg:text-5xl font-black text-[#4F00D0]">0</span>
-                        <span class="text-xs font-bold text-[#66547d] uppercase tracking-wider">PUNTI TOTALI</span>
+                        <span class="text-xs font-bold text-[#66547d] uppercase tracking-wider">TOTAL SCORE</span>
                     </div>
                     <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
                         <span id="correctFinalScore" class="text-3xl lg:text-4xl font-bold text-emerald-600">0</span>
-                        <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">CORRETTE</span>
+                        <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">CORRECT</span>
                     </div>
                     <div class="bg-rose-50 border border-rose-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
                         <span id="wrongFinalScore" class="text-3xl lg:text-4xl font-bold text-rose-600">0</span>
-                        <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">ERRATE</span>
+                        <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">WRONG</span>
                     </div>
                     <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
                         <span id="maxStreakFinalScore" class="text-3xl lg:text-4xl font-bold text-amber-600">0</span>
@@ -135,7 +135,7 @@
 
                 <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md pt-2">
                     <button id="playAgainBtn" class="btn flex-1 p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-                        Gioca Ancora
+                        Play Again
                     </button>
                     <button class="btn js-homePageBtn flex-1 p-4 h-auto rounded-full btn-soft btn-primary text-xl font-bold hover:scale-105 transition-all duration-300 cursor-pointer">
                         Home Page
@@ -146,7 +146,7 @@
             <!-- Loading / Countdown Overlay -->
             <div id="loading" class="absolute inset-0 bg-[#FAFAFA]/95 rounded-2xl flex flex-col items-center justify-center gap-4 z-20 transition-opacity duration-300">
                 <span class="loading loading-spinner loading-lg text-[#4F00D0]"></span>
-                <p id="retryCounter" class="text-lg font-bold text-primary text-center px-4">Caricamento domande in corso...</p>
+                <p id="retryCounter" class="text-lg font-bold text-primary text-center px-4">Loading questions...</p>
             </div>
 
         </div>
@@ -161,15 +161,15 @@
                 </svg>
             </div>
             <div class="flex flex-col gap-1">
-                <h3 class="text-3xl font-extrabold text-primary">Gioco in Pausa</h3>
-                <p class="text-[#66547d] text-base">Prenditi un momento di respiro!</p>
+                <h3 class="text-3xl font-extrabold text-primary">Game Paused</h3>
+                <p class="text-[#66547d] text-base">Take a quick breath!</p>
             </div>
             <div class="flex flex-col gap-3 w-full">
                 <button id="resumeGameBtn" class="btn w-full p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300">
-                    Riprendi Partita
+                    Resume Game
                 </button>
                 <button class="btn js-homePageBtn w-full p-4 h-auto rounded-full btn-soft btn-primary text-xl font-bold hover:scale-105 transition-all duration-300">
-                    Torna alla Home
+                    Back to Home
                 </button>
             </div>
         </div>

@@ -56,7 +56,7 @@ if (rawPfp === "undefined" || rawPfp.trim() === "") {
 }
 
 const gameState = {
-    nickname: params.get("nickname") || "Giocatore",
+    nickname: params.get("nickname") || "Player",
     difficulty: rawDifficulty === "mixed" ? "" : rawDifficulty,
     category: rawCategory,
     pfpId: rawPfp,
@@ -127,7 +127,7 @@ async function fetchQuestions(difficulty, category) {
 
     const data = await response.json();
     if (!data.results || data.results.length === 0) {
-        throw new Error("Nessuna domanda disponibile per i filtri selezionati.");
+        throw new Error("No questions available for the selected filters.");
     }
 
     return data.results;
@@ -140,12 +140,12 @@ async function fetchQuestions(difficulty, category) {
 async function displayCountdown(seconds) {
     for (let i = seconds; i > 0; i--) {
         if (retryCounterEl) {
-            retryCounterEl.innerText = `Troppe richieste. Nuovo tentativo tra ${i}s...`;
+            retryCounterEl.innerText = `Too many requests. Retrying in ${i}s...`;
         }
         await wait(1000);
     }
     if (retryCounterEl) {
-        retryCounterEl.innerText = "Caricamento in corso...";
+        retryCounterEl.innerText = "Loading questions...";
     }
 }
 
@@ -197,7 +197,7 @@ function renderQuestion() {
         progressBarEl.style.width = `${progressPercent}%`;
     }
     if (questionCounterEl) {
-        questionCounterEl.innerText = `Domanda ${currentNum} di ${totalQuestions}`;
+        questionCounterEl.innerText = `Question ${currentNum} of ${totalQuestions}`;
     }
 
     // Update difficulty / category badge
@@ -515,13 +515,13 @@ async function startGame() {
             return;
         } catch (error) {
             attempts++;
-            console.warn(`Tentativo ${attempts} fallito:`, error.message);
+            console.warn(`Attempt ${attempts} failed:`, error.message);
 
             if (attempts >= maxAttempts) {
                 if (retryCounterEl) {
                     retryCounterEl.innerHTML = `
-                        <span class="text-rose-600 block mb-2">Impossibile caricare le domande dal server.</span>
-                        <button onclick="window.location.reload()" class="btn btn-sm btn-primary rounded-full mt-2">Riprova</button>
+                        <span class="text-rose-600 block mb-2">Unable to load questions from the server.</span>
+                        <button onclick="window.location.reload()" class="btn btn-sm btn-primary rounded-full mt-2">Try Again</button>
                     `;
                 }
                 const spinner = loadingOverlay?.querySelector(".loading-spinner");
