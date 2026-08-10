@@ -1,30 +1,42 @@
-@import url("/src/styles/layout/header.css");
-@import url("/src/styles/utils.css");
-@import url("/src/styles/layout/base.css");
-@import url("/src/styles/layout/footer.css");
-@import url("/src/styles/game/gamepage-header.css");
-@import url("/src/styles/game/game-section.css");
-@import url("/src/styles/game/pause-menu.css");
-@import url("/src/styles/game/quiz-completed.css");
-@import url("/src/styles/game/full-score.css");
-@import url("/src/styles/game/progress-bar.css");
+@import "tailwindcss";
+@plugin "daisyui";
 
-.main-content{
-    margin-bottom: 25px;
+@plugin "daisyui" {
+  themes: light --default;
 }
 
-.loading-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* display: flex; */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-primary: #37274d;
+  --color-secondary: #eedcff;
 }
 
-.loading-container img {
-    width: 80px;
+/* Custom Answer Feedback Styles */
+.option-btn {
+  @apply btn w-full h-auto min-h-[64px] p-4 text-xl font-bold text-primary bg-secondary border-none rounded-[15px] hover:bg-primary hover:text-secondary hover:scale-[1.02] hover:shadow-md transition-all duration-200 text-left justify-start shadow-sm cursor-pointer whitespace-normal;
 }
 
+.option-btn:disabled {
+  @apply opacity-60 cursor-not-allowed hover:scale-100;
+}
+
+.option-btn.correct-option {
+  @apply bg-emerald-600! text-white! scale-[1.02] shadow-lg shadow-emerald-200! opacity-100!;
+}
+
+.option-btn.wrong-option {
+  @apply bg-rose-600! text-white! scale-[0.98] shadow-md shadow-rose-200! opacity-100!;
+}
+
+.option-btn.eliminated-option {
+  @apply opacity-30 line-through scale-95 pointer-events-none;
+}
+
+/* Blur effect when paused */
+.game-blur {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
