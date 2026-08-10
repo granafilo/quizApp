@@ -102,6 +102,7 @@ async function renderPage() {
     let fiftyPercentUsed = false;
     let pauseMenuIsDisplayed = false;
     let nextQuestionIsDisplayed = false;
+    let isGameFinished = false;
     let answers = [];
 
     if (totalQuestionsNumElem) {
@@ -263,6 +264,7 @@ async function renderPage() {
 
     // Pause button
     pauseBtn?.addEventListener('click', () => {
+        if (isGameFinished || pauseBtn.disabled) return;
         if (pauseMenuIsDisplayed) {
             hidePauseMenu();
         } else {
@@ -272,6 +274,9 @@ async function renderPage() {
 
     document.addEventListener('keydown', (event) => {
         if (event.key === "Escape") {
+            if (isGameFinished || pauseBtn?.disabled) {
+                return;
+            }
             if (pauseMenuIsDisplayed) {
                 hidePauseMenu();
             } else {
@@ -400,7 +405,11 @@ async function renderPage() {
         if (correctFinalScore) correctFinalScore.innerText = `${score.corrette}`;
         if (wrongFinalScore) wrongFinalScore.innerText = `${score.errate}`;
 
-        if (pauseBtn) pauseBtn.disabled = true;
+        isGameFinished = true;
+        if (pauseBtn) {
+            pauseBtn.disabled = true;
+            pauseBtn.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
+        }
     }
 }
 
