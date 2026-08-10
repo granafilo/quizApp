@@ -193,6 +193,29 @@ async function renderPage() {
         if (domanda) {
             domanda.innerText = decodeHTMLEntities(currentQuestion.question);
         }
+
+        updateFiftyPercentState();
+    }
+
+    function updateFiftyPercentState() {
+        if (!fiftyPercentBtn) return;
+
+        if (isGameFinished || fiftyPercentUsed) {
+            fiftyPercentBtn.disabled = true;
+            fiftyPercentBtn.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
+            fiftyPercentBtn.setAttribute('title', fiftyPercentUsed ? 'Lifeline already used' : 'Game completed');
+        } else if (pauseMenuIsDisplayed || nextQuestionIsDisplayed) {
+            fiftyPercentBtn.disabled = true;
+            fiftyPercentBtn.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
+        } else if (currentQuestion.type !== 'multiple') {
+            fiftyPercentBtn.disabled = true;
+            fiftyPercentBtn.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
+            fiftyPercentBtn.setAttribute('title', 'Not available for True/False questions');
+        } else {
+            fiftyPercentBtn.disabled = false;
+            fiftyPercentBtn.classList.remove('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
+            fiftyPercentBtn.setAttribute('title', 'Remove 2 wrong options (-1 pt)');
+        }
     }
 
     // Answer click handler
@@ -210,8 +233,7 @@ async function renderPage() {
 
     // Direct 50/50 Lifeline Button
     fiftyPercentBtn?.addEventListener('click', () => {
-        if (fiftyPercentUsed) {
-            alert('Hai già utilizzato il tuo aiuto 50/50 per questa partita!');
+        if (isGameFinished || fiftyPercentUsed || pauseMenuIsDisplayed || nextQuestionIsDisplayed) {
             return;
         }
 
@@ -242,9 +264,7 @@ async function renderPage() {
         fiftyPercentUsed = true;
         score.punteggio = Math.max(0, score.punteggio - 1);
         updateScoreDisplay();
-
-        fiftyPercentBtn.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
-        fiftyPercentBtn.setAttribute('title', 'Aiuto già utilizzato');
+        updateFiftyPercentState();
     });
 
     // Next question handler
@@ -343,6 +363,7 @@ async function renderPage() {
             resultContainer.classList.remove('flex');
         }
         nextQuestionIsDisplayed = false;
+        updateFiftyPercentState();
     }
 
     function openNextQuestionMenu() {
@@ -352,6 +373,7 @@ async function renderPage() {
             resultContainer.classList.add('flex');
         }
         nextQuestionIsDisplayed = true;
+        updateFiftyPercentState();
     }
 
     function showPauseMenu() {
@@ -360,6 +382,7 @@ async function renderPage() {
             pauseMenu.classList.add('flex');
         }
         pauseMenuIsDisplayed = true;
+        updateFiftyPercentState();
         if (pageContainer) pageContainer.classList.add('blur-xs', 'pointer-events-none');
     }
 
@@ -369,6 +392,7 @@ async function renderPage() {
             pauseMenu.classList.remove('flex');
         }
         pauseMenuIsDisplayed = false;
+        updateFiftyPercentState();
         if (pageContainer) pageContainer.classList.remove('blur-xs', 'pointer-events-none');
     }
 
@@ -410,6 +434,7 @@ async function renderPage() {
             pauseBtn.disabled = true;
             pauseBtn.classList.add('opacity-40', 'cursor-not-allowed', 'pointer-events-none');
         }
+        updateFiftyPercentState();
     }
 }
 
