@@ -34,14 +34,22 @@
 
     <header class="bg-[#FAFAFA] w-full flex justify-between items-center px-4 sm:px-8 lg:px-15 py-3.5 sm:py-5 border-b border-gray-100 shadow-xs">
         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#4F00D0]">Quiz App</h1>
-        <div class="flex items-center gap-3 sm:gap-6">
-            <div class="hidden sm:flex gap-5 text-base sm:text-lg justify-end items-center">
+        <div class="flex items-center gap-1.5 sm:gap-4">
+            <div class="hidden sm:flex gap-5 text-base sm:text-lg justify-end items-center mr-2">
                 <button class="font-bold text-[#4F00D0] border-b-2 border-[#4F00D0] cursor-pointer pb-0.5">Home</button>
-                <a href="https://github.com/granafilo/quizApp" target="_blank" rel="noopener noreferrer"
-                    class="text-[#64748b] cursor-pointer border-b-2 border-transparent hover:border-[#4F00D0] hover:text-[#4F00D0] transition-all duration-300 pb-0.5">Github</a>
             </div>
+            <!-- GitHub Link (visible on mobile and desktop) -->
+            <a href="https://github.com/granafilo/quizApp" target="_blank" rel="noopener noreferrer"
+                class="btn btn-ghost btn-circle text-[#64748b] hover:text-[#4F00D0] hover:bg-secondary transition-colors cursor-pointer"
+                aria-label="View Source on GitHub" title="View Source on GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
+                </svg>
+            </a>
+            <!-- Leaderboard Modal Trigger -->
             <button id="scoreboardBtn" class="btn btn-ghost btn-circle text-[#4F00D0] hover:bg-secondary transition-colors cursor-pointer" aria-label="View Leaderboard" title="View Leaderboard">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
                     <path d="m12 7.09l2.45 1.49l-.65-2.81L16 3.89l-2.89-.25L12 1l-1.13 2.64L8 3.89l2.18 1.88l-.68 2.81zM15 23H9V10h6zM1 17v6h6v-6zm4 4H3v-2h2zm12-8v10h6V13zm4 8h-2v-6h2z" />
                 </svg>
             </button>
