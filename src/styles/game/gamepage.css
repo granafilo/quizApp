@@ -13,72 +13,30 @@
   --color-secondary: #eedcff;
 }
 
-/* Custom Answer Feedback Styles & Animations */
-.option-btn {
-  @apply btn w-full h-auto min-h-[64px] p-4 text-xl font-bold text-primary bg-secondary border-none rounded-[15px] hover:bg-primary hover:text-secondary hover:scale-[1.02] hover:shadow-md transition-all duration-200 text-left justify-start shadow-sm cursor-pointer whitespace-normal;
+@layer components {
+    .correct-option {
+        background-color: #dcfce7 !important;
+        border-color: #22c55e !important;
+        color: #15803d !important;
+        font-weight: 700 !important;
+    }
+
+    .wrong-option {
+        background-color: #fee2e2 !important;
+        border-color: #ef4444 !important;
+        color: #b91c1c !important;
+        font-weight: 700 !important;
+    }
+
+    .selezionato {
+        border-color: #4F00D0 !important;
+    }
 }
 
-.option-btn:disabled {
-  @apply opacity-60 cursor-not-allowed hover:scale-100;
-}
-
-.option-btn.correct-option {
-  @apply bg-emerald-600! text-white! opacity-100! shadow-lg shadow-emerald-400/40!;
-  animation: popCorrect 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.option-btn.wrong-option {
-  @apply bg-rose-600! text-white! opacity-100! shadow-md shadow-rose-400/40!;
-  animation: shakeWrong 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-.option-btn.eliminated-option {
-  @apply opacity-25 line-through scale-95 pointer-events-none transition-all duration-300;
-}
-
-/* Question Slide & Fade-in Transition */
-.question-animate {
-  animation: questionSlideFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes popCorrect {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.04);
-  }
-  100% {
-    transform: scale(1.02);
-  }
-}
-
-@keyframes shakeWrong {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  20%, 60% {
-    transform: translateX(-6px);
-  }
-  40%, 80% {
-    transform: translateX(6px);
-  }
-}
-
-@keyframes questionSlideFade {
-  0% {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Blur effect when paused */
-.game-blur {
-  filter: blur(4px);
-  pointer-events: none;
-  user-select: none;
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: "Roboto", sans-serif;
 }

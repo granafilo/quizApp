@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Now - Quiz Challenge | Granafilo</title>
     <meta name="description"
-        content="The game is on! Answer questions correctly, earn points, and climb the leaderboard in this fast-paced interactive quiz experience.">
+        content="The game is on! Answer questions correctly, earn points, and show off your skills in this fast-paced interactive quiz experience.">
     <link rel="icon" href="/favicon.ico" />
-
     <link rel="stylesheet" href="/src/styles/game/gamepage.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,178 +16,171 @@
         rel="stylesheet">
 </head>
 
-<body class="min-h-screen flex flex-col bg-[#fbf3ff]! font-['Roboto'] antialiased">
+<body class="min-h-screen flex flex-col bg-[#fbf3ff]">
 
-    <!-- Header -->
-    <header class="bg-[#FAFAFA] w-full flex justify-between items-center px-5 lg:px-15 py-5 shadow-xs">
-        <a href="/index.html" class="text-3xl lg:text-4xl font-extrabold text-[#4F00D0] hover:opacity-90 transition-opacity">Quiz App</a>
-        <div class="flex items-center gap-5 text-lg">
-            <button class="js-homePageBtn text-[#64748b] hover:text-[#4F00D0] font-bold cursor-pointer transition-colors duration-200 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9 22 9 12 15 12 15 22"/>
-                </svg>
-                <span>Home</span>
+    <!-- Top App Navigation Header -->
+    <header class="bg-[#FAFAFA] w-full px-4 sm:px-8 lg:px-12 py-3.5 sm:py-4 border-b border-gray-100 shadow-xs flex justify-between items-center">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#4F00D0]">Quiz App</h1>
+        <div class="flex items-center gap-2">
+            <button id="pauseBtn" class="btn btn-sm sm:btn-md btn-ghost hover:bg-secondary text-[#4F00D0] rounded-xl font-bold flex items-center gap-1.5 cursor-pointer" aria-label="Pause Game">
+                <img src="/images/pause.png" class="w-4 h-4 sm:w-5 sm:h-5 object-contain" alt="Pause">
+                <span class="hidden sm:inline">Pause</span>
             </button>
-            <a href="https://github.com/granafilo/quizApp" target="_blank" rel="noopener noreferrer"
-                class="text-[#64748b] hover:text-[#4F00D0] font-bold cursor-pointer transition-colors duration-200">Github</a>
+            <button class="js-homePageBtn btn btn-sm sm:btn-md btn-ghost hover:bg-red-50 text-gray-500 hover:text-red-600 rounded-xl font-bold flex items-center gap-1.5 cursor-pointer" aria-label="Exit Game">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span class="hidden sm:inline">Exit</span>
+            </button>
         </div>
     </header>
 
-    <!-- Main Game Area -->
-    <main class="w-full flex-1 bg-[#fbf3ff]! py-6 lg:py-10 px-4 flex flex-col items-center justify-center">
+    <!-- Main Game Arena -->
+    <main class="flex-1 w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6 flex flex-col gap-3.5 sm:gap-6 justify-start">
         
-        <!-- Game Card Container -->
-        <div id="gameCard" class="w-full max-w-4xl bg-[#FAFAFA] rounded-2xl shadow-xl p-6 lg:p-10 flex flex-col gap-6 relative transition-all duration-300">
+        <!-- Top Player & Stats Dashboard Card -->
+        <div class="w-full bg-[#FAFAFA] rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-purple-50 shadow-sm flex flex-col gap-3">
             
-            <!-- In-game Top Bar (Player Info, Progress, Powerups) -->
-            <div id="gameTopBar" class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-100">
-                
-                <!-- Player Info Badge -->
-                <div id="welcomeMessage" class="flex items-center gap-3 bg-secondary px-4 py-2 rounded-full shadow-xs">
-                    <img id="playerPfp" class="w-10 h-10 rounded-full object-cover border-2 border-primary/20" src="/images/profile_pics/user.svg" alt="Avatar">
-                    <span id="playerNickname" class="font-bold text-primary text-base lg:text-lg truncate max-w-[140px]">Player</span>
+            <!-- Player Info & 50/50 Lifeline Row -->
+            <div class="flex items-center justify-between gap-3">
+                <div id="welcomeMessage" class="flex items-center gap-2.5 min-w-0">
+                    <!-- Injected avatar and username -->
                 </div>
 
-                <!-- Progress Bar & Score Tracker -->
-                <div class="flex-1 min-w-[200px] flex flex-col gap-1.5 px-2">
-                    <div class="flex justify-between items-center text-xs lg:text-sm font-bold text-[#66547d]">
-                        <span id="questionCounter">Question 1 of 15</span>
-                        <div class="flex items-center gap-2">
-                            <div id="streakBadge" class="hidden items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-2.5 py-0.5 rounded-full shadow-xs animate-bounce">
-                                <span>🔥</span>
-                                <span id="streakText">x2</span>
-                            </div>
-                            <span id="scoreTracker" class="text-[#4F00D0]">0 pts</span>
-                        </div>
-                    </div>
-                    <div class="w-full h-3 bg-secondary rounded-full overflow-hidden">
-                        <div id="progressBar" class="h-full bg-gradient-to-r from-[#6833e8] to-[#a285fc] transition-all duration-500 rounded-full" style="width: 0%;"></div>
-                    </div>
-                </div>
+                <!-- 50/50 Lifeline Button -->
+                <button id="fiftyPercent" class="btn btn-sm sm:btn-md bg-gradient-to-r from-[#6833e8] to-[#a285fc] text-white font-extrabold border-none rounded-xl shadow-xs gap-1.5 hover:opacity-90 active:scale-95 transition-all cursor-pointer px-3.5 sm:px-4" aria-label="Use 50:50 Lifeline" title="Remove 2 wrong options (-1 pt)">
+                    <img src="/images/50-percent.png" class="w-4 h-4 sm:w-5 sm:h-5 object-contain" alt="">
+                    <span class="text-xs sm:text-sm font-black">50/50</span>
+                </button>
+            </div>
 
-                <!-- Powerups & Pause Action -->
-                <div class="flex items-center gap-2">
-                    <button id="hintBtn" class="btn btn-sm btn-secondary text-primary font-bold rounded-full gap-1.5 hover:scale-105 transition-all shadow-xs cursor-pointer" title="Hint: Eliminate 2 wrong answers">
-                        <img src="/images/50-percent.png" class="w-4 h-4 object-contain" alt="Hint 50%">
-                        <span class="hidden sm:inline">50/50</span>
-                    </button>
-                    <button id="pauseBtn" class="btn btn-sm btn-circle btn-ghost text-primary hover:bg-secondary transition-colors cursor-pointer" title="Pause (Esc)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
+            <!-- Stats Bar (Question Counter & Live Score) -->
+            <div class="grid grid-cols-2 gap-2 sm:gap-4 pt-2 border-t border-gray-100">
+                <div class="bg-purple-50 text-purple-950 px-3.5 py-2 rounded-xl flex items-center justify-between font-bold text-xs sm:text-sm shadow-2xs">
+                    <span class="opacity-75 uppercase tracking-wider text-[10px] sm:text-xs">Question</span>
+                    <span class="text-[#4F00D0] font-black text-sm sm:text-base"><span id="currentQuestionNum">1</span> / <span id="totalQuestionsNum">15</span></span>
+                </div>
+                <div class="bg-secondary/70 text-primary px-3.5 py-2 rounded-xl flex items-center justify-between font-bold text-xs sm:text-sm shadow-2xs">
+                    <span class="opacity-75 uppercase tracking-wider text-[10px] sm:text-xs">Score</span>
+                    <span class="text-[#4F00D0] font-black text-sm sm:text-base"><span id="currentScore">0</span> pts</span>
                 </div>
             </div>
 
-            <!-- Active Question & Options Screen -->
-            <div id="pageContainer" class="flex flex-col gap-6 w-full">
-                
-                <!-- Category / Difficulty Tag -->
-                <div class="flex justify-center items-center gap-2">
-                    <span id="difficultyBadge" class="badge badge-soft badge-primary text-xs uppercase font-bold tracking-wider px-3 py-1">Quiz</span>
-                </div>
+            <!-- Animated Progress Bar -->
+            <div class="w-full h-2 bg-secondary/50 rounded-full overflow-hidden shadow-inner">
+                <div class="progress-bar h-full bg-gradient-to-r from-[#6833e8] to-[#a285fc] rounded-full transition-all duration-300" style="width: 0%;"></div>
+            </div>
+        </div>
 
-                <!-- Question Text -->
-                <div class="w-full min-h-[90px] flex items-center justify-center text-center px-2">
-                    <h2 id="domanda" class="text-2xl lg:text-3xl font-extrabold text-primary leading-snug">Loading question...</h2>
-                </div>
+        <!-- Question & Options Card -->
+        <div id="pageContainer" class="w-full bg-[#FAFAFA] rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 shadow-md border border-purple-50 flex flex-col gap-5 sm:gap-6 transition-all duration-300">
+            
+            <!-- Category & Difficulty Badges -->
+            <div class="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+                <span id="questionCategory" class="badge bg-secondary text-primary font-bold text-xs sm:text-sm py-2.5 px-3.5 border-none shadow-2xs">General Knowledge</span>
+                <span id="questionDifficulty" class="badge bg-purple-100 text-[#4F00D0] font-bold text-xs sm:text-sm py-2.5 px-3.5 uppercase border-none shadow-2xs">Medium</span>
+            </div>
 
-                <!-- Options Grid Container -->
-                <div id="option-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full pt-2">
-                    <!-- Injected dynamically by JS -->
-                </div>
+            <!-- Question Text -->
+            <div class="text-center font-extrabold text-xl sm:text-2xl md:text-3xl text-primary min-h-[70px] sm:min-h-[90px] flex items-center justify-center break-words px-2 sm:px-6 leading-snug">
+                <div id="domanda">Caricamento domanda...</div>
+            </div>
+            
+            <!-- Options Grid: 1 col on mobile, 2 cols on tablet/desktop! -->
+            <div id="option">
+                <div id="option-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 w-full"></div>
+            </div>
 
-                <!-- Next Question Button Container -->
-                <div id="resultContainer" class="w-full hidden pt-4">
-                    <button id="nextQuestion" class="btn w-full p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-2xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
-                        Next Question &rarr;
-                    </button>
+            <!-- Loading Spinner -->
+            <div id="loading" class="flex flex-col items-center justify-center py-10 gap-3">
+                <img src="/images/loading.gif" class="w-12 h-12" alt="Loading">
+                <p id="retryCounter" class="text-primary font-bold text-sm sm:text-base">Caricamento domande in corso...</p>
+            </div>
+        </div>
+
+        <!-- Next Question CTA Button -->
+        <div id="resultContainer" class="hidden w-full mt-1 flex justify-center">
+            <button id="nextQuestion" class="btn w-full py-4 sm:py-5 h-auto rounded-full bg-gradient-to-r from-[#6833e8] to-[#a285fc] text-white text-lg sm:text-2xl font-black shadow-xl hover:scale-102 active:scale-98 transition-all cursor-pointer">
+                Prossima Domanda &rarr;
+            </button>
+        </div>
+
+        <!-- End Game Final Score Summary Screen -->
+        <div id="noMoreQuestions" class="hidden w-full max-w-lg bg-[#FAFAFA] rounded-3xl p-6 sm:p-10 shadow-2xl border border-purple-50 flex flex-col gap-6 mx-auto text-center">
+            <div class="flex flex-col gap-1.5">
+                <h2 class="text-3xl sm:text-4xl font-black text-primary">Match Completed!</h2>
+                <p class="text-sm sm:text-base text-gray-600">Great job! Here is your final summary:</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                <div class="col-span-1 row-span-2 bg-secondary rounded-2xl sm:rounded-3xl p-6 flex flex-col items-center justify-center text-primary font-bold shadow-xs">
+                    <span class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mb-1">Total Score</span>
+                    <span id="finalScore" class="text-5xl sm:text-6xl font-black text-[#4F00D0]">0</span>
+                    <span class="text-xs text-primary/70 font-semibold mt-1">points</span>
+                </div>
+                <div class="bg-[#ecfdec] rounded-2xl sm:rounded-3xl p-4 flex flex-col items-center justify-center text-[#0d6c26] font-bold shadow-xs">
+                    <span class="text-xs sm:text-sm uppercase tracking-wider opacity-80">Correct</span>
+                    <span id="correctFinalScore" class="text-2xl sm:text-4xl font-black">0</span>
+                </div>
+                <div class="bg-[#feedf0] rounded-2xl sm:rounded-3xl p-4 flex flex-col items-center justify-center text-[#b4113d] font-bold shadow-xs">
+                    <span class="text-xs sm:text-sm uppercase tracking-wider opacity-80">Wrong</span>
+                    <span id="wrongFinalScore" class="text-2xl sm:text-4xl font-black">0</span>
                 </div>
             </div>
 
-            <!-- Quiz Completed / Final Score Screen -->
-            <div id="noMoreQuestions" class="w-full hidden flex-col items-center gap-8 py-4">
-                <div class="text-center flex flex-col gap-2">
-                    <h2 class="text-4xl lg:text-5xl font-extrabold text-primary">Quiz Completed! 🎉</h2>
-                    <p class="text-[#66547d] text-lg">Here is your match summary:</p>
-                </div>
+            <!-- Back to Home Button on Summary -->
+            <button class="js-homePageBtn btn w-full py-4 sm:py-4.5 h-auto rounded-full bg-gradient-to-r from-[#6833e8] to-[#a285fc] text-white text-lg sm:text-xl font-extrabold shadow-lg hover:scale-102 active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2 mt-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span>Back to Home</span>
+            </button>
+        </div>
 
-                <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 lg:gap-4 max-w-3xl">
-                    <div class="bg-secondary/50 border border-[#eedcff] p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
-                        <span id="finalScore" class="text-4xl lg:text-5xl font-black text-[#4F00D0]">0</span>
-                        <span class="text-xs font-bold text-[#66547d] uppercase tracking-wider">TOTAL SCORE</span>
-                    </div>
-                    <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
-                        <span id="correctFinalScore" class="text-3xl lg:text-4xl font-bold text-emerald-600">0</span>
-                        <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">CORRECT</span>
-                    </div>
-                    <div class="bg-rose-50 border border-rose-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
-                        <span id="wrongFinalScore" class="text-3xl lg:text-4xl font-bold text-rose-600">0</span>
-                        <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">WRONG</span>
-                    </div>
-                    <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
-                        <span id="maxStreakFinalScore" class="text-3xl lg:text-4xl font-bold text-amber-600">0</span>
-                        <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">MAX COMBO 🔥</span>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md pt-2">
-                    <button id="playAgainBtn" class="btn flex-1 p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-                        Play Again
-                    </button>
-                    <button class="btn js-homePageBtn flex-1 p-4 h-auto rounded-full btn-soft btn-primary text-xl font-bold hover:scale-105 transition-all duration-300 cursor-pointer">
-                        Home Page
-                    </button>
-                </div>
-            </div>
-
-            <!-- Loading / Countdown Overlay -->
-            <div id="loading" class="absolute inset-0 bg-[#FAFAFA]/95 rounded-2xl flex flex-col items-center justify-center gap-4 z-20 transition-opacity duration-300">
-                <span class="loading loading-spinner loading-lg text-[#4F00D0]"></span>
-                <p id="retryCounter" class="text-lg font-bold text-primary text-center px-4">Loading questions...</p>
-            </div>
-
+        <!-- Back to Home Container (fallback/utility) -->
+        <div id="backHome" class="hidden w-full max-w-md mt-2 flex justify-center mx-auto">
+            <button class="js-homePageBtn btn w-full py-3.5 sm:py-4 h-auto rounded-full bg-gradient-to-r from-[#6833e8] to-[#a285fc] text-white text-lg sm:text-xl font-bold shadow-lg hover:scale-102 active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span>Back to Home</span>
+            </button>
         </div>
     </main>
 
-    <!-- Pause Modal Dialog -->
-    <dialog id="pauseModal" class="modal modal-bottom sm:modal-middle">
-        <div class="modal-box bg-[#FAFAFA] text-center rounded-2xl max-w-md p-8 flex flex-col items-center gap-6 shadow-2xl">
-            <div class="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                </svg>
-            </div>
-            <div class="flex flex-col gap-1">
-                <h3 class="text-3xl font-extrabold text-primary">Game Paused</h3>
-                <p class="text-[#66547d] text-base">Take a quick breath!</p>
-            </div>
+    <!-- Pause Menu Modal Overlay -->
+    <div id="pauseMenu" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center gap-6 p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl flex flex-col items-center gap-5 text-center">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-primary">Game Paused</h3>
+            <p class="text-sm text-gray-500">Take a breath or resume when you are ready!</p>
+            
             <div class="flex flex-col gap-3 w-full">
-                <button id="resumeGameBtn" class="btn w-full p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300">
-                    Resume Game
+                <!-- Resume Button -->
+                <button id="backToGame" class="btn w-full py-3.5 h-auto rounded-full bg-gradient-to-r from-[#6833e8] to-[#a285fc] text-white text-lg font-bold shadow-md hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <img src="/images/play.svg" class="w-6 h-6" alt="Resume">
+                    <span>Resume Game</span>
                 </button>
-                <button class="btn js-homePageBtn w-full p-4 h-auto rounded-full btn-soft btn-primary text-xl font-bold hover:scale-105 transition-all duration-300">
-                    Back to Home
+
+                <!-- Go Back to Home Button -->
+                <button class="js-homePageBtn btn w-full py-3.5 h-auto rounded-full btn-soft btn-primary text-base font-bold transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                    <span>Go Back to Home</span>
                 </button>
             </div>
         </div>
-        <form method="dialog" class="modal-backdrop bg-black/40 backdrop-blur-xs">
-            <button>close</button>
-        </form>
-    </dialog>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-[#FAFAFA] py-5 px-4 text-center text-xs text-[#64748b] border-t border-gray-100">
+    <footer class="bg-[#FAFAFA] text-center p-3.5 sm:p-5 text-xs sm:text-sm text-gray-500 border-t border-gray-100 mt-auto">
         <p>
-            Quiz questions sourced from <a href="https://opentdb.com/" target="_blank" class="font-bold hover:text-[#4F00D0] underline">Open Trivia DB</a>.
-            Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="hover:text-[#4F00D0] underline">CC BY-SA 4.0</a>.
+            Quiz questions sourced from <a href="https://opentdb.com/" target="_blank" rel="noopener noreferrer" class="text-[#4F00D0] font-semibold underline">Open Trivia DB</a>.
+            Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer" class="underline">CC BY-SA 4.0</a>.
         </p>
     </footer>
 
-    <!-- Game Logic Script -->
     <script src="/src/game.js" type="module"></script>
-
 </body>
 
 </html>
