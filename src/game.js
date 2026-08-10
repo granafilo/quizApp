@@ -49,6 +49,7 @@ const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const params = new URLSearchParams(window.location.search);
 const rawDifficulty = (params.get("difficulty") || "").toLowerCase();
+const rawCategory = params.get("category") || "";
 let rawPfp = params.get("pfpId") || "user.svg";
 if (rawPfp === "undefined" || rawPfp.trim() === "") {
     rawPfp = "user.svg";
@@ -57,6 +58,7 @@ if (rawPfp === "undefined" || rawPfp.trim() === "") {
 const gameState = {
     nickname: params.get("nickname") || "Giocatore",
     difficulty: rawDifficulty === "mixed" ? "" : rawDifficulty,
+    category: rawCategory,
     pfpId: rawPfp,
     allQuestions: [],
     currentIndex: 0,
@@ -65,6 +67,8 @@ const gameState = {
         corrette: 0,
         errate: 0
     },
+    streak: 0,
+    maxStreak: 0,
     fiftyPercentUsed: false,
     isWaitingNext: false,
     currentAnswers: []
@@ -78,6 +82,8 @@ const playerNicknameEl = document.getElementById("playerNickname");
 const playerPfpEl = document.getElementById("playerPfp");
 const questionCounterEl = document.getElementById("questionCounter");
 const scoreTrackerEl = document.getElementById("scoreTracker");
+const streakBadgeEl = document.getElementById("streakBadge");
+const streakTextEl = document.getElementById("streakText");
 const progressBarEl = document.getElementById("progressBar");
 const difficultyBadgeEl = document.getElementById("difficultyBadge");
 const domandaEl = document.getElementById("domanda");
@@ -93,6 +99,7 @@ const noMoreQuestionsContainer = document.getElementById("noMoreQuestions");
 const finalScoreEl = document.getElementById("finalScore");
 const correctFinalScoreEl = document.getElementById("correctFinalScore");
 const wrongFinalScoreEl = document.getElementById("wrongFinalScore");
+const maxStreakFinalScoreEl = document.getElementById("maxStreakFinalScore");
 const playAgainBtn = document.getElementById("playAgainBtn");
 const loadingOverlay = document.getElementById("loading");
 const retryCounterEl = document.getElementById("retryCounter");
@@ -105,11 +112,13 @@ const homePageBtns = document.querySelectorAll(".js-homePageBtn");
 /**
  * Fetches 15 quiz questions from Open Trivia DB.
  * @param {string} difficulty 
+ * @param {string} category
  * @returns {Promise<Array<Object>>}
  */
-async function fetchQuestions(difficulty) {
+async function fetchQuestions(difficulty, category) {
     const diffQuery = difficulty ? `&difficulty=${encodeURIComponent(difficulty)}` : "";
-    const url = `https://opentdb.com/api.php?amount=15${diffQuery}`;
+    const catQuery = category ? `&category=${encodeURIComponent(category)}` : "";
+    const url = `https://opentdb.com/api.php?amount=15${diffQuery}${catQuery}`;
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -118,7 +127,7 @@ async function fetchQuestions(difficulty) {
 
     const data = await response.json();
     if (!data.results || data.results.length === 0) {
-        throw new Error("Nessuna domanda disponibile.");
+        throw new Error("Nessuna domanda disponibile per i filtri selezionati.");
     }
 
     return data.results;
@@ -231,6 +240,13 @@ function renderQuestion() {
     resultContainerEl.classList.add("hidden");
     gameState.isWaitingNext = false;
 
+    // Trigger smooth question transition animation
+    if (pageContainer) {
+        pageContainer.classList.remove("question-animate");
+        void pageContainer.offsetWidth; // Reflow to reset animation
+        pageContainer.classList.add("question-animate");
+    }
+
     // Update Hint button state
     if (hintBtn) {
         if (questionObj.type === "multiple" && !gameState.fiftyPercentUsed) {
@@ -265,18 +281,49 @@ function handleOptionSelect(selectedBtn, isCorrect) {
     if (isCorrect) {
         selectedBtn.classList.add("correct-option");
         gameState.score.corrette++;
+        gameState.streak++;
+        if (gameState.streak > gameState.maxStreak) {
+            gameState.maxStreak = gameState.streak;
+        }
 
-        // Point weighting based on difficulty
+        // Base points according to difficulty
+        let basePoints = 1;
         if (questionObj.difficulty === "hard") {
-            gameState.score.punteggio += 3;
+            basePoints = 3;
         } else if (questionObj.difficulty === "medium") {
-            gameState.score.punteggio += 2;
-        } else {
-            gameState.score.punteggio += 1;
+            basePoints = 2;
+        }
+
+        // Streak combo bonus
+        let streakBonus = 0;
+        if (gameState.streak >= 5) {
+            streakBonus = 3;
+        } else if (gameState.streak >= 3) {
+            streakBonus = 2;
+        } else if (gameState.streak === 2) {
+            streakBonus = 1;
+        }
+
+        gameState.score.punteggio += (basePoints + streakBonus);
+
+        // Update streak combo badge in UI
+        if (streakBadgeEl && streakTextEl) {
+            if (gameState.streak >= 2) {
+                streakTextEl.innerText = `x${gameState.streak} (+${streakBonus} pts)`;
+                streakBadgeEl.classList.remove("hidden");
+                streakBadgeEl.classList.add("inline-flex");
+            }
         }
     } else {
         selectedBtn.classList.add("wrong-option");
         gameState.score.errate++;
+        gameState.streak = 0;
+
+        // Hide streak badge on wrong answer
+        if (streakBadgeEl) {
+            streakBadgeEl.classList.remove("inline-flex");
+            streakBadgeEl.classList.add("hidden");
+        }
     }
 
     updateScoreTracker();
@@ -342,7 +389,8 @@ function handleFinishGame() {
     const userScore = {
         gameId: Date.now() + Math.random().toString(16).substring(2),
         username: gameState.nickname,
-        score: gameState.score
+        score: gameState.score,
+        maxStreak: gameState.maxStreak
     };
 
     const scoreBoard = loadFroamStorage() || [];
@@ -359,6 +407,7 @@ function handleFinishGame() {
     if (finalScoreEl) finalScoreEl.innerText = `${gameState.score.punteggio}`;
     if (correctFinalScoreEl) correctFinalScoreEl.innerText = `${gameState.score.corrette}`;
     if (wrongFinalScoreEl) wrongFinalScoreEl.innerText = `${gameState.score.errate}`;
+    if (maxStreakFinalScoreEl) maxStreakFinalScoreEl.innerText = `${gameState.maxStreak}`;
 
     if (hintBtn) hintBtn.disabled = true;
     if (pauseBtn) pauseBtn.disabled = true;
@@ -458,7 +507,7 @@ async function startGame() {
     while (attempts < maxAttempts) {
         try {
             if (loadingOverlay) loadingOverlay.classList.remove("hidden");
-            gameState.allQuestions = await fetchQuestions(gameState.difficulty);
+            gameState.allQuestions = await fetchQuestions(gameState.difficulty, gameState.category);
 
             // Successfully fetched
             if (loadingOverlay) loadingOverlay.classList.add("hidden");

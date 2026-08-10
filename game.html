@@ -30,6 +30,8 @@
                 </svg>
                 <span>Home</span>
             </button>
+            <a href="https://github.com/granafilo/quizApp" target="_blank" rel="noopener noreferrer"
+                class="text-[#64748b] hover:text-[#4F00D0] font-bold cursor-pointer transition-colors duration-200">Github</a>
         </div>
     </header>
 
@@ -50,9 +52,15 @@
 
                 <!-- Progress Bar & Score Tracker -->
                 <div class="flex-1 min-w-[200px] flex flex-col gap-1.5 px-2">
-                    <div class="flex justify-between text-xs lg:text-sm font-bold text-[#66547d]">
+                    <div class="flex justify-between items-center text-xs lg:text-sm font-bold text-[#66547d]">
                         <span id="questionCounter">Domanda 1 di 15</span>
-                        <span id="scoreTracker" class="text-[#4F00D0]">0 pts</span>
+                        <div class="flex items-center gap-2">
+                            <div id="streakBadge" class="hidden items-center gap-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-2.5 py-0.5 rounded-full shadow-xs animate-bounce">
+                                <span>🔥</span>
+                                <span id="streakText">x2</span>
+                            </div>
+                            <span id="scoreTracker" class="text-[#4F00D0]">0 pts</span>
+                        </div>
                     </div>
                     <div class="w-full h-3 bg-secondary rounded-full overflow-hidden">
                         <div id="progressBar" class="h-full bg-gradient-to-r from-[#6833e8] to-[#a285fc] transition-all duration-500 rounded-full" style="width: 0%;"></div>
@@ -61,11 +69,11 @@
 
                 <!-- Powerups & Pause Action -->
                 <div class="flex items-center gap-2">
-                    <button id="hintBtn" class="btn btn-sm btn-secondary text-primary font-bold rounded-full gap-1.5 hover:scale-105 transition-all shadow-xs" title="Hint: Elimina 2 risposte errate">
+                    <button id="hintBtn" class="btn btn-sm btn-secondary text-primary font-bold rounded-full gap-1.5 hover:scale-105 transition-all shadow-xs cursor-pointer" title="Hint: Elimina 2 risposte errate">
                         <img src="/images/50-percent.png" class="w-4 h-4 object-contain" alt="Hint 50%">
                         <span class="hidden sm:inline">50/50</span>
                     </button>
-                    <button id="pauseBtn" class="btn btn-sm btn-circle btn-ghost text-primary hover:bg-secondary transition-colors" title="Pausa (Esc)">
+                    <button id="pauseBtn" class="btn btn-sm btn-circle btn-ghost text-primary hover:bg-secondary transition-colors cursor-pointer" title="Pausa (Esc)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
                         </svg>
@@ -93,7 +101,7 @@
 
                 <!-- Next Question Button Container -->
                 <div id="resultContainer" class="w-full hidden pt-4">
-                    <button id="nextQuestion" class="btn w-full p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-2xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+                    <button id="nextQuestion" class="btn w-full p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-2xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer">
                         Prossima Domanda &rarr;
                     </button>
                 </div>
@@ -106,26 +114,30 @@
                     <p class="text-[#66547d] text-lg">Ecco il riassunto della tua partita:</p>
                 </div>
 
-                <div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl">
-                    <div class="bg-secondary/50 border border-[#eedcff] p-6 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
-                        <span id="finalScore" class="text-5xl lg:text-6xl font-black text-[#4F00D0]">0</span>
+                <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 lg:gap-4 max-w-3xl">
+                    <div class="bg-secondary/50 border border-[#eedcff] p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
+                        <span id="finalScore" class="text-4xl lg:text-5xl font-black text-[#4F00D0]">0</span>
                         <span class="text-xs font-bold text-[#66547d] uppercase tracking-wider">PUNTI TOTALI</span>
                     </div>
-                    <div class="bg-emerald-50 border border-emerald-200 p-6 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
-                        <span id="correctFinalScore" class="text-4xl lg:text-5xl font-bold text-emerald-600">0</span>
+                    <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
+                        <span id="correctFinalScore" class="text-3xl lg:text-4xl font-bold text-emerald-600">0</span>
                         <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">CORRETTE</span>
                     </div>
-                    <div class="bg-rose-50 border border-rose-200 p-6 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
-                        <span id="wrongFinalScore" class="text-4xl lg:text-5xl font-bold text-rose-600">0</span>
+                    <div class="bg-rose-50 border border-rose-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
+                        <span id="wrongFinalScore" class="text-3xl lg:text-4xl font-bold text-rose-600">0</span>
                         <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">ERRATE</span>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl text-center flex flex-col items-center justify-center gap-1 shadow-xs">
+                        <span id="maxStreakFinalScore" class="text-3xl lg:text-4xl font-bold text-amber-600">0</span>
+                        <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">MAX COMBO 🔥</span>
                     </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md pt-2">
-                    <button id="playAgainBtn" class="btn flex-1 p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300">
+                    <button id="playAgainBtn" class="btn flex-1 p-4 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-xl font-bold text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
                         Gioca Ancora
                     </button>
-                    <button class="btn js-homePageBtn flex-1 p-4 h-auto rounded-full btn-soft btn-primary text-xl font-bold hover:scale-105 transition-all duration-300">
+                    <button class="btn js-homePageBtn flex-1 p-4 h-auto rounded-full btn-soft btn-primary text-xl font-bold hover:scale-105 transition-all duration-300 cursor-pointer">
                         Home Page
                     </button>
                 </div>

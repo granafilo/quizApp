@@ -233,13 +233,15 @@ gameInfoModal.addEventListener('click', (event) => {
 function startGame() {
     const nickname = document.getElementById('nickname').value;
     const difficulty = document.getElementById('difficulty').value.toLowerCase();
-    // console.log(difficulty)
-    const pfp = currentPfp.name;
+    const categoryEl = document.getElementById('category');
+    const category = categoryEl ? categoryEl.value : '';
+    const pfp = currentPfp.name || 'user.svg';
+
     if (nickname.trim() === '') {
         alert('Please enter a nickname to start the game.');
         return;
     }
-    window.location.href = `./game.html?nickname=${nickname}&difficulty=${difficulty}&pfpId=${pfp}`
+    window.location.href = `./game.html?nickname=${encodeURIComponent(nickname)}&difficulty=${encodeURIComponent(difficulty)}&pfpId=${encodeURIComponent(pfp)}&category=${encodeURIComponent(category)}`;
 }
 
 function findGameById(gameId) {
