@@ -21,11 +21,11 @@
         {
             "@context": "https://schema.org/",
             "@type": "Quiz",
-            "name": "Nome della tua Quiz App",
-            "description": "Un divertente quiz interattivo per testare le tue conoscenze.",
+            "name": "Quiz App",
+            "description": "A fun interactive trivia quiz to test your knowledge.",
             "hasPart": {
                 "@type": "Question",
-                "name": "Esempio di domanda del quiz"
+                "name": "Example Quiz Question"
             }
         }
     </script>
@@ -38,9 +38,9 @@
     <header class="bg-[#FAFAFA] w-full flex justify-between items-center px-5 lg:px-15 py-5">
         <h1 class="text-3xl lg:text-4xl font-extrabold text-[#4F00D0] flex-1">Quiz App</h1>
         <div class="flex gap-5 text-lg flex-1 justify-center lg:justify-end">
-            <button class="font-bold text-[#4F00D0] border-b-2 border-transparent cursor-pointer">Home</button>
-            <button
-                class="text-[#64748b] cursor-pointer border-b-2 border-transparent hover:border-[#4F00D0] transition-all duration-300">Github</button>
+            <a href="/index.html" class="font-bold text-[#4F00D0] border-b-2 border-transparent cursor-pointer">Home</a>
+            <a href="https://github.com/granafilo/quizApp" target="_blank" rel="noopener noreferrer"
+                class="text-[#64748b] cursor-pointer border-b-2 border-transparent hover:border-[#4F00D0] hover:text-[#4F00D0] transition-all duration-300">Github</a>
         </div>
         <div class="flex-1 lg:hidden flex justify-end">
             <button class="btn border-none rounded-full group">
@@ -107,21 +107,39 @@
                     <h6 class="text-[#66547d] text-center">Enter your nickname and choose your difficulty</h6>
                 </div>
                 <!-- input section -->
-                <div class="flex flex-col w-full gap-7.5">
+                <div class="flex flex-col w-full gap-5">
                     <input id="nickname" type="text" placeholder="Type your name..."
-                        class="text-center w-full h-auto p-5 input bg-secondary rounded-[15px] text-2xl" />
+                        class="text-center w-full h-auto p-5 input bg-secondary rounded-[15px] text-2xl font-bold text-primary placeholder:font-normal" />
 
-                    <select id="difficulty"
-                        class="select w-full justify-center h-auto p-5 text-2xl font-bold text-primary bg-secondary rounded-[15px] cursor-pointer">
-                        <option disabled selected value="" class="lg:justify-center">DIFFICULTY</option>
-                        <option value="Mixed" class="diff-select-options">Mixed</option>
-                        <option value="Easy" class="diff-select-options">Easy</option>
-                        <option value="Medium" class="diff-select-options">Medium</option>
-                        <option value="Hard" class="diff-select-options">Hard</option>
-                    </select>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                        <select id="difficulty"
+                            class="select w-full justify-center h-auto p-5 text-xl font-bold text-primary bg-secondary rounded-[15px] cursor-pointer">
+                            <option value="" selected>Difficulty: Mixed</option>
+                            <option value="easy" class="diff-select-options">Easy</option>
+                            <option value="medium" class="diff-select-options">Medium</option>
+                            <option value="hard" class="diff-select-options">Hard</option>
+                        </select>
+
+                        <select id="category"
+                            class="select w-full justify-center h-auto p-5 text-xl font-bold text-primary bg-secondary rounded-[15px] cursor-pointer">
+                            <option value="" selected>Category: Any</option>
+                            <option value="9" class="diff-select-options">General Knowledge</option>
+                            <option value="15" class="diff-select-options">Video Games</option>
+                            <option value="11" class="diff-select-options">Film & Cinema</option>
+                            <option value="12" class="diff-select-options">Music</option>
+                            <option value="17" class="diff-select-options">Science & Nature</option>
+                            <option value="18" class="diff-select-options">Computers & Tech</option>
+                            <option value="21" class="diff-select-options">Sports</option>
+                            <option value="22" class="diff-select-options">Geography</option>
+                            <option value="23" class="diff-select-options">History</option>
+                            <option value="31" class="diff-select-options">Anime & Manga</option>
+                            <option value="32" class="diff-select-options">Cartoons & Comics</option>
+                            <option value="10" class="diff-select-options">Books & Literature</option>
+                        </select>
+                    </div>
 
                     <button id="startGameBtn"
-                        class="btn w-full p-5 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-4xl text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300"
+                        class="btn w-full p-5 h-auto rounded-full bg-gradient-to-br from-[#6833e8] to-[#a285fc] text-3xl lg:text-4xl text-[#FAFAFA] hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer"
                         alt="start the game button">
                         Start Game
                     </button>
@@ -207,17 +225,17 @@
                 <div class="flex gap-10">
                     <div
                         class="flex-1 flex flex-col w-full items-center justify-center p-10 bg-secondary rounded-[25px] text-primary text-2xl font-bold gap-2">
-                        <div>PUNTEGGIO</div>
+                        <div>SCORE</div>
                         <div class="text-4xl game-info-score-number"></div>
                     </div>
                     <div
                         class="flex-1 flex flex-col w-full items-center justify-center p-10 bg-[#ecfdec] rounded-[25px] text-[#0d6c26] text-2xl font-bold gap-2">
-                        <div>CORRETTE</div>
+                        <div>CORRECT</div>
                         <div class="text-4xl game-info-correct-number">100</div>
                     </div>
                     <div
                         class="flex-1 flex flex-col w-full items-center justify-center p-10 bg-[#feedf0] rounded-[25px] text-[#b4113d] text-2xl font-bold gap-2">
-                        <div>ERRATE</div>
+                        <div>WRONG</div>
                         <div class="text-4xl game-info-wrong-number">100</div>
                     </div>
                 </div>
